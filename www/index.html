@@ -29,7 +29,7 @@
                     <ion-side-menu-content>
 
 
-                      <ion-header-bar class="bar-dark">
+                      <ion-header-bar class="bar-positive">
 
                       <!-- BOTON DE LAS TRES RAYITAS-->
                         <button class="button button-icon" ng-click="toggleProjects()">
@@ -37,20 +37,20 @@
                         </button>
 
 
-                        <h1 class="title">{{activeProject.title}}</h1>
+                        <h1 class="title"><i class="icon ion-arrow-left-b" ng-click="dia = dia - 1" ></i> <span class="fecha">{{ano}}-{{mes}}-{{dia}}</span> <i class="icon ion-arrow-right-b" ng-click="dia = dia + 1" ></i></h1>
 
-
+                          
                         <!-- New Task button-->
                         <button class="button button-icon" ng-click="newTask()">
-                          <i class="icon ion-compose"></i>
+                          <i class="icon ion-calendar"></i>
                         </button>
 
 
                       </ion-header-bar>
 
 
-                      <ion-content scroll="false">
-                        <ion-list>
+                      <ion-content scroll="false" >
+                        <ion-list ng-show="false">
                           <ion-item ng-repeat="task in activeProject.tasks">
                             {{task.title}}
                           </ion-item>
@@ -64,15 +64,18 @@
                                             ng-class="{active: isGroupShown(vinculacion)}">
                                       <i class="icon" ng-class="isGroupShown(vinculacion) ? 'ion-minus' : 'ion-plus'"></i>
                                     &nbsp;
-                                    Group {{vinculacion.nombre}}
+                                     {{vinculacion.nombre}}
                                   </ion-item>
                                   <ion-item class="item-accordion item-icon-right"
                                             ng-repeat="proposito in filtered =(propositos | filter:{ vinculacion: vinculacion.id , mes_ano: '2015' + '-'+ '09' +'-' , }) "
                                             ng-show="isGroupShown(vinculacion)">
                                     {{proposito.proposito}}
-                                    <span class="icon ion-plus-circled mas " ng-class="{'positive' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 0 }).length != 0 } "></span>
-                                    <span class="icon ion-minus-circled menos " ng-class="{'assertive' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 1 }).length != 0 }"></span>
-                                    <span class="icon ion-contrast neutro " ng-class="{'balanced' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 2 }).length != 0 }"></span>
+                                    <span class="icon ion-plus-circled mas " ng-class="{'mas-mark' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 1 }).length != 0 } " ng-click="marcar(proposito, 1 )"></span>
+
+
+                                    <span class="icon ion-minus-circled menos " ng-class="{'menos-mark' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 2 }).length != 0 }" ng-click="marcar(proposito, 2 )"></span>
+
+                                    <span class="icon ion-contrast neutro " ng-class="{'neutro-mark' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 0 }).length != 0 }" ng-click="marcar(proposito, 0 )"></span>
                                   </ion-item>
                                 </div>
                               </ion-list>

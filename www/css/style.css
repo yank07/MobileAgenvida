@@ -15,8 +15,13 @@
   display: block !important;
 }
 
+.item-accordion .icon {
+
+color: #ddd;
+	}
+
 span.icon.ion-plus-circled.mas {
-    right: 10px;
+    right: 70px;
 }
 
 span.icon.ion-minus-circled.menos {
@@ -25,10 +30,40 @@ span.icon.ion-minus-circled.menos {
 
 
 
-
 span.icon.ion-contrast.neutro {
 
-	right: 70px;
+	right: 10px;
+}
+
+span.icon.ion-plus-circled.mas.mas-mark {
+    color: green;
+}
+
+
+span.icon.ion-minus-circled.menos.menos-mark {
+      color: red;
+}
+
+span.icon.ion-contrast.neutro.neutro-mark {
+
+	 color: blue;
+}
+
+.title i.icon.ion-arrow-left-b {
+    margin-right: 15px;
+    font-size: 30px;
+}
+
+.title i.icon.ion-arrow-right-b {
+    margin-left: 15px;
+    font-size: 30px;
+}
+
+
+.title .fecha {
+      font-size: 29px;
+    margin: 0px 30px;
+
 }
 
 

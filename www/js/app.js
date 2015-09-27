@@ -18,8 +18,11 @@ angular.module('agenvida', ['ionic','Agenvida.controllers'])
   });
 })
 
+
+
 .factory('Projects', function() {
   return {
+
     all: function() {
       var projectString = window.localStorage['projects'];
       if(projectString) {
@@ -27,9 +30,14 @@ angular.module('agenvida', ['ionic','Agenvida.controllers'])
       }
       return [];
     },
+
+
     save: function(projects) {
       window.localStorage['projects'] = angular.toJson(projects);
     },
+
+
+
     newProject: function(projectTitle) {
       // Add a new project
       return {
@@ -37,14 +45,26 @@ angular.module('agenvida', ['ionic','Agenvida.controllers'])
         tasks: []
       };
     },
+
+
+
     getLastActiveIndex: function() {
       return parseInt(window.localStorage['lastActiveProject']) || 0;
     },
+
+
+    
     setLastActiveIndex: function(index) {
       window.localStorage['lastActiveProject'] = index;
     }
+
+
+
   }
 })
+.config(['$httpProvider', function($httpProvider) {
+  $httpProvider.defaults.withCredentials = true;
+}])
 
 
 
