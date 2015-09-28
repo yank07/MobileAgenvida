@@ -66,6 +66,3 @@ angular.module('agenvida', ['ionic','Agenvida.controllers'])
   $httpProvider.defaults.withCredentials = true;
 }])
 
-
-
-

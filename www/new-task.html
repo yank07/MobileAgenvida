@@ -1,6 +1,7 @@
   <div class="modal">
 
 <div class="content has-header">
+ <form ng-submit="login(username, password)">
       <div class="list">
         <label class="item item-input">
           <input type="text" placeholder="First Name" ng-model="username">
@@ -13,7 +14,7 @@
         <button class="button button-block button-positive" ng-click="login(username, password)">Submit</button>
       </div>
     </div>
-
+</form>
   </div>
 
     <!-- Modal header bar 

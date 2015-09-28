@@ -5,7 +5,54 @@ angular.module('Agenvida.controllers', [])
 
 //$http.defaults.headers.common['Authorization']= 'Bearer Am1yFBvVNeLmYkPQdpkdIvzdbvGoBY';
 
-$http.defaults.headers.common['Authorization']= 'Bearer 0QbSxsPGIZGuA1DdSaseyOloIkXBoN';
+//$http.defaults.headers.common['Authorization']= 'Bearer 0QbSxsPGIZGuA1DdSaseyOloIkXBoN';
+
+ 
+
+// Token= OAuth.getAccessToken(user);
+
+    
+      /*************************************************/
+      /* TRAIGO TODOS LOS PROPOSITOS DEL USUARIO */ 
+      /*************************************************/
+      getPropositos = function() {        
+
+      $http.get('http://localhost:8000/propositos2/').then(function(result){
+                                                        $scope.propositos = result.data;
+                                                        },
+                                        function(){ } 
+                                     );
+
+                              }
+
+
+        function searchFecha(dia, myArray){
+              for (var i=0; i < myArray.length; i++) {
+                  if (myArray[i].dia === $scope.ano + "-" + $scope.mes + "-" + $scope.dia) {
+                      console.log(myArray[i].dia)
+                      return myArray[i];
+                  }
+              }
+          }
+
+   $http({
+    method: 'POST',
+    url:"http://localhost:8000/o/token/",
+    headers: {
+              'Content-Type': "application/x-www-form-urlencoded",
+              },
+    data:"client_id=DbSojNBpAXDEQ3CARcrKOpWI3PS8mkI3osJL0jdd&grant_type=password&username=rodri&password=itavera07&client_secret="})
+   .then(function(result){
+      $scope.token = result.data;
+      console.log();
+      $http.defaults.headers.common['Authorization']= 'Bearer '+$scope.token.access_token;
+
+
+        getPropositos();
+
+   });
+
+
 
   $scope.dia = 25;
   $scope.mes = "09";
@@ -16,29 +63,6 @@ $http.defaults.headers.common['Authorization']= 'Bearer 0QbSxsPGIZGuA1DdSaseyOlo
    //$scope.propositos = [{"id":1,"usuario":"rodrigo","vinculacion":1,"proposito":"Amarle a gi","mes_ano":"2015-09-25","marcaciones":[{"id":2,"dia":"2015-09-25","cumplimiento":1,"proposito":1}]},{"id":2,"usuario":"rodrigo","vinculacion":1,"proposito":"Ti amu","mes_ano":"2015-09-25","marcaciones":[{"id":1,"dia":"2015-09-25","cumplimiento":1,"proposito":2}]},{"id":3,"usuario":"rodrigo","vinculacion":1,"proposito":"Sos un capo","mes_ano":"2015-09-25","marcaciones":[{"id":3,"dia":"2015-09-25","cumplimiento":0,"proposito":3}]},{"id":4,"usuario":"rodrigo","vinculacion":1,"proposito":"Rezar","mes_ano":"2014-09-25","marcaciones":[{"id":5,"dia":"2014-09-25","cumplimiento":2,"proposito":4}]},{"id":5,"usuario":"rodrigo","vinculacion":1,"proposito":"rosario","mes_ano":"2014-09-25","marcaciones":[{"id":4,"dia":"2014-09-25","cumplimiento":1,"proposito":5}]},{"id":6,"usuario":"rodrigo","vinculacion":1,"proposito":"Migracion ok","mes_ano":"2015-09-25","marcaciones":[{"id":6,"dia":"2015-09-25","cumplimiento":2,"proposito":6}]}];
 
 
-      /*************************************************/
-      /* TRAIGO TODOS LOS PROPOSITOS DEL USUARIO */ 
-      /*************************************************/
-	    getPropositos = function() {        
-
-      $http.get('http://localhost:8000/propositos2/').then(function(result){
-                                                        $scope.propositos = result.data;
-                                                        },
-                                        function(){ } 
-                                     );
-
-                              }
-
-        getPropositos();
-
-        function searchFecha(dia, myArray){
-              for (var i=0; i < myArray.length; i++) {
-                  if (myArray[i].dia === $scope.ano + "-" + $scope.mes + "-" + $scope.dia) {
-                      console.log(myArray[i].dia)
-                      return myArray[i];
-                  }
-              }
-          }
       /*************************************************/
      /* MARCO LOS NUEVOS MARCACIONES DE LOS PROPOSITOS */ 
      /*************************************************/
@@ -118,6 +142,30 @@ $http.defaults.headers.common['Authorization']= 'Bearer 0QbSxsPGIZGuA1DdSaseyOlo
 
   	console.log(username + password);
   	$scope.taskModal.hide();
+/*
+    req = {
+ method: 'POST',
+ url: 'http://localhost:8000/o/token/',
+ headers: {
+   'Content-Type': 'application/x-www-form-urlencoded'
+ },
+ data: { grant_type: 'password',
+         username: "rodri",
+         password: "itavera07",
+         client_id:"DbSojNBpAXDEQ3CARcrKOpWI3PS8mkI3osJL0jdd",
+        
+
+  },
+
+ 
+}
+
+
+
+
+    $http(req);*/
+
+  
   	
   	
   }
@@ -144,4 +192,5 @@ $http.defaults.headers.common['Authorization']= 'Bearer 0QbSxsPGIZGuA1DdSaseyOlo
 
 
 
-});
+})
+
