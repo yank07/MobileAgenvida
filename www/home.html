@@ -1,16 +1,17 @@
-<ion-view view-title="Agenvida"  hide-nav-bar="true">
+<ion-view view-title="Agenvida"  hide-nav-bar="true" has-navbar="true" >
 
 
-<ion-side-menus>
+<ion-side-menus enable-menu-with-back-views="true">
 
       <!-- ++++++++++++++++ Center content  ++++++++++++++++  -->
                     <ion-side-menu-content>
 
+                   
 
-                      <ion-header-bar class="bar-positive">
 
-                      <!-- BOTON DE LAS TRES RAYITAS-->
-                        <button class="icon-right button button-icon" ng-click="toggleProjects()">
+                  <!--    <ion-header-bar class="bar-positive">
+
+                        <button class="icon-right button button-icon" ng-click="toggleLeft()">
                           <i class="icon ion-navicon"></i>
                         </button>
 
@@ -21,9 +22,7 @@
                         </h1>
 
 
-                      
-                          
-                        <!-- New Task button-->
+            
 
                         <div class="buttons">
 
@@ -36,7 +35,7 @@
 
 
 
-                          <button class="button button-icon icon-right" side="right" ng-click="newTask()">
+                          <button class="button button-icon icon-right" side="right" ng-click="verPerfil()">
                           <i class="icon ion-android-person"></i>
                         </button>
 
@@ -49,85 +48,14 @@
 
 
 
-                      </ion-header-bar>
-                       <ion-header-bar class="bar bar-subheader" align-title="center" >
-
-
-
-                         <h2 class="title">
-
-                          <a class="button  button-icon  icon ion-arrow-left-b" ng-click="diaDown()" ></a> 
-
-                          <span class="fecha">{{ano}}-{{mes}}-{{dia}}</span> 
-                          <a class=" button  button-icon icon ion-arrow-right-b" ng-click="diaUp()" ></a></h2>
-
-                      </ion-header-bar>
+                      </ion-header-bar> -->
+                     
 
 
 
 
 
-
-
-
-
-
-                      <ion-content scroll="false" class="has-subheader" has-subheader="true" >
-
-                        <ion-list ng-show="false">
-                          <ion-item ng-repeat="task in activeProject.tasks">
-                            {{task.title}}
-                          </ion-item>
-                        </ion-list>
-
-
-                              <ion-list>
-                                <div ng-repeat="vinculacion in vinculaciones">
-                                  <ion-item class="item-stable"
-                                            ng-click="toggleGroup(vinculacion)"
-                                            ng-class="{active: isGroupShown(vinculacion)}">
-                                      <i class="icon" ng-class="isGroupShown(vinculacion) ? 'ion-minus' : 'ion-plus'"></i>
-                                    &nbsp;
-                                     {{vinculacion.nombre}}
-                                  </ion-item>
-                                  <ion-item class="item-accordion  item-icon-right"
-                                            ng-repeat="proposito in filtered =(propositos | filter:{ vinculacion: vinculacion.id , mes_ano: ano + '-'+ mes +'-' , }) "
-                                            ng-show="isGroupShown(vinculacion)"
-                                            on-double-tap="show(proposito)" 
-
-
-                                            >
-                    
-                                    {{proposito.proposito}}
-
-                                    
-                                    <span class="icon ion-plus-circled mas " ng-class="{'mas-mark' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 1 }).length != 0 } " ng-click="marcar(proposito, 1 )"></span>
-
-
-                                    <span class="icon ion-minus-circled menos " ng-class="{'menos-mark' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 2 }).length != 0 }" ng-click="marcar(proposito, 2 )"></span>
-
-                                    <span class="icon ion-contrast neutro" ng-class="{'neutro-mark' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 0 }).length != 0 }" ng-click="marcar(proposito, 0 )"></span>
-                                   
-                                  </ion-item>
-
-                                            <label class="item item-input item-accordion" ng-show=" isGroupShown(vinculacion) && showInput[vinculacion.id]">
-                                                
-                                                <input type="text">
-                                              </label>
-                                
-
-                                  <ion-item class="item-accordion  item-icon-right" ng-show="isGroupShown(vinculacion)" ng-click="CreateProposito(vinculacion.id)">
-                                  Agregar nuevo Proposito
-
-                                  <span class="icon ion-plus-circled"  ng-click=""></span>
-                                  </ion-item>
-
-                                  
-                                </div>
-
-
-                              </ion-list>
-                      </ion-content>
+                      <ion-nav-view name="MainContent" animation="slide-left-right"></ion-nav-view>
 
 
 
@@ -141,26 +69,67 @@
 
 
                 <!-- ++++++++++++++++ Left menu ++++++++++++++++ -->
-                <ion-side-menu side="left">
+
+       
+                <ion-side-menu side="left" >
 
 
                   <ion-header-bar class="bar-dark">
-                    <h1 class="title">Projects</h1>
-                    <button class="button button-icon ion-plus" ng-click="newProject()">
-                    </button>
+                    <h1 class="title">Menu</h1>
+                   
                   </ion-header-bar>
 
 
                   <ion-content scroll="false">
                     <ion-list>
-                      <ion-item ng-repeat="project in projects" ng-click="selectProject(project, $index)" ng-class="{active: activeProject == project}">
-                        {{project.title}}
+
+                       <ion-item ng-click="verMarcacion()" menu-close>
+
+                      Propositos
+                     
+                      </ion-item>
+
+
+                      <ion-item ng-click="verReporte()" menu-close>
+
+                      Reporte Mensual
+                     
+                      </ion-item>
+
+                       <ion-item>
+
+                      Evangelio del Dia
+                     
+                      </ion-item>
+
+                       <ion-item>
+
+                     Telefono del Padre
+                     
+                      </ion-item>
+                       <ion-item>
+
+                      Oraciones
+                     
+                      </ion-item>
+
+                       <ion-item>
+
+                     Capitalario
+                     
+                      </ion-item>
+                       <ion-item>
+
+                      Sugerencias
+                     
                       </ion-item>
                     </ion-list>
                   </ion-content>
 
 
                 </ion-side-menu>
+
+               
 </ion-view>
 
       

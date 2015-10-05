@@ -1,36 +1,39 @@
-angular.module('Agenvida.controllers', [])
+angular.module('Agenvida.controllerMarcacion', [])
 
-.controller('AgenvidaCtrl', function($scope, $ionicModal, $http ,$ionicSideMenuDelegate, TokenService, $ionicPopup , $ionicActionSheet) {
-
-
-    $scope.domain = "http://agenvida.herokuapp.com/";
-    //$scope.domain = "http://localhost:8000/";
+.controller('controllerMarcacion', function($scope,  $http , $state, $ionicSideMenuDelegate, $ionicModal,$ionicPopup , $ionicActionSheet) {
+  /**************************************************/
+  /**************** VARIABLES **********************/
+  /*************************************************/
+  $scope.domain = "http://agenvida.herokuapp.com/";
+  //$scope.domain = "http://localhost:8000/";
   $scope.date = new Date( );
   $scope.dia = $scope.date.getDate();
   $scope.mes = $scope.date.getMonth()+1;
   $scope.ano = $scope.date.getFullYear();
-
   $scope.showInput = [false, false, false, false, false] ;
-
   $scope.NuevoProposito = ['','','',''];
   $scope.vinculaciones = [{"id":1,"nombre":"Dios"}, {"id":2,"nombre":"Conmigo"},{"id":3,"nombre":"Con los Demás"}, {"id":4,"nombre":"Con la Naturaleza"},]
 
-
-
+   $scope.weekDaysList = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"];
+   $scope.monthList = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agost", "Sept", "Oct", "Nov", "Dic"];
+  
+  /***************************************************/
+  /* Configuracion del Calendario para elegir fechas */
+   /***************************************************/
 
   $scope.datepickerObject = {
-    //  titleLabel: 'Title',  //Optional
+    //titleLabel: 'Title',  //Optional
       todayLabel: 'Hoy',  //Optional
-     closeLabel: 'Cerrar',  //Optional
+      closeLabel: 'Cerrar',  //Optional
       setLabel: 'Ir',  //Optional
       setButtonType : 'button-assertive',  //Optional
       todayButtonType : 'button-assertive',  //Optional
-     // closeButtonType : 'button-assertive',  //Optional
+  //  closeButtonType : 'button-assertive',  //Optional
       inputDate: new Date(),    //Optional
       mondayFirst: true,    //Optional
-      //disabledDates: disabledDates, //Optional
-      //weekDaysList: weekDaysList,   //Optional
-     // monthList: monthList, //Optional
+  //  disabledDates: disabledDates, //Optional
+    weekDaysList: $scope.weekDaysList,   //Optional
+    monthList:  $scope.monthList, //Optional
 
       templateType: 'modal', //Optional
       showTodayButton: 'true', //Optional
@@ -39,19 +42,17 @@ angular.module('Agenvida.controllers', [])
       from: new Date(2012, 8, 2),   //Optional
       to: new Date(2018, 8, 25),    //Optional
       callback: function (val) {    //Mandatory
-       // datePickerCallback(val);
+       
        if (val){
-       $scope.dia = ("0" + val.getDate()).slice(-2)
-       $scope.mes =  ("0" + (val.getMonth() + 1)).slice(-2)
-       $scope.ano =  val.getFullYear();
+           $scope.dia = ("0" + val.getDate()).slice(-2)
+           $scope.mes =  ("0" + (val.getMonth() + 1)).slice(-2)
+           $scope.ano =  val.getFullYear();
 
-       $scope.date.setDate($scope.dia);
-       $scope.date.setMonth($scope.mes-1);
-       $scope.date.setFullYear($scope.ano);
+           $scope.date.setDate($scope.dia);
+           $scope.date.setMonth($scope.mes-1);
+           $scope.date.setFullYear($scope.ano);
 
-       console.log($scope.date);
-
-
+        // console.log($scope.date);
 
        }
   
@@ -59,23 +60,22 @@ angular.module('Agenvida.controllers', [])
       }
     };
 
-  
+  // FIN DE CONFIGURACION DE CALENDARIO
       /*************************************************/
       /* TRAIGO TODOS LOS PROPOSITOS DEL USUARIO */ 
       /*************************************************/
       $scope.getPropositos = function() {  
 
-     // $http.defaults.headers.common['Authorization']= 'Bearer '+TokenService.getToken();     
-
-
-
-      $http.get($scope.domain + 'propositos2/').then(function(result){
+  // $http.defaults.headers.common['Authorization']= 'Bearer '+TokenService.getToken();     //para colocar el token en el header
+      $http.get($scope.domain + 'propositos2/').then(function(result){//si el get va bien
                                                         $scope.propositos = result.data;
                                                         },
-                                        function(){ } 
-                                     );
+                                                      function(){ // algo salio mar #TODO volver a registrar
 
-                              }// FIN GET PROPOSITOS
+                                                       } 
+                                                    );
+
+                                          }         // FIN GET PROPOSITOS
 
 
       /*************************************************/
@@ -102,9 +102,9 @@ angular.module('Agenvida.controllers', [])
      /* MARCO LOS NUEVOS MARCACIONES DE LOS PROPOSITOS */ 
      /*************************************************/
     $scope.marcar = function( proposito, valorMarcacion){
-                    console.log(proposito);
-                    console.log($scope.ano + "-" + $scope.mes + "-" + $scope.dia);
-                    console.log( searchFecha( $scope.dia , proposito.marcaciones) );
+                  //  console.log(proposito);
+                  //  console.log($scope.ano + "-" + $scope.mes + "-" + $scope.dia);
+                  //  console.log( searchFecha( $scope.dia , proposito.marcaciones) );
 
                     /* busco si ya existe una marcacion de ese proposito en esa fecha */
                     marcacion = searchFecha( $scope.dia , proposito.marcaciones)
@@ -116,7 +116,7 @@ angular.module('Agenvida.controllers', [])
 
                       if (marcacion.cumplimiento != valorMarcacion) /* Corroboro que realmente haya un cambio */
                         {   
-
+                            /* Si hay un cambio entonces actualizo el valor en el servidor mediante un PUT*/
                            marcacion.cumplimiento = valorMarcacion;
                           $http.put($scope.domain +'marcaciones2/' + marcacion.id + "/", marcacion).then(function(){console.log("volvi")});
 
@@ -134,98 +134,63 @@ angular.module('Agenvida.controllers', [])
                               "proposito": proposito.id
                       }
 
-                      console.log(data);
+                      //console.log(data);
                       $http.post($scope.domain + 'marcaciones2/', data).then(function(result){
 
-                                                                                console.log(result);
+                                                                                //console.log(result);
                                                                                 proposito.marcaciones.push(result.data);
 
                                                                                });
                     }/* Fin else*/
   }//Fin funcion marcar
 
+/*********************************************/
+/* Funcion para aumentar y disminuir un dia con flechita */
+/*********************************************/
 
   $scope.diaUp = function(){
 
-   $scope.tomorrow = new Date();
+  $scope.tomorrow = new Date();
    
-   $scope.tomorrow.setTime($scope.date.getTime()+ 864e5);
+  $scope.tomorrow.setTime($scope.date.getTime()+ 864e5);
 
-      $scope.dia = ("0" + $scope.tomorrow.getDate()).slice(-2);
-       $scope.mes =  ("0" + ($scope.tomorrow.getMonth() + 1)).slice(-2);
+  $scope.dia = ("0" + $scope.tomorrow.getDate()).slice(-2);
+  $scope.mes =  ("0" + ($scope.tomorrow.getMonth() + 1)).slice(-2);
 
-
-
-
-   $scope.ano= $scope.tomorrow.getFullYear();
+  $scope.ano= $scope.tomorrow.getFullYear();
   
-   $scope.date.setTime($scope.tomorrow.getTime());
-
-
-
+  $scope.date.setTime($scope.tomorrow.getTime());
 
 
   }
 
   $scope.diaDown = function(){
 
-    $scope.tomorrow = new Date();
+  $scope.tomorrow = new Date();
    
-   $scope.tomorrow.setTime($scope.date.getTime() - 864e5);
+  $scope.tomorrow.setTime($scope.date.getTime() - 864e5);
 
-    $scope.dia = ("0" + $scope.tomorrow.getDate()).slice(-2);
-    $scope.mes =  ("0" + ($scope.tomorrow.getMonth() + 1)).slice(-2);
+  $scope.dia = ("0" + $scope.tomorrow.getDate()).slice(-2);
+  $scope.mes =  ("0" + ($scope.tomorrow.getMonth() + 1)).slice(-2);
 
-
-   $scope.ano= $scope.tomorrow.getFullYear();
-
-
-   $scope.date.setTime($scope.tomorrow.getTime());
+  $scope.ano= $scope.tomorrow.getFullYear();
 
 
-
-
+  $scope.date.setTime($scope.tomorrow.getTime());
 
   }
 
-  $scope.addInput = function(vinculacionID){
-    console.log(vinculacionID);
 
+/*********************************************/
+/* FIN Funcion  aumentar un dia con flechita */
+/*********************************************/
 
-      $scope.showInput[vinculacionID] = true ;
-      console.log($scope.showInput);
+  
 
-  }
-
-  /************************************///
-  // Create our modal
-  /************************************///
-  $ionicModal.fromTemplateUrl('new-task.html', function(modal) {
-    $scope.taskModal = modal;
-  }, {
-    scope: $scope
-  });
-
-  /************************************///
-  // ACCIONES 
-  /************************************///
  
-
-  $scope.newTask = function() {
-    $scope.taskModal.show();
-  };
-
-  $scope.closeNewTask = function() {
-    $scope.taskModal.hide();
-  }
-
-  $scope.toggleProjects = function() {
-    $ionicSideMenuDelegate.toggleLeft();
-  }; 
-
-  /***************/
-/**** Show pop Up****/
-/*******************/
+/**********************************************/
+/**** Show pop Up de Crear nuevo proposito****/
+/*********************************************/
 $scope.CreateProposito = function(vinculacionID) {
    $scope.PropositoNuevo = {vinculacion: vinculacionID , mes_ano:$scope.ano + '-'+ $scope.mes + '-' + $scope.dia} ;
 
@@ -243,9 +208,7 @@ $scope.CreateProposito = function(vinculacionID) {
          type: 'button-positive',
          onTap: function(e) {
               if($scope.PropositoNuevo.proposito == ""){
-
-                  e.preventDefault();
-                  
+                  e.preventDefault();              
 
               }
               else {
@@ -257,8 +220,6 @@ $scope.CreateProposito = function(vinculacionID) {
                                                                                           $scope.propositos.push(result.data);
 
                                                                                         }
-
-
                   )
 
               }
@@ -268,9 +229,12 @@ $scope.CreateProposito = function(vinculacionID) {
      ]
    }); }
 
+/* FIN de POPUP */
+  /**************************************************************************/
+  /*****Muestro las opciones de edicion de un proposito al hacer doble tab***/
+  /**************************************************************************/
 
- // Triggered on a button click, or some other target
- $scope.show = function(proposito) {
+ $scope.showOpciones = function(proposito) {
 
    // Show the action sheet
    var hideSheet = $ionicActionSheet.show({
@@ -287,7 +251,7 @@ $scope.CreateProposito = function(vinculacionID) {
           return true;
         },
 
-    destructiveButtonClicked: function(){
+    destructiveButtonClicked: function(){ //Cuando hago tab en eliminar
       console.log("Eliminado");
        $http.delete($scope.domain +'propositos2/' + proposito.id + "/").then(
 
@@ -302,15 +266,10 @@ $scope.CreateProposito = function(vinculacionID) {
 
      );
        
-      // console.log($scope.propositos.indexOf(proposito));
-       //console.log($scope.propositos);
-      
-
-
-
+     
       return true;
     },
-     buttonClicked: function(index) {
+     buttonClicked: function(index) { //cuando hago click en editar
 
       console.log(propositoID);
        return true;
@@ -320,12 +279,13 @@ $scope.CreateProposito = function(vinculacionID) {
 
  };
 
-
+//FIN de botones de edicion
 
 
     /************************************
    * if given group is the selected group, deselect it
    * else, select the given group
+   * Es el acordeon
    *************************************/
 
   
@@ -340,71 +300,30 @@ $scope.CreateProposito = function(vinculacionID) {
     return $scope.shownGroup === group;
   };
 
+  // Fin de Acorderon 
+
+
+$scope.toggleLeft = function() {
+    $ionicSideMenuDelegate.toggleLeft();
+  };
+
+$scope.verPerfil = function (){
+  console.log("ver perfil");
+  $state.go('app.perfil');
+}
+
+
+$scope.verReporte = function(){
+   $state.go('app.reporte-mensual');
+}
+$scope.verMarcacion= function(){
+   $state.go('app.marcacion');
+}
+
+
 
 
 })/* FIN AGENVIDACTRL*/
 
-
-.controller('SignInCtrl', function($scope, $state, $http , TokenService,$window) {
-
- $scope.domain = "http://agenvida.herokuapp.com/";
- //   $scope.domain = "http://localhost:8000/";
-
- if ( $window.localStorage.token){
-  console.log($window.localStorage.token);
-   $state.go('home');
-
- }
-  
-  $scope.signIn = function(user) {
-    //console.log('Sign-In', user);
-    //UserService.setUser(user);
-    //$state.go('home');
-
-    console.log("client_id=DbSojNBpAXDEQ3CARcrKOpWI3PS8mkI3osJL0jdd&grant_type=password&username="+user.username+"&password="+user.password+"&client_secret=");
-    $http({
-    method: 'POST',
-              url:$scope.domain+"o/token/",
-              headers: {
-                        'Content-Type': "application/x-www-form-urlencoded",
-                        },
-              data:"client_id=QlLwYhQoeYx98FzV40a82amX9Ik3HjGtfPNlXHqN&grant_type=password&username="+user.username+"&password="+user.password+"&client_secret="
-  })
-   .then(function(result){
-      //$scope.token = result.data;   
-      //console.log("then");
-      //TokenService.setToken($scope.token.access_token);
-        $window.localStorage.token = result.data.access_token;
-
-        $scope.message = 'Welcome';
-     
-      
-    
-
-      $state.go('home');
-
-   },
-   function (result){//Si hay algun error en la autenticacion
-
-     // Erase the token if the user fails to log in
-        delete $window.localStorage.token;
-
-        // Handle login errors here
-        $scope.message = 'Error: Invalid user or password';
-   }
-
-   );
-
-// $state.go('home');
-
-  };
-
-
-  
-})
-
-.controller('HomeTabCtrl', function($scope) {
-  console.log('HomeTabCtrl');
-});
 
 

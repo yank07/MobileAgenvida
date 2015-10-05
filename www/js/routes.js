@@ -6,25 +6,76 @@ angular.module('Agenvida.routes', [])
 
   $stateProvider
 
-  .state('home', {
-    url: '/home',
+  .state('app', {
+    url: '/app',
     templateUrl: 'home.html',
-    controller: 'AgenvidaCtrl'
+    abstract: true,
+    controller: 'controllerMarcacion'
 
   })
 
-  .state('facts', {
-      url: '/facts',  
-      templateUrl: 'facts.html'
+  .state('app.marcacion', {
+      url: "/marcacion",
+      views: {
+        'MainContent' :{
+          templateUrl: "marcacion.html",
+          controller: 'controllerMarcacion'
+        }
+      }
+})
+
+   .state('app.reporte-mensual', {
+      url: "/reporte-mensual",
+      views: {
+        'MainContent' :{
+          templateUrl: "reporte-mensual.html",
+          controller: 'controllerMarcacion'
+        }
+      }
+})
+
+
+  .state('app.perfil', {
+      url: '/perfil',  
+
+         views: {
+        'MainContent' :{
+            templateUrl: 'perfil.html',
+      controller: 'controllerPerfil'
+        }
+      }
+    
+
       
     })
    .state('signin', {
-      url: '/sign-in',
+      url: '/',
       templateUrl: 'sign-in.html',
-      controller: 'SignInCtrl'
+      controller: 'controllerLogin'
     })
 
-    $urlRouterProvider.otherwise('/sign-in');
+    .state('configuracion', {
+      url: '/configuracion',
+      templateUrl: 'configuracion.html',
+      controller: 'controllerConfiguracion'
+    })
+
+   
+
+    .state('app.contrato-pedagogico', {
+      url: '/contrato-pedagogico',
+
+         views: {
+        'MainContent' :{
+               templateUrl: 'contrato-pedagogico.html',
+       controller: 'controllerConfiguracion'
+        }
+      }
+     
+     // controller: 'controllerLogin'
+    })
+
+   $urlRouterProvider.otherwise('/');
 
 
 
