@@ -1,0 +1,18 @@
+
+cd /home/rodrigo/ProyectoAgenvida/MobileAgenvida/
+
+
+
+
+cordova build --release android
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore /home/rodrigo/ProyectoAgenvida/MobileAgenvida/platforms/android/build/outputs/apk/android-release-unsigned.apk alias_name
+
+
+
+
+
+cd /home/rodrigo/android-sdk-linux/build-tools/23.0.1
+
+
+./zipalign -v 4 /home/rodrigo/ProyectoAgenvida/MobileAgenvida/platforms/android/build/outputs/apk/android-release-unsigned.apk /home/rodrigo/ProyectoAgenvida/MobileAgenvida/platforms/android/build/outputs/apk/agenvida3.apk

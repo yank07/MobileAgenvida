@@ -27,7 +27,7 @@
                           <a class="button  button-icon  icon ion-arrow-left-b" ng-click="diaDown()" ></a> 
 
                           <span class="fecha">{{ano}}-{{mes}}-{{dia}}</span> 
-                          <a class=" button  button-icon icon ion-arrow-right-b" ng-click="verPerfil()" ></a></h2>
+                          <a class=" button  button-icon icon ion-arrow-right-b" ng-click="diaUp()" ></a></h2>
 
                       </ion-header-bar>
 
@@ -41,7 +41,7 @@
 
 
                               <ion-list>
-                                <div ng-repeat="vinculacion in vinculaciones">
+                                <div ng-repeat="vinculacion in vinculaciones" ng-init="sectionIndex = $index">
                                   <ion-item class="item-stable"
                                             ng-click="toggleGroup(vinculacion)"
                                             ng-class="{active: isGroupShown(vinculacion)}">
@@ -57,15 +57,15 @@
 
                                             >
                     
-                                    {{proposito.proposito}}
+                                    {{proposito.proposito}} 
 
-                                    
-                                    <span class="icon ion-plus-circled mas " ng-class="{'mas-mark' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 1 }).length != 0 } " ng-click="marcar(proposito, 1 )"></span>
+                                    <ion-spinner class="cargando" ng-show="loading == sectionIndex + '-' + $index"></ion-spinner>
+                                    <span class="icon ion-ios-checkmark-outline mas " ng-class="{'mas-mark' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 1 }).length != 0 } " ng-click="marcar(proposito, 1 , sectionIndex, $index)"></span>
 
 
-                                    <span class="icon ion-minus-circled menos " ng-class="{'menos-mark' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 2 }).length != 0 }" ng-click="marcar(proposito, 2 )"></span>
+                                    <span class="icon ion-ios-close-outline menos " ng-class="{'menos-mark' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 2 }).length != 0 }" ng-click="marcar(proposito, 2 , sectionIndex, $index)"></span>
 
-                                    <span class="icon ion-contrast neutro" ng-class="{'neutro-mark' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 0 }).length != 0 }" ng-click="marcar(proposito, 0 )"></span>
+                                    <span class="icon ion-ios-circle-outline neutro" ng-class="{'neutro-mark' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 0 }).length != 0 }" ng-click="marcar(proposito, 0, sectionIndex, $index )"></span>
                                    
                                   </ion-item>
 

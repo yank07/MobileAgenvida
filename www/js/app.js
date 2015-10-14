@@ -3,8 +3,23 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('agenvida', ['ionic','Agenvida.controllerLogin', 'Agenvida.controllerMarcacion',
- "Agenvida.routes", 'ionic-datepicker', 'DateFilters', 'Agenvida.controllerPerfil', 'Agenvida.controllerConfiguracion'])
+angular.module('agenvida', ['ionic','Agenvida.controllerLogin', 'Agenvida.controllerSignUp', 'Agenvida.controllerMarcacion',
+ "Agenvida.routes", 'ionic-datepicker', 'DateFilters', 'Agenvida.controllerPerfil', 'Agenvida.controllerConfiguracion', 'Agenvida.LoadingCtrl'])
+
+.run( [ '$state',  function($state){
+
+  if(window.localStorage.token){
+
+    console.log("en estoy en run y tengo el token");
+    console.log(window.localStorage.token);
+    $state.go('app.marcacion');
+
+  }
+
+
+
+
+}])
 
 
 
@@ -34,6 +49,11 @@ angular.module('agenvida', ['ionic','Agenvida.controllerLogin', 'Agenvida.contro
 .config(function ($httpProvider) {
   $httpProvider.interceptors.push('authInterceptor');
 });
+
+
+
+
+  
 
 
 

@@ -48,16 +48,16 @@ angular.module('Agenvida.routes', [])
 
       
     })
-   .state('signin', {
-      url: '/',
-      templateUrl: 'sign-in.html',
-      controller: 'controllerLogin'
-    })
+   
 
-    .state('configuracion', {
+    .state('app.configuracion', {
       url: '/configuracion',
-      templateUrl: 'configuracion.html',
+       views: {
+        'MainContent' :{
+     templateUrl: 'configuracion.html',
       controller: 'controllerConfiguracion'
+        }}
+     
     })
 
    
@@ -73,6 +73,35 @@ angular.module('Agenvida.routes', [])
       }
      
      // controller: 'controllerLogin'
+    })
+
+    .state('signin', {
+      url: '/',
+      templateUrl: 'sign-in.html',
+      controller: 'controllerLogin',
+      onEnter: function($state){
+        if(window.localStorage.token){
+          console.log("Estoy en Routes SignIn");
+          console.log(window.localStorage.token);
+
+           $state.go('app.marcacion');
+        }
+    }
+    })
+
+
+    .state('signup', {
+      url: '/signup',
+      templateUrl: 'sign-up.html',
+      controller: 'controllerSignUp'
+ 
+    })
+
+     .state('forgot-password', {
+      url: '/forgot-password',
+      templateUrl: 'forgot-password.html',
+      controller: 'controllerSignUp'
+ 
     })
 
    $urlRouterProvider.otherwise('/');

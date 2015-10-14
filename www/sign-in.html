@@ -10,23 +10,23 @@
         <ion-content>
           <div class="list">
             <label class="item item-input">
-              <span class="input-label">Username</span>
-              <input type="text" ng-model="user.username">
+              <span class="input-label">Nombre de Usuario</span>
+              <input type="text" ng-model="user.username" autocorrect="off" autocapitalize="off" autocomplete="off">
             </label>
             <label class="item item-input">
-              <span class="input-label">Password</span>
+              <span class="input-label">Contraseña</span>
               <input type="password" ng-model="user.password">
             </label>
           </div>
           <div class="padding">
-            <button class="button button-block button-positive" ng-click="signIn(user)">
-              Sign-In
+            <button class="button button-block button-positive" ng-click="signIn()">
+              Ingresar
             </button>
             <p class="text-center">
-              <a href="#/forgot-password">¿Olvidaste tu contraseña?</a>
+              <a href="" ng-click="forgotPasword()">¿Olvidaste tu contraseña?</a>
             </p>
               <p class="text-center">
-              <a href="#/forgot-password">Crear usuario</a>
+              <a href="" ng-click="signup()">Crear usuario</a>
             </p>
           </div>
         </ion-content>

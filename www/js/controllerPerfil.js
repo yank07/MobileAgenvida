@@ -10,7 +10,7 @@ $scope.goMarcacion = function(){
 
 $scope.goConfiguracion = function() {
 	console.log("go configuracion");
-	$state.go('configuracion');
+	$state.go('app.configuracion');
 };
 
 
@@ -21,6 +21,13 @@ $scope.goContratoPedagogico = function(){
 
 };
 
+$scope.cerraSesion = function (){
+
+	delete $window.localStorage.token;
+	$state.go('signin');
+
+
+}
 
 
 //console.log($ionicHistory.viewHistory());

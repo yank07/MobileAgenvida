@@ -1,15 +1,19 @@
 angular.module('Agenvida.controllerMarcacion', [])
 
-.controller('controllerMarcacion', function($scope,  $http , $state, $ionicSideMenuDelegate, $ionicModal,$ionicPopup , $ionicActionSheet) {
+.controller('controllerMarcacion', function($scope, $rootScope, $http , $state, $ionicHistory, $ionicSideMenuDelegate, $ionicModal,$ionicPopup , $ionicActionSheet,$window,$ionicLoading) {
   /**************************************************/
   /**************** VARIABLES **********************/
   /*************************************************/
+
+  $ionicHistory.clearHistory();
+  console.log($ionicHistory.viewHistory());
   $scope.domain = "http://agenvida.herokuapp.com/";
   //$scope.domain = "http://localhost:8000/";
   $scope.date = new Date( );
-  $scope.dia = $scope.date.getDate();
-  $scope.mes = $scope.date.getMonth()+1;
+  $scope.dia = ("0" + $scope.date.getDate()).slice(-2);
+  $scope.mes = ("0" + ($scope.date.getMonth() + 1)).slice(-2);
   $scope.ano = $scope.date.getFullYear();
+  console.log( $scope.dia + '-' +  $scope.mes + '-' + $scope.ano);
   $scope.showInput = [false, false, false, false, false] ;
   $scope.NuevoProposito = ['','','',''];
   $scope.vinculaciones = [{"id":1,"nombre":"Dios"}, {"id":2,"nombre":"Conmigo"},{"id":3,"nombre":"Con los Demás"}, {"id":4,"nombre":"Con la Naturaleza"},]
@@ -20,9 +24,8 @@ angular.module('Agenvida.controllerMarcacion', [])
   /***************************************************/
   /* Configuracion del Calendario para elegir fechas */
    /***************************************************/
-
   $scope.datepickerObject = {
-    //titleLabel: 'Title',  //Optional
+    titleLabel: 'Elegir día',  //Optional
       todayLabel: 'Hoy',  //Optional
       closeLabel: 'Cerrar',  //Optional
       setLabel: 'Ir',  //Optional
@@ -30,7 +33,7 @@ angular.module('Agenvida.controllerMarcacion', [])
       todayButtonType : 'button-assertive',  //Optional
   //  closeButtonType : 'button-assertive',  //Optional
       inputDate: new Date(),    //Optional
-      mondayFirst: true,    //Optional
+      mondayFirst: false,    //Optional
   //  disabledDates: disabledDates, //Optional
     weekDaysList: $scope.weekDaysList,   //Optional
     monthList:  $scope.monthList, //Optional
@@ -39,7 +42,7 @@ angular.module('Agenvida.controllerMarcacion', [])
       showTodayButton: 'true', //Optional
       modalHeaderColor: 'bar-positive', //Optional
       modalFooterColor: 'bar-positive', //Optional
-      from: new Date(2012, 8, 2),   //Optional
+      from: new Date(2012, 1, 2),   //Optional
       to: new Date(2018, 8, 25),    //Optional
       callback: function (val) {    //Mandatory
        
@@ -60,18 +63,51 @@ angular.module('Agenvida.controllerMarcacion', [])
       }
     };
 
+
+    $scope.LoadingShow = function() {
+    $ionicLoading.show({
+      template: 'Cargando...'
+    });
+  };
+  $scope.LoadingHide= function(){
+    $ionicLoading.hide();
+  };
+
+
+
+
+
+
   // FIN DE CONFIGURACION DE CALENDARIO
       /*************************************************/
       /* TRAIGO TODOS LOS PROPOSITOS DEL USUARIO */ 
       /*************************************************/
       $scope.getPropositos = function() {  
 
+          $scope.LoadingShow();
+
   // $http.defaults.headers.common['Authorization']= 'Bearer '+TokenService.getToken();     //para colocar el token en el header
       $http.get($scope.domain + 'propositos2/').then(function(result){//si el get va bien
                                                         $scope.propositos = result.data;
+                                                        $scope.LoadingHide();
                                                         },
-                                                      function(){ // algo salio mar #TODO volver a registrar
+                                                      function(result){ // algo salio mal #TODO volver a registrar
+                                                              console.log("algo salio mal");
+                                                              if(result.statusText=="UNAUTHORIZED"){
+                                                                $rootScope.mensaje = "No autorizado";
+                                                                console.log("no estas autorizado");
+                                                                delete $window.localStorage.token;
+                                                                $state.go("signin");
+                                                                
+                                                              }
+                                                              else if (result.detail=="Invalid token header. No credentials provided."){
+                                                                delete $window.localStorage.token;
+                                                                console.log("Invalid Token");
+                                                                 $state.go("signin");
 
+
+                                                              }
+                                                              
                                                        } 
                                                     );
 
@@ -82,8 +118,11 @@ angular.module('Agenvida.controllerMarcacion', [])
       /******* Busco la fecha de la marcacion  ******** */ 
       /*************************************************/
 
-        function searchFecha(dia, myArray){
+        function searchFecha(myArray){
+          console.log(myArray);
+          console.log($scope.ano + "-" + $scope.mes + "-" + $scope.dia);
               for (var i=0; i < myArray.length; i++) {
+
                   if (myArray[i].dia === $scope.ano + "-" + $scope.mes + "-" + $scope.dia) {
                       console.log(myArray[i].dia)
                       return myArray[i];
@@ -94,6 +133,7 @@ angular.module('Agenvida.controllerMarcacion', [])
 
      $scope.getPropositos();
 
+  
            
 
    
@@ -101,24 +141,29 @@ angular.module('Agenvida.controllerMarcacion', [])
       /*************************************************/
      /* MARCO LOS NUEVOS MARCACIONES DE LOS PROPOSITOS */ 
      /*************************************************/
-    $scope.marcar = function( proposito, valorMarcacion){
+    $scope.marcar = function( proposito, valorMarcacion,  sectionIndex, index){
                   //  console.log(proposito);
                   //  console.log($scope.ano + "-" + $scope.mes + "-" + $scope.dia);
                   //  console.log( searchFecha( $scope.dia , proposito.marcaciones) );
 
                     /* busco si ya existe una marcacion de ese proposito en esa fecha */
-                    marcacion = searchFecha( $scope.dia , proposito.marcaciones)
+                    marcacion = searchFecha( proposito.marcaciones);
 
 
                     /* Si ya hay una maracion, entonces actualizo */   
                     if (marcacion){
-                      console.log("hay marcacion");
+                      
+
 
                       if (marcacion.cumplimiento != valorMarcacion) /* Corroboro que realmente haya un cambio */
                         {   
-                            /* Si hay un cambio entonces actualizo el valor en el servidor mediante un PUT*/
-                           marcacion.cumplimiento = valorMarcacion;
-                          $http.put($scope.domain +'marcaciones2/' + marcacion.id + "/", marcacion).then(function(){console.log("volvi")});
+                          /* Si hay un cambio entonces actualizo el valor en el servidor mediante un PUT*/
+                          console.log("hay marcacion y hay un cambio");
+                         // marcacion.loading = -1; 
+                          
+                          $scope.loading = sectionIndex + '-' + index; //pongo loading hasta que llegue la respuesta
+                          console.log($scope.loading);
+                          $http.put($scope.domain +'marcaciones2/' + marcacion.id + "/", marcacion).then(function(result){console.log("volvi");console.log(result); marcacion.cumplimiento = valorMarcacion; $scope.loading = ""});
 
                          }
                      
@@ -133,16 +178,24 @@ angular.module('Agenvida.controllerMarcacion', [])
                               "cumplimiento": valorMarcacion,
                               "proposito": proposito.id
                       }
-
+                      
                       //console.log(data);
+                      $scope.loading = sectionIndex + '-' + index; //pongo loading hasta que llegue la respuesta
                       $http.post($scope.domain + 'marcaciones2/', data).then(function(result){
 
                                                                                 //console.log(result);
                                                                                 proposito.marcaciones.push(result.data);
+                                                                                //$scope.loading(proposito.id);
+                                                                                $scope.loading = ""; //pongo loading hasta que llegue la respuesta
 
-                                                                               });
+                                                                               }
+
+                                                                               );
                     }/* Fin else*/
   }//Fin funcion marcar
+
+
+  
 
 /*********************************************/
 /* Funcion para aumentar y disminuir un dia con flechita */

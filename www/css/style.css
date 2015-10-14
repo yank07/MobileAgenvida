@@ -20,31 +20,37 @@
 color: #ddd;
 	}
 
-span.icon.ion-plus-circled.mas {
+
+.cargando {
+    float: right;
+    position: absolute;
+    right: 105px;
+}
+span.icon.mas {
     right: 70px;
 }
 
-span.icon.ion-minus-circled.menos {
+span.icon.menos {
     right: 40px;
 }
 
 
 
-span.icon.ion-contrast.neutro {
+span.icon.neutro {
 
 	right: 10px;
 }
 
-span.icon.ion-plus-circled.mas.mas-mark {
+span.icon.mas.mas-mark {
     color: green;
 }
 
 
-span.icon.ion-minus-circled.menos.menos-mark {
+span.icon.menos.menos-mark {
       color: red;
 }
 
-span.icon.ion-contrast.neutro.neutro-mark {
+span.icon.neutro.neutro-mark {
 
 	 color: blue;
 }
@@ -64,6 +70,12 @@ span.icon.ion-contrast.neutro.neutro-mark {
       font-size: 18px;
     margin: 0px 30px;
 
+}
+
+
+
+.center{
+ 
 }
 
 
