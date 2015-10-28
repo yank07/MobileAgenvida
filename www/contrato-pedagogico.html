@@ -1,6 +1,6 @@
 
 
-      <ion-view view-title="Contrato Pedagogico"  >
+      <ion-view view-title="Contrato Pedagógico"  >
 
       <ion-nav-bar class="bar-positive">
   <ion-nav-back-button class="button-clear">
@@ -14,7 +14,7 @@
  
   <div class="item item-icon-right" href="#">
    
-    El contrato pedagogico es un medio pedagogico que se configura sobre la base de actitudes y comportamiento que quieren alcanzarse.
+    El contrato pedagogico es un medio pedagógico que se configura sobre la base de actitudes y comportamiento que quieren alcanzarse.
   
   </div>
 
@@ -22,36 +22,39 @@
    ¿Qué quiero reafirmar este año?
   </div>
 
-  <div class="item item-icon-right" href="#">
-   
-   
+  <div class="item item-body item-icon-right" href="#">
+    {{perfil.reafirmar}}
+    
 
-       <i class="icon ion-edit"></i>
+       <i class="icon ion-edit" ng-click="editar('reafirmar')"></i>
   
   </div>
 
-   <div class="item item-divider">
+   <div class="item item-body item-divider">
    ¿De qué me quiero liberar este año?
   </div>
 
   <div class="item item-icon-right" href="#">
    
-   
+   {{perfil.liberar}}
+    
 
-       <i class="icon ion-edit"></i>
+       <i class="icon ion-edit" ng-click="editar('liberar')"></i>
   
   </div>
 
 
-<div class="item item-divider">
+<div class="item item-body item-divider">
    ¿Qué quiero adquirir para mí?
   </div>
 
   <div class="item item-icon-right" href="#">
+
+    {{perfil.adquirir}}
    
    
 
-       <i class="icon ion-edit"></i>
+       <i class="icon ion-edit" ng-click="editar('adquirir')"></i>
   
   </div>
 

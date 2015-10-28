@@ -2,6 +2,8 @@ angular.module('Agenvida.controllerSignUp', [])
 .controller('controllerSignUp', function($scope, $state, $http ,$window, $rootScope, $ionicLoading) {
 
 $scope.user = {}
+$scope.forgot = {}
+$scope.mensajeEnviado = false;
 
 	console.log("Crear usuario");
 
@@ -16,12 +18,15 @@ $scope.user = {}
 
 
 	$scope.crearUsuario= function(){
+
+
  $scope.LoadingShow();
 		console.log( $scope.user );
-  $http.post("http://agenvida.herokuapp.com/" + 'usuarios2/', $scope.user).then(function(result){
+  $http.post($rootScope.doamin + 'usuario_create/', $scope.user).then(function(result){
 
-                                                        $scope.LoadingHide();  
-                                                        $window.localStorage.username = $scope.user.username;                  
+                                                         
+                                                        $window.localStorage.username = $scope.user.username; 
+                                                        $scope.LoadingHide();                  
   														$state.go('signin');
 
                                                                                },
@@ -41,6 +46,17 @@ $scope.user = {}
 
 	} 
 
+
+$scope.resetPassword = function(){
+
+console.log($scope.forgot.email);
+
+$http.post($rootScope.doamin + 'auth/password/reset/', $scope.forgot).then(function(result){
+  console.log("email enviado");
+  $scope.mensajeEnviado = true;
+})
+
+}
 
 
 

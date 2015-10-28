@@ -19,48 +19,57 @@
 
   <div class="item item-icon-right" href="#">
    
-    <h2>Jose Engling</h2>
-      <p>Nombre y Apellido</p>
+    <h2>{{user.first_name}} </h2>
+      <p>Nombre</p>
 
-       <i class="icon ion-edit"></i>
+       <i class="icon ion-edit" ng-click="editarUser('first_name')"></i>
   
   </div>
 
   <div class="item item-icon-right" href="#">
    
-    <h2>jengling</h2>
+    <h2>{{user.last_name}} </h2>
+      <p>Apellido</p>
+
+       <i class="icon ion-edit" ng-click="editarUser('last_name')"></i>
+  
+  </div>
+
+  <div class="item item-icon-right" href="#">
+   
+    <h2>{{user.username}}</h2>
       <p>Usuario</p>
 
-       <i class="icon ion-edit"></i>
+       <i class="icon ion-edit" ng-click="editarUser('username')" ></i>
   
   </div>
 
 
-  <div class="item item-icon-right" href="#">
+  <div class="item item-body item-icon-right" href="#">
    
-    <h2>Ser todo para todos</h2>
+    <h2>{{perfil.ideal_personal}}</h2>
       <p>Ideal personal</p>
 
-       <i class="icon ion-edit"></i>
+       <i class="icon ion-edit" ng-click="editar('ideal_personal')"></i>
   
   </div>
 
   <div class="item item-icon-right" >
    
-     <h2>01/10/2015</h2>
+     <h2>{{perfil.nacimiento}}</h2>
       <p>Fecha de nacimiento</p>
 
-       <i class="icon ion-edit" ng-click="goConfiguracion()"></i>
+       <i class="icon ion-edit" ng-click="editar('nacimiento')"></i>
   
 
   </div>
 
   <div class="item item-icon-right" >
     
-    <h2>Alemania</h2>
+    <h2>{{perfil.pais}}</h2>
       <p>País</p>
 
-      <i class="icon ion-edit"></i>
+      <i class="icon ion-edit" ng-click="editar('pais')"></i>
   
   </div>
 

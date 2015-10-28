@@ -9,8 +9,11 @@
                     </ion-nav-buttons>
 
                     <ion-nav-buttons side="right">
+
+                    <button class="button button-icon icon  ion-android-funnel " ng-click="desplegar()"></button>
                      <!-- Toggle left side menu -->
-                     <ionic-datepicker input-obj="datepickerObject"><button  class="button button-icon icon ion-calendar"></button></ionic-datepicker>
+                     <button class="button button-icon icon ion-ios-refresh-empty" ng-click="getPropositos()"></button>
+                      <!--  <ionic-datepicker input-obj="datepickerObject"><button  class="button button-icon icon ion-calendar"></button></ionic-datepicker>-->
                      <button  class="button button-icon icon ion-android-person" ng-click="verPerfil()"></button>
                     </ion-nav-buttons>
          
@@ -26,63 +29,95 @@
 
                           <a class="button  button-icon  icon ion-arrow-left-b" ng-click="diaDown()" ></a> 
 
-                          <span class="fecha">{{ano}}-{{mes}}-{{dia}}</span> 
+                          <ionic-datepicker input-obj="datepickerObject"><span class="fecha">{{dia}}-{{mes}}-{{ano}}</span> </ionic-datepicker>
                           <a class=" button  button-icon icon ion-arrow-right-b" ng-click="diaUp()" ></a></h2>
+
+
 
                       </ion-header-bar>
 
-                      <ion-content scroll="false" class="has-subheader" has-subheader="true" >
-
-                        <ion-list ng-show="false">
-                          <ion-item ng-repeat="task in activeProject.tasks">
-                            {{task.title}}
-                          </ion-item>
-                        </ion-list>
+                      <ion-content scroll="true" class="has-subheader" has-subheader="true" >
 
 
-                              <ion-list>
+
+                              <ion-list >
+
+                               <div class=" item item-body">
+                                  
+                                  <h2> <b>Ideal Personal:</b> "{{perfil.ideal_personal}}"</h2>
+<!--*************************************** PROPOSITO PARTIULAR ************************************-->
+                                   <p class="item-icon-right pps" ng-show="true" ng-value= " pps = ( propositos | filter:{ vinculacion: propositoParticular.id , mes_ano: ano + '-'+ mes +'-' , })[0]" on-double-tap="showOpciones(pps)" on-hold="showOpciones(proposito)" ><b>P. Particular:</b>   
+
+
+
+                                    <span ng-if="pps != null">
+                                             {{pps.proposito | limitTo:25}}
+
+                                           <ion-spinner class="cargando" ng-show="loading == 'undefined-undefined'"></ion-spinner>
+                                          <span class="icon ion-ios-checkmark-outline mas " ng-class="{'mas-mark' : (pps.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 1 }).length != 0 } " ng-click="marcar(pps, 1 , sectionIndex, $index)"></span>
+
+                                          <span class="icon ion-ios-close-outline menos " ng-class="{'menos-mark' : (pps.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 2 }).length != 0 }" ng-click="marcar(pps, 2 , sectionIndex, $index)"></span>
+
+                                          <span class="icon ion-ios-circle-outline neutro" ng-class="{'neutro-mark' : (pps.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 0 }).length != 0 }" ng-click="marcar(pps, 0, sectionIndex, $index )"></span>
+                                  </span>
+                                  <span ng-if="pps == null">
+
+                                      Agregar un proposito particular
+                                       <span class="icon ion-ios-plus-outline"  ng-click="CreateProposito(propositoParticular.id)"></span>
+                                  </span>
+
+
+                                    </p>
+                                 
+  <!--*************************************** FIN PROPOSITO PARTIULAR ************************************-->
+                                </div>
+
+                               
+
+
+                             
+
                                 <div ng-repeat="vinculacion in vinculaciones" ng-init="sectionIndex = $index">
-                                  <ion-item class="item-stable"
+                                  <ion-item class="item-calm"
                                             ng-click="toggleGroup(vinculacion)"
-                                            ng-class="{active: isGroupShown(vinculacion)}">
-                                      <i class="icon" ng-class="isGroupShown(vinculacion) ? 'ion-minus' : 'ion-plus'"></i>
+
+                                            ng-class="{active: shownGroup[vinculacion.id]}">
+                                      <i class="icon" ng-class="shownGroup[vinculacion.id] ? 'ion-chevron-down' : 'ion-chevron-right'"></i>
                                     &nbsp;
                                      {{vinculacion.nombre}}
                                   </ion-item>
                                   <ion-item class="item-accordion  item-icon-right"
                                             ng-repeat="proposito in filtered =(propositos | filter:{ vinculacion: vinculacion.id , mes_ano: ano + '-'+ mes +'-' , }) "
-                                            ng-show="isGroupShown(vinculacion)"
-                                            on-double-tap="showOpciones(proposito)" 
+                                            ng-show="shownGroup[vinculacion.id]"
+                                            on-double-tap="showOpciones(proposito)" on-hold="showOpciones(proposito)"
 
 
                                             >
                     
-                                    {{proposito.proposito}} 
+                                    {{proposito.proposito | limitTo:30}} 
 
                                     <ion-spinner class="cargando" ng-show="loading == sectionIndex + '-' + $index"></ion-spinner>
-                                    <span class="icon ion-ios-checkmark-outline mas " ng-class="{'mas-mark' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 1 }).length != 0 } " ng-click="marcar(proposito, 1 , sectionIndex, $index)"></span>
+                                    <span class="icon ion-ios-checkmark-outline mas " ng-class="{'mas-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 1 }).length != 0 } " ng-click="marcar(proposito, 1 , sectionIndex, $index)"></span>
 
 
-                                    <span class="icon ion-ios-close-outline menos " ng-class="{'menos-mark' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 2 }).length != 0 }" ng-click="marcar(proposito, 2 , sectionIndex, $index)"></span>
+                                    <span class="icon ion-ios-close-outline menos " ng-class="{'menos-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 2 }).length != 0 }" ng-click="marcar(proposito, 2 , sectionIndex, $index)"></span>
 
-                                    <span class="icon ion-ios-circle-outline neutro" ng-class="{'neutro-mark' : (proposito.marcaciones | filter:{ dia: dia, cumplimiento: 0 }).length != 0 }" ng-click="marcar(proposito, 0, sectionIndex, $index )"></span>
+                                    <span class="icon ion-ios-circle-outline neutro" ng-class="{'neutro-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 0 }).length != 0 }" ng-click="marcar(proposito, 0, sectionIndex, $index )"></span>
                                    
-                                  </ion-item>
-
-                                            <label class="item item-input item-accordion" ng-show=" isGroupShown(vinculacion) && showInput[vinculacion.id]">
-                                                
-                                                <input type="text">
-                                              </label>
+                                  </ion-item>                                
                                 
 
-                                  <ion-item class="item-accordion  item-icon-right" ng-show="isGroupShown(vinculacion)" ng-click="CreateProposito(vinculacion.id)">
-                                  Agregar nuevo Proposito
+                                  <ion-item class="item-accordion  item-icon-left" ng-show="shownGroup[vinculacion.id]" ng-click="CreateProposito(vinculacion.id)">
+                                   <span class="icon ion-ios-plus-outline"  ng-click=""></span>
+                                    Nuevo
 
-                                  <span class="icon ion-plus-circled"  ng-click=""></span>
+                                 
                                   </ion-item>
 
                                   
                                 </div>
+
+
 
 
                               </ion-list>

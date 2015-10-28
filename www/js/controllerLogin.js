@@ -1,7 +1,7 @@
 angular.module('Agenvida.controllerLogin', [])
 .controller('controllerLogin', function($scope, $state, $http ,$window, $rootScope,$ionicLoading) {
 
- $scope.domain = "http://agenvida.herokuapp.com/";
+ //$rootScope.domain = "http://agenvida.herokuapp.com/";
  //   $scope.domain = "http://localhost:8000/";
 
  if ( $window.localStorage.token){
@@ -14,12 +14,13 @@ angular.module('Agenvida.controllerLogin', [])
  }
  $scope.user = {};
 
- $scope.user.username = $window.localStorage.username;
+$scope.user.username = $window.localStorage.username;
+$scope.user.password = $window.localStorage.password;
+ $scope.mensajeShow=false;
 
+ //console.log($rootScope.mensaje );
 
- console.log($rootScope.mensaje );
-
-  
+   
 
   $scope.LoadingShow = function() {
     $ionicLoading.show({
@@ -40,8 +41,10 @@ angular.module('Agenvida.controllerLogin', [])
     //console.log('Sign-In', user);
     //UserService.setUser(user);
     //$state.go('home');
+   
+    if($scope.user.username!='' && $scope.user.password!='' ){
     $scope.LoadingShow();
-    $window.localStorage.username = $scope.user.username;
+    
    // console.log("client_id=DbSojNBpAXDEQ3CARcrKOpWI3PS8mkI3osJL0jdd&grant_type=password&username="+user.username+"&password="+user.password+"&client_secret=");
     $http({
     method: 'POST',
@@ -49,20 +52,27 @@ angular.module('Agenvida.controllerLogin', [])
               headers: {
                         'Content-Type': "application/x-www-form-urlencoded",
                         },
-              data:"client_id=QlLwYhQoeYx98FzV40a82amX9Ik3HjGtfPNlXHqN&grant_type=password&username="+$scope.user.username+"&password="+$scope.user.password+"&client_secret="
+              data:"client_id="+ $rootScope.client_id+"&grant_type=password&username="+$scope.user.username+"&password="+$scope.user.password+"&client_secret="
   })
    .then(function(result){
       //$scope.token = result.data;   
       //console.log("then");
       //TokenService.setToken($scope.token.access_token);
-        $window.localStorage.token = result.data.access_token;
-         $window.localStorage.refresh_token = result.data.refresh_token;
-         $scope.LoadingHide();
-        $scope.message = 'Welcome hice el post y volvi';
+      $window.localStorage.username = $scope.user.username;
+    $window.localStorage.password = $scope.user.password;
+       $window.localStorage.token = result.data.access_token;
+       $window.localStorage.refresh_token = result.data.refresh_token;
+       $scope.LoadingHide();
+       $scope.message = 'Login Exitoso';
+       $scope.message_lindo = ''
+       $scope.color_mensaje = "green";
+       $scope.mensajeShow=true;
+
         console.log($scope.message);
       
-      
+      $scope.mensajeShow=false;
     
+        $scope.LoadingHide();
 
       $state.transitionTo('app.marcacion');
 
@@ -73,28 +83,38 @@ angular.module('Agenvida.controllerLogin', [])
         delete $window.localStorage.token;
 
         // Handle login errors here
-        $scope.message = 'Error: Invalid user or password';
+        console.log(result);
+        $scope.message = result.data.error_description;
+        $scope.message_lindo = 'Ocurrió un error de autenticación, favor intertalo nuevamente.'
+        $scope.color_mensaje = "red";
+        $scope.mensajeShow=true;
+        $scope.LoadingHide();
+
+
    }
-
    );
-
  //$state.go('app.marcacion');
+  }//endif
+  else{
+        $scope.message_lindo = 'Ingresá tu usuario y contraseña';
+        $scope.color_mensaje = "red";
+        $scope.mensajeShow=true;
 
+  }
+};
 
-
-  };
+  $scope.signIn();
 
   $scope.signup = function(){
-
-
     $state.go('signup');
-  }
+  };
 
   $scope.forgotPasword = function(){
     $state.go("forgot-password");
   }
+});
 
-})
+
 
 // TODO REFRESH TOKEN
 /*

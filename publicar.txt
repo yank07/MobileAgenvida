@@ -1,7 +1,7 @@
 
 cd /home/rodrigo/ProyectoAgenvida/MobileAgenvida/
 
-
+export ANDROID_HOME="/home/rodrigo/android-sdk-linux/"
 
 
 cordova build --release android
@@ -15,4 +15,5 @@ jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.
 cd /home/rodrigo/android-sdk-linux/build-tools/23.0.1
 
 
-./zipalign -v 4 /home/rodrigo/ProyectoAgenvida/MobileAgenvida/platforms/android/build/outputs/apk/android-release-unsigned.apk /home/rodrigo/ProyectoAgenvida/MobileAgenvida/platforms/android/build/outputs/apk/agenvida3.apk
+./zipalign -v 4 /home/rodrigo/ProyectoAgenvida/MobileAgenvida/platforms/android/build/outputs/apk/android-release-unsigned.apk /home/rodrigo/ProyectoAgenvida/MobileAgenvida/platforms/android/build/outputs/apk/agenvida8.apk
+

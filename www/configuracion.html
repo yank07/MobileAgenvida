@@ -13,31 +13,14 @@
             <div class="list">
 
  
-  <div class="item item-icon-right" href="#">
-   
-    <h2>Jose Engling</h2>
-      <p>Nombre y Apellido</p>
-
-       <i class="icon ion-edit"></i>
-  
-  </div>
-
-  <div class="item item-icon-right" href="#">
-   
-    <h2>jengling</h2>
-      <p>Usuario</p>
-
-       <i class="icon ion-edit"></i>
-  
-  </div>
 
 
   <div class="item item-icon-right" href="#">
    
-    <h2>jengling@schoenstatt.com</h2>
+    <h2>{{user.email}}</h2>
       <p>correo electronico</p>
 
-       <i class="icon ion-edit"></i>
+       <i class="icon ion-edit" ng-click="editarUser('email')"></i>
   
   </div>
 
@@ -46,7 +29,7 @@
      <h2>**********</h2>
       <p>Contraseña</p>
 
-       <i class="icon ion-edit"></i>
+       <i class="icon ion-edit" ng-click="editarPassword('password')"></i>
   
 
   </div>

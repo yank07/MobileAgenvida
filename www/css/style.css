@@ -5,7 +5,7 @@
   line-height: 38px;
   padding-top: 0;
   padding-bottom: 0;
-  transition: 0.09s all linear;
+  transition: 0.04s all linear;
 }
 .list .item.item-accordion.ng-hide {
   line-height: 0px;
@@ -79,4 +79,17 @@ span.icon.neutro.neutro-mark {
 }
 
 
+.icono-login {
+  text-align: center;
+  margin: 0px 0px;
+}
+
+
+
+.icono-login img {
+  width: 40%;
+}
+
+.pps {    position: relative;
+    padding-top: 7px;}
 

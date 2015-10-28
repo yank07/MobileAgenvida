@@ -4,7 +4,7 @@
 <ion-side-menus enable-menu-with-back-views="true">
 
       <!-- ++++++++++++++++ Center content  ++++++++++++++++  -->
-                    <ion-side-menu-content>
+                    <ion-side-menu-content scroll="true">
 
                    
 
@@ -80,7 +80,7 @@
                   </ion-header-bar>
 
 
-                  <ion-content scroll="false">
+                  <ion-content >
                     <ion-list>
 
                        <ion-item ng-click="verMarcacion()" menu-close>
@@ -92,33 +92,33 @@
 
                       <ion-item ng-click="verReporte()" menu-close>
 
-                      Reporte Mensual
+                      Reporte Mensual <span class="item-note">Pronto</span>
+                     
+                      </ion-item>
+
+                       <ion-item ng-click="verEvangelio()" menu-close>
+
+                      Evangelio del Día <span class="item-note balanced">Nuevo</span>
                      
                       </ion-item>
 
                        <ion-item>
 
-                      Evangelio del Dia
+                     Telefono del Padre <span class="item-note">Pronto</span>
+                     
+                      </ion-item>
+                       <ion-item>
+
+                      Oraciones <span class="item-note">Pronto</span>
                      
                       </ion-item>
 
                        <ion-item>
 
-                     Telefono del Padre
+                     Capitalario <span class="item-note">Pronto</span>
                      
                       </ion-item>
-                       <ion-item>
-
-                      Oraciones
-                     
-                      </ion-item>
-
-                       <ion-item>
-
-                     Capitalario
-                     
-                      </ion-item>
-                       <ion-item>
+                       <ion-item ng-click="verSugerencias()" menu-close>
 
                       Sugerencias
                      

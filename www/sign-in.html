@@ -1,5 +1,5 @@
 
-      <ion-view view-title="Sign-In">
+      <ion-view view-title="Ingresar">
 
 
   <ion-nav-bar class="bar-positive">
@@ -8,6 +8,26 @@
                   </ion-nav-bar>
 
         <ion-content>
+          <div class="icono-login">
+
+            <img src="img/agenvidaicono.png">
+
+
+          </div>
+
+           <div class="card" ng-show="mensajeShow">
+            <div class="item item-text-wrap">
+                  <p style="">{{message_lindo}}</p>
+
+                 
+
+                  <p style="color:{{color_mensaje}}">{{message}}</p>
+            </div>
+          </div>
+
+
+     
+        
           <div class="list">
             <label class="item item-input">
               <span class="input-label">Nombre de Usuario</span>
@@ -18,16 +38,24 @@
               <input type="password" ng-model="user.password">
             </label>
           </div>
+
           <div class="padding">
             <button class="button button-block button-positive" ng-click="signIn()">
               Ingresar
             </button>
+            
             <p class="text-center">
               <a href="" ng-click="forgotPasword()">¿Olvidaste tu contraseña?</a>
             </p>
               <p class="text-center">
               <a href="" ng-click="signup()">Crear usuario</a>
             </p>
+             <div class="card">
+            <div class="item item-text-wrap">
+                  Si ya eras usuario de Agenvida, podés iniciar sesión con tu misma cuenta, si no te acordás tu usuario y tu contraseña, hace click en olvidé mi contraseña.
+            </div>
+          </div>
+
           </div>
         </ion-content>
       </ion-view>

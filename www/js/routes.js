@@ -34,6 +34,16 @@ angular.module('Agenvida.routes', [])
       }
 })
 
+   .state('app.sugerencias', {
+      url: "/sugerencias",
+      views: {
+        'MainContent' :{
+          templateUrl: "sugerencias.html",
+          controller: 'controllerMarcacion'
+        }
+      }
+})
+
 
   .state('app.perfil', {
       url: '/perfil',  
@@ -55,7 +65,7 @@ angular.module('Agenvida.routes', [])
        views: {
         'MainContent' :{
      templateUrl: 'configuracion.html',
-      controller: 'controllerConfiguracion'
+      controller: 'controllerPerfil'
         }}
      
     })
@@ -68,12 +78,28 @@ angular.module('Agenvida.routes', [])
          views: {
         'MainContent' :{
                templateUrl: 'contrato-pedagogico.html',
-       controller: 'controllerConfiguracion'
+       controller: 'controllerPerfil'
         }
       }
      
      // controller: 'controllerLogin'
     })
+
+     .state('app.evangelio', {
+      url: '/evangelio',
+
+         views: {
+        'MainContent' :{
+               templateUrl: 'evangelio.html',
+              controller: 'controllerEvangelio'
+        }
+      }
+     
+     // controller: 'controllerLogin'
+    })
+
+
+
 
     .state('signin', {
       url: '/',
@@ -103,6 +129,11 @@ angular.module('Agenvida.routes', [])
       controller: 'controllerSignUp'
  
     })
+
+    
+
+
+     
 
    $urlRouterProvider.otherwise('/');
 
