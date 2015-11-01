@@ -22,7 +22,7 @@ $scope.mensajeEnviado = false;
 
  $scope.LoadingShow();
 		console.log( $scope.user );
-  $http.post($rootScope.doamin + 'usuario_create/', $scope.user).then(function(result){
+  $http.post($rootScope.domain + 'usuario_create/', $scope.user).then(function(result){
 
                                                          
                                                         $window.localStorage.username = $scope.user.username; 
@@ -51,7 +51,7 @@ $scope.resetPassword = function(){
 
 console.log($scope.forgot.email);
 
-$http.post($rootScope.doamin + 'auth/password/reset/', $scope.forgot).then(function(result){
+$http.post($rootScope.domain + 'auth/password/reset/', $scope.forgot).then(function(result){
   console.log("email enviado");
   $scope.mensajeEnviado = true;
 })

@@ -1,6 +1,8 @@
 
 
-<ion-view view-title="Agenvida" >
+<ion-view view-title="Agenvida" ng-init="actualizar()">
+
+
 
   <ion-nav-bar class="bar-positive">
                     <ion-nav-buttons side="left">
@@ -12,7 +14,7 @@
 
                     <button class="button button-icon icon  ion-android-funnel " ng-click="desplegar()"></button>
                      <!-- Toggle left side menu -->
-                     <button class="button button-icon icon ion-ios-refresh-empty" ng-click="getPropositos()"></button>
+                     <!--  <button class="button button-icon icon ion-ios-refresh-empty" ng-click="getPropositos()"></button> -->
                       <!--  <ionic-datepicker input-obj="datepickerObject"><button  class="button button-icon icon ion-calendar"></button></ionic-datepicker>-->
                      <button  class="button button-icon icon ion-android-person" ng-click="verPerfil()"></button>
                     </ion-nav-buttons>
@@ -21,7 +23,7 @@
 
 
 
-                        <ion-header-bar class="bar bar-subheader" align-title="center" >
+                        <ion-header-bar class="bar bar-subheader bar-positive" align-title="center" >
 
 
 
@@ -37,6 +39,10 @@
                       </ion-header-bar>
 
                       <ion-content scroll="true" class="has-subheader" has-subheader="true" >
+                      <ion-refresher
+                        pulling-text="Pull to refresh..."
+                        on-refresh="actualizar()">
+                      </ion-refresher>
 
 
 
@@ -78,7 +84,7 @@
                              
 
                                 <div ng-repeat="vinculacion in vinculaciones" ng-init="sectionIndex = $index">
-                                  <ion-item class="item-calm"
+                                  <ion-item class="item-positive"
                                             ng-click="toggleGroup(vinculacion)"
 
                                             ng-class="{active: shownGroup[vinculacion.id]}">
@@ -109,7 +115,7 @@
 
                                   <ion-item class="item-accordion  item-icon-left" ng-show="shownGroup[vinculacion.id]" ng-click="CreateProposito(vinculacion.id)">
                                    <span class="icon ion-ios-plus-outline"  ng-click=""></span>
-                                    Nuevo
+                                    <span style="font-size:1px">.</span>
 
                                  
                                   </ion-item>

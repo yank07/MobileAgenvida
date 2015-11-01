@@ -27,10 +27,24 @@ $scope.goContratoPedagogico = function(){
 $scope.cerraSesion = function (){
 
 	delete $window.localStorage.token;
+    delete $window.localStorage.password;
 	$state.go('signin');
 
 
 }
+
+$scope.verRecordatorioMail = function(){
+  console.log("recordatorio-mail");
+
+   $state.go('app.recordatorio-mail');
+}
+
+$scope.verNotificaciones = function(){
+  console.log("verNotificaciones");
+
+   $state.go('app.notificaciones');
+}
+
 
 
 $http.get($rootScope.domain + "userProfile/").then(function(result){

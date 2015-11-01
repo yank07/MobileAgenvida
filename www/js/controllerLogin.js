@@ -16,6 +16,10 @@ angular.module('Agenvida.controllerLogin', [])
 
 $scope.user.username = $window.localStorage.username;
 $scope.user.password = $window.localStorage.password;
+if (typeof $scope.user.password === 'undefined'){
+  $scope.user.password = '';
+
+}
  $scope.mensajeShow=false;
 
  //console.log($rootScope.mensaje );
@@ -41,14 +45,15 @@ $scope.user.password = $window.localStorage.password;
     //console.log('Sign-In', user);
     //UserService.setUser(user);
     //$state.go('home');
+    console.log($scope.user.password );
    
-    if($scope.user.username!='' && $scope.user.password!='' ){
+    if($scope.user.username!='' && $scope.user.password != '' ){
     $scope.LoadingShow();
     
    // console.log("client_id=DbSojNBpAXDEQ3CARcrKOpWI3PS8mkI3osJL0jdd&grant_type=password&username="+user.username+"&password="+user.password+"&client_secret=");
     $http({
     method: 'POST',
-              url:$scope.domain+"o/token/",
+              url:$rootScope.domain+"o/token/",
               headers: {
                         'Content-Type': "application/x-www-form-urlencoded",
                         },

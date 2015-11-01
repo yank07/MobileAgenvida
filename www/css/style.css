@@ -93,3 +93,81 @@ span.icon.neutro.neutro-mark {
 .pps {    position: relative;
     padding-top: 7px;}
 
+.item.item-positive {
+    border-color: #387EF5;
+    background-color: #387ef5;
+    color: #fff;
+}
+
+
+/* REPORTE */
+
+
+.col.label1 {
+  /*  -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);*/
+
+      -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    padding: 0px;
+    float: left;
+   /* transform-origin: left top 0;*/
+    
+
+    font-size: 6px;
+    
+    text-align: center;
+    
+    border: ;
+}
+.marcacion.col {
+    border-right: solid white 0px;
+      background: #FBF7F7;
+        
+    padding: 0px;
+    float: left;
+    transform-origin: left top 0;
+    /* height: 20px; */
+    /* width: 38px; */
+
+    font-size: 0px;
+    /* padding-left: 0.6px; */
+    
+    border: ;
+}
+
+
+
+.col.neutro {
+    background: #B7DFEA;;
+}
+
+.col.positivo {
+    background-color: rgb(51, 205, 95);;
+}
+
+.col.negativo {
+    background-color: rgb(239, 71, 58);
+}
+
+.item.reporte{
+      padding: 0px;
+}
+
+.reporte h5 {
+    margin-top: 10px;
+    margin-bottom: 0px;
+    margin-left: 5px;
+  
+}
+
+.referencias .col{
+      text-align: center;
+}
+
+
+/* FIN REPORTE */

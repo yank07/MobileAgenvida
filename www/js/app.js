@@ -3,13 +3,26 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('agenvida', ['ionic','ionic.service.core','ngCordova',
+angular.module('agenvida', ['ionic',
   
-  'ionic.service.push','Agenvida.controllerLogin', 'Agenvida.controllerSignUp', 'Agenvida.controllerMarcacion',
- "Agenvida.routes", 'ionic-datepicker', 'DateFilters', 'Agenvida.controllerPerfil', 
- 'Agenvida.controllerConfiguracion', 'Agenvida.LoadingCtrl', 'Agenvida.Notifications', 'Agenvida.controllerEvangelio', 'ngSanitize'])
+  'ngCordova',  
+  'Agenvida.controllerLogin', 
+  'Agenvida.controllerSignUp', 
+  'Agenvida.controllerMarcacion',
+ "Agenvida.routes", 
+ 'ionic-datepicker', 
+ 'DateFilters', 
+ 'Agenvida.controllerPerfil',  
+ 'Agenvida.controllerConfiguracion', 
+ 'Agenvida.controllerNotifications', 
+ 'Agenvida.LoadingCtrl',  
+ 'Agenvida.controllerEvangelio',
+ 'Agenvida.controllerReporte', 
+ 'Agenvida.controllerTelefono', 
+ 'Agenvida.controllerOraciones',
+ 'ngSanitize'])
 
-.run( [ '$state', '$rootScope',  function($state,  $rootScope){
+.run( [ '$state', '$rootScope','$ionicLoading',   function($state,  $rootScope, $ionicLoading){
 
   if(window.localStorage.token){
 
@@ -28,8 +41,21 @@ angular.module('agenvida', ['ionic','ionic.service.core','ngCordova',
 
   $rootScope.client_id = "FCMnar3EJW84jY4Lgsh9GSEgSAY9HGbIzv9vpxsr"; //Produccion
 
-  
+  $rootScope.dias_semana = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"];
+   $rootScope.meses =["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agost", "Sept", "Oct", "Nov", "Dic"];
+   $rootScope.meses_num = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+   $rootScope.anos = ["2014","2015","2016"];
 
+     $rootScope.LoadingShow = function() {
+    $ionicLoading.show({
+      template: 'Cargando...'
+    });
+  };
+  $rootScope.LoadingHide= function(){
+    $ionicLoading.hide();
+  };
+
+   
 
 
 
@@ -64,17 +90,6 @@ angular.module('agenvida', ['ionic','ionic.service.core','ngCordova',
   $httpProvider.interceptors.push('authInterceptor');
 })
 
-.config(['$ionicAppProvider', function($ionicAppProvider) {
-  $ionicAppProvider.identify({
-    app_id: 'de9da7f3',
-    api_key: 'f8ff324d5d3685d0ffc8f95198e44f9c1716935b1e60037e',
-    dev_push: true
-  });
-}])
-
-
-
-  
 
 
 

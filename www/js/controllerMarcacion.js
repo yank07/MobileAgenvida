@@ -20,8 +20,8 @@ angular.module('Agenvida.controllerMarcacion', [])
   $scope.vinculaciones = [{"id":1,"nombre":"Dios"}, {"id":2,"nombre":"Conmigo"},{"id":3,"nombre":"Con los Demás"}, {"id":4,"nombre":"Con la Naturaleza"},{"id":7,"nombre":"Propósitos Semanales"}, {"id":8,"nombre":"Propósitos Mensuales"},]
   $scope.extras = [{"id":7,"nombre":"Proposito Semanales"}, {"id":8,"nombre":"Proposito Mensuales"}]
   $scope.propositoParticular = {"id":5, "nombre":"Proposito Particular"}
-   $scope.weekDaysList = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"];
-   $scope.monthList = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agost", "Sept", "Oct", "Nov", "Dic"];
+   $scope.weekDaysList = $rootScope.dias_semana; // esto esta definido en app.js
+   $scope.monthList = $rootScope.meses; // esto esta definido en app.js
   
   /***************************************************/
   /* Configuracion del Calendario para elegir fechas */
@@ -67,7 +67,7 @@ angular.module('Agenvida.controllerMarcacion', [])
     };
 
 
-    $scope.LoadingShow = function() {
+  $scope.LoadingShow = function() {
     $ionicLoading.show({
       template: 'Cargando...'
     });
@@ -87,16 +87,19 @@ angular.module('Agenvida.controllerMarcacion', [])
       /*************************************************/
       $scope.getPropositos = function() {  
 
-          $scope.LoadingShow();
+          $rootScope.LoadingShow();
 
   // $http.defaults.headers.common['Authorization']= 'Bearer '+TokenService.getToken();     //para colocar el token en el header
       $http.get($rootScope.domain + 'propositos/').then(function(result){//si el get va bien
                                                         $scope.propositos = result.data;
+                                                        $rootScope.propositos = result.data;
+                                                        $window.localStorage.propositos = JSON.stringify(result.data) ;
                                                         console.log( $scope.propositos);
                                                         $scope.pps = {};
                                                        // $scope.pps = $filter('filter')($scope.propositos, { vinculacion: $scope.propositoParticular.id , mes_ano: ano + '-'+ mes +'-'  } )[0];
-                                                        console.log($scope.pps);
-                                                        $scope.LoadingHide();
+                                                      //  console.log($scope.pps);
+                                                        $rootScope.LoadingHide();
+                                                        $scope.$broadcast('scroll.refreshComplete');
                                                         },
                                                       function(result){ // algo salio mal #TODO volver a registrar
                                                               console.log("algo salio mal");
@@ -145,16 +148,13 @@ $scope.actualizar = function(){
      $scope.getPropositos();
 
      $http.get($rootScope.domain + "userProfile/").then(function(result){
-
-             $scope.perfil = result.data;
-
-
+      $scope.perfil = result.data;
 });
 
 }
 
 
-$scope.actualizar();
+//$scope.actualizar();
 
 
   
@@ -492,8 +492,20 @@ $scope.verEvangelio = function(){
    $state.go('app.evangelio');
 }
 
+
+
+$scope.verTelefono = function(){
+  
+
+   $state.go('app.telefono');
+}
+
 $scope.verMarcacion= function(){
    $state.go('app.marcacion');
+}
+
+$scope.verOraciones= function(){
+   $state.go('app.oraciones');
 }
 
 

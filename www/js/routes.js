@@ -29,7 +29,7 @@ angular.module('Agenvida.routes', [])
       views: {
         'MainContent' :{
           templateUrl: "reporte-mensual.html",
-          controller: 'controllerMarcacion'
+          controller: 'controllerReporte'
         }
       }
 })
@@ -69,6 +69,25 @@ angular.module('Agenvida.routes', [])
         }}
      
     })
+    .state('app.recordatorio-mail', {
+      url: '/recordario-mail',
+       views: {
+        'MainContent' :{
+     templateUrl: 'recordatorio-mail.html',
+      controller: 'controllerPerfil'
+        }}
+     
+    })
+
+     .state('app.notificaciones', {
+      url: '/notificaciones',
+       views: {
+        'MainContent' :{
+     templateUrl: 'notificaciones.html',
+      controller: 'controllerNotifications'
+        }}
+     
+    })
 
    
 
@@ -98,6 +117,48 @@ angular.module('Agenvida.routes', [])
      // controller: 'controllerLogin'
     })
 
+      .state('app.telefono', {
+      url: '/telefono',
+
+         views: {
+        'MainContent' :{
+               templateUrl: 'telefono.html',
+              controller: 'controllerTelefono'
+        }
+      }
+     
+     // controller: 'controllerLogin'
+    })
+
+
+    .state('app.oraciones', {
+      url: '/oraciones',
+
+         views: {
+        'MainContent' :{
+               templateUrl: 'oraciones.html',
+              controller: 'controllerOraciones'
+        }
+      }
+     
+     // controller: 'controllerLogin'
+    })
+
+
+    .state('app.oracionDetail', {
+      url: '/oracionDetail',
+
+         views: {
+        'MainContent' :{
+               templateUrl: 'oracionDetail.html',
+              controller: 'controllerOraciones'
+        }
+      }
+     
+     // controller: 'controllerLogin'
+    })
+
+   
 
 
 
