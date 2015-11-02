@@ -1,6 +1,6 @@
 angular.module('Agenvida.controllerNotifications', [ ])
 
-.controller('controllerNotifications', function($scope, $rootScope, $http ,$window, $ionicUser, $cordovaLocalNotification, $ionicPlatform) {
+.controller('controllerNotifications', function($scope, $rootScope, $http ,$window/*, $ionicUser , $cordovaLocalNotification, $ionicPlatform*/) {
 /*
 $scope.identifyUser = function() {
  var user = $ionicUser.get();
@@ -46,7 +46,7 @@ $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
   $scope.token = data.token;
 });*/
 
-
+/*
 $ionicPlatform.ready(function () {
          
         $scope.scheduleSingleNotification = function () {
@@ -104,7 +104,7 @@ $ionicPlatform.ready(function () {
         };      
          
     });
-
+*/
 
 
 

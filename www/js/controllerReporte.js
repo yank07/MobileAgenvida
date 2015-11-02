@@ -53,7 +53,7 @@ $scope.actualizarReporte = function() {
 
 
 	$scope.propositos_mes = $filter('filter')($scope.propositos, {  mes_ano: $scope.anos.selectedOption + '-'+ $scope.meses.selectedOption +'-' , }); //traigo los propositos del mes
-	console.log($scope.propositos_mes);
+	console.log($scope.propositos_mes.length);
 	
 	//console.log($scope.propositos_dios[1].marcaciones);
 
@@ -70,24 +70,24 @@ $scope.actualizarReporte = function() {
 				if ($scope.propositos_mes[i].vinculacion==5) {$scope.propositos_mes[i].vinculacion_nombre="Proposito Particular"};
 
 				
-			for (var j = 0; j < $scope.propositos_mes[i].marcaciones.length; j++) {
-				
-				$scope.marcacion = $scope.propositos_mes[i].marcaciones[j];
-			//	console.log($scope.propositos_mes[i].marcaciones[j]);
-				if($scope.marcacion.cumplimiento == 1){
-					$scope.propositos_mes[i].positivo = $scope.propositos_mes[i].positivo + 1;					
-				}
-				else if ($scope.marcacion.cumplimiento == 2){				
-					$scope.propositos_mes[i].negativo = $scope.propositos_mes[i].negativo + 1;
-				}
-				else {
-					$scope.propositos_mes[i].neutro = $scope.propositos_mes[i].neutro + 1;
-				}
+				for (var j = 0; j < $scope.propositos_mes[i].marcaciones.length; j++) {
+					
+					$scope.marcacion = $scope.propositos_mes[i].marcaciones[j];
+				//	console.log($scope.propositos_mes[i].marcaciones[j]);
+					if($scope.marcacion.cumplimiento == 1){
+						$scope.propositos_mes[i].positivo = $scope.propositos_mes[i].positivo + 1;					
+					}
+					else if ($scope.marcacion.cumplimiento == 2){				
+						$scope.propositos_mes[i].negativo = $scope.propositos_mes[i].negativo + 1;
+					}
+					else {
+						$scope.propositos_mes[i].neutro = $scope.propositos_mes[i].neutro + 1;
+					}
 
-			};//endFor
+				};//endFor
 
-	//	console.log($scope.propositos_mes[i].positivo);
-	//	console.log($scope.propositos_mes[i].negativo);
+		//	console.log($scope.propositos_mes[i].positivo);
+		//	console.log($scope.propositos_mes[i].negativo);
 
 
 	};
@@ -97,7 +97,7 @@ $scope.actualizarReporte = function() {
 	$scope.propositos_conmigo = $filter('filter')($scope.propositos_mes, {  vinculacion: 2 , });
 	$scope.propositos_losDemas = $filter('filter')($scope.propositos_mes, {  vinculacion: 3 , });
 	$scope.propositos_naturaleza = $filter('filter')($scope.propositos_mes, {  vinculacion: 4 , });
-   $scope.propositos_pparticular = $filter('filter')($scope.propositos_mes, {  vinculacion: 5 , });
+    $scope.propositos_pparticular = $filter('filter')($scope.propositos_mes, {  vinculacion: 5 , });
 
 	//console.log($scope.propositos_naturaleza);
 
@@ -148,7 +148,7 @@ for (var j = 0; j < 6; j++) {
 
 		
 
-}
+		}
 
 
 	
@@ -157,39 +157,88 @@ for (var j = 0; j < 6; j++) {
 
 	//console.log($scope.maxPropositoGeneral);
 
-	$scope.data2 = [[]]
+	$scope.data2 = [[]];
+	
+
+	/// DIOS 
 	aux = 0;
 	for (var i = 0; i < $scope.propositos_dios.length; i++) {
 		aux  = aux + $scope.propositos_dios[i].positivo;
 		
 	};
-	$scope.data2[0].push(aux/$scope.propositos_dios.length);
+	if ($scope.propositos_dios.length == 0 ) {
+		$scope.data2[0].push(0); 
+	}
+	else{
+		$scope.data2[0].push(aux/$scope.propositos_dios.length); 
+	}
+
+
+	
+
+
+	///CONMIGO
 	aux = 0;
 	for (var i = 0; i < $scope.propositos_conmigo.length; i++) {
 		aux  = aux + $scope.propositos_conmigo[i].positivo;
 		
 	};
-	$scope.data2[0].push(aux/$scope.propositos_conmigo.length); 
+
+	if ($scope.propositos_conmigo.length == 0 ) {
+		$scope.data2[0].push(0); 
+	}
+	else{
+		$scope.data2[0].push(aux/$scope.propositos_conmigo.length); 
+	}
+	
+
+	//LOS DEMAS
 	aux = 0;
 	for (var i = 0; i < $scope.propositos_losDemas.length; i++) {
 		aux  = aux + $scope.propositos_losDemas[i].positivo;
 		
 	};
-	$scope.data2[0].push(aux/$scope.propositos_losDemas.length); 
+
+	if ($scope.propositos_losDemas.length == 0 ) {
+		$scope.data2[0].push(0); 
+	}
+	else{
+		$scope.data2[0].push(aux/$scope.propositos_losDemas.length); 
+	}
+	
+	console.log($scope.propositos_losDemas);
+
+	//NATURALEZA
 	aux = 0;
 	for (var i = 0; i < $scope.propositos_naturaleza.length; i++) {
 		aux  = aux + $scope.propositos_naturaleza[i].positivo;
 		
 	};
-	$scope.data2[0].push(aux/$scope.propositos_naturaleza.length); 
+	if ($scope.propositos_naturaleza.length == 0 ) {
+		$scope.data2[0].push(0); 
+	}
+	else{
+		$scope.data2[0].push(aux/$scope.propositos_naturaleza.length); 
+	}
+
+
+	console.log($scope.propositos_naturaleza);
+
+	//PROPOSITO PARTICULAR
 	aux = 0;
 	for (var i = 0; i < $scope.propositos_pparticular.length; i++) {
 		aux  = aux + $scope.propositos_pparticular[i].positivo;
 		
 	};
 
-
-	$scope.data2[0].push(aux/$scope.propositos_pparticular.length);  
+	console.log($scope.propositos_pparticular);
+	if ($scope.propositos_pparticular.length == 0 ) {
+		$scope.data2[0].push(0); 
+	}
+	else{
+		$scope.data2[0].push(aux/$scope.propositos_pparticular.length); 
+	} 
+	console.log($scope.data2 );
 
 	
 }// Fin de actualizar Reporte
@@ -197,7 +246,7 @@ for (var j = 0; j < 6; j++) {
 $scope.actualizarReporte();
 
 
-	//console.log($scope.data2 );
+	
 
 	$scope.getNumber = function(num) {
     return new Array(num);   

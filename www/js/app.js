@@ -20,6 +20,7 @@ angular.module('agenvida', ['ionic',
  'Agenvida.controllerReporte', 
  'Agenvida.controllerTelefono', 
  'Agenvida.controllerOraciones',
+ 
  'ngSanitize'])
 
 .run( [ '$state', '$rootScope','$ionicLoading',   function($state,  $rootScope, $ionicLoading){

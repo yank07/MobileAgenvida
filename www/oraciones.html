@@ -21,7 +21,7 @@
 </div>
 
 <ion-list>
-  <ion-item ng-repeat="oracion in oraciones| filter:searchText" ng-click="getOracion(oracion.id)">
+  <ion-item  ng-repeat="oracion in oraciones| filter:searchText" ng-click="getOracion(oracion.id)">
     {{oracion.nombre}}
   </ion-item>
 </ion-list>

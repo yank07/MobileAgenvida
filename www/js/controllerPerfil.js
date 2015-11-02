@@ -46,6 +46,7 @@ $scope.verNotificaciones = function(){
 }
 
 
+$rootScope.LoadingShow();
 
 $http.get($rootScope.domain + "userProfile/").then(function(result){
 
@@ -60,6 +61,8 @@ $http.get($rootScope.domain + "users/").then(function(result){
 	$scope.user = result.data;
 
 	console.log($scope.user);
+
+    $rootScope.LoadingHide();
 
 
 });

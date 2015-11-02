@@ -187,6 +187,7 @@ $scope.actualizar = function(){
                           
                           $scope.loading = sectionIndex + '-' + index; //pongo loading hasta que llegue la respuesta
                           console.log($scope.loading);
+                          marcacion.cumplimiento = valorMarcacion;
                           $http.put($rootScope.domain +'marcaciones/' + marcacion.id + "/", marcacion).then(function(result){console.log("volvi");console.log(result); marcacion.cumplimiento = valorMarcacion; $scope.loading = ""});
 
                          }
