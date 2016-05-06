@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('agenvida', ['ionic',
+agenvidaApp = angular.module('agenvida', ['ionic',
   
   'ngCordova',  
   'Agenvida.controllerLogin', 
@@ -20,7 +20,7 @@ angular.module('agenvida', ['ionic',
  'Agenvida.controllerReporte', 
  'Agenvida.controllerTelefono', 
  'Agenvida.controllerOraciones',
- 
+ 'pascalprecht.translate', // Translate
  'ngSanitize'])
 
 .run( [ '$state', '$rootScope','$ionicLoading',   function($state,  $rootScope, $ionicLoading){
@@ -32,20 +32,35 @@ angular.module('agenvida', ['ionic',
     $state.go('app.marcacion');
 
   }
+
+
   $rootScope.domain = "";
 
-  //$rootScope.domain = "http://localhost:8000/";
+  $rootScope.domain = "http://localhost:8000/";
 
 
-    $rootScope.domain = "http://agenvida.herokuapp.com/"
-  //$rootScope.client_id = "DbSojNBpAXDEQ3CARcrKOpWI3PS8mkI3osJL0jdd"; //desarrollo
+ //   $rootScope.domain = "http://agenvida.herokuapp.com/"
+  $rootScope.client_id = "zk31U7ywB3j5cxnEXxnRQGOdf2ksnLHDO4MMdMKe"; //desarrollo
 
-  $rootScope.client_id = "FCMnar3EJW84jY4Lgsh9GSEgSAY9HGbIzv9vpxsr"; //Produccion
+ // $rootScope.client_id = "FCMnar3EJW84jY4Lgsh9GSEgSAY9HGbIzv9vpxsr"; //Produccion
 
   $rootScope.dias_semana = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"];
    $rootScope.meses =["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agost", "Sept", "Oct", "Nov", "Dic"];
    $rootScope.meses_num = ['01','02','03','04','05','06','07','08','09','10','11','12'];
    $rootScope.anos = ["2014","2015","2016"];
+
+   /* Posibles Idiomas */
+$rootScope.idiomas = [{
+    name: "Español",
+    codigo:"es"
+   
+}, {
+    name: "English",
+    codigo:"en"
+   
+   }]
+
+ 
 
      $rootScope.LoadingShow = function() {
     $ionicLoading.show({
@@ -90,6 +105,12 @@ angular.module('agenvida', ['ionic',
 .config(function ($httpProvider) {
   $httpProvider.interceptors.push('authInterceptor');
 })
+
+.filter('capitalize', function() {
+    return function(input) {
+      return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+    }
+});
 
 
 

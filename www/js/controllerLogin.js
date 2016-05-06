@@ -1,5 +1,5 @@
 angular.module('Agenvida.controllerLogin', [])
-.controller('controllerLogin', function($scope, $state, $http ,$window, $rootScope,$ionicLoading) {
+.controller('controllerLogin', function($scope, $state, $http ,$window, $rootScope,$ionicLoading,$translate) {
 
  //$rootScope.domain = "http://agenvida.herokuapp.com/";
  //   $scope.domain = "http://localhost:8000/";
@@ -38,6 +38,16 @@ if (typeof $scope.user.password === 'undefined'){
   $scope.LoadingHide = function(){
     $ionicLoading.hide();
   };
+
+
+   $scope.ChangeLanguage = function(language){
+   $window.localStorage.language = language;
+   console.log(language.name);
+   $translate.use(language.codigo);
+  };
+
+
+   
 
   
   

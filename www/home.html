@@ -75,7 +75,7 @@
 
 
                   <ion-header-bar class="bar-dark">
-                    <h1 class="title">Menu</h1>
+                    <h1 class="title">Menu </h1>
                    
                   </ion-header-bar>
 
@@ -85,44 +85,44 @@
 
                        <ion-item ng-click="verMarcacion()" menu-close>
 
-                      Propositos
+                      {{"purposes" | translate  | capitalize }}
                      
                       </ion-item>
 
 
                       <ion-item ng-click="verReporte()" menu-close>
 
-                      Reporte Mensual <span class="item-note balanced">Nuevo</span>
+                         {{"monthly_report" | translate  | capitalize }} <!--<span class="item-note balanced">Nuevo</span> -->
                      
                       </ion-item>
 
                        <ion-item ng-click="verEvangelio()" menu-close>
 
-                      Evangelio del Día <span class="item-note balanced">Nuevo</span>
+                         {{"lecture_day" | translate  | capitalize }} 
                      
                       </ion-item>
 
                        <ion-item ng-click="verTelefono()" menu-close>
 
-                     Telefono del Padre <span class="item-note balanced">Nuevo</span>
+                     {{"father_telephone" | translate | capitalize }} 
                      
                       </ion-item>
                        <ion-item ng-click="verOraciones()" menu-close>
 
-                      Oraciones <span class="item-note balanced">Nuevo</span>
+                      {{"prayers" | translate | capitalize }}
                      
                       </ion-item>
 
-                       <ion-item>
+                      <!-- <ion-item>
 
                      Capitalario <span class="item-note">Pronto</span>
                      
-                      </ion-item>
+                      </ion-item> 
                        <ion-item ng-click="verSugerencias()" menu-close>
 
                       Sugerencias
                      
-                      </ion-item>
+                      </ion-item>-->
                     </ion-list>
                   </ion-content>
 

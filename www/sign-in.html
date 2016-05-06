@@ -1,5 +1,5 @@
 
-      <ion-view view-title="Ingresar">
+      <ion-view view-title="{{'login' | translate | uppercase}}">
 
 
   <ion-nav-bar class="bar-positive">
@@ -30,25 +30,35 @@
         
           <div class="list">
             <label class="item item-input">
-              <span class="input-label">Nombre de Usuario</span>
+              <span class="input-label">{{'user_name' | translate}}</span>
               <input type="text" ng-model="user.username" autocorrect="off" autocapitalize="off" autocomplete="off">
             </label>
             <label class="item item-input">
-              <span class="input-label">Contraseña</span>
+              <span class="input-label">{{'password' | translate}}</span>
               <input type="password" ng-model="user.password">
             </label>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                  {{'language' | translate}} 
+                </div>
+              <select ng-init=" idioma = idiomas[1]" 
+                    ng-model="idioma" 
+                    ng-options="idioma.name for idioma in idiomas" ng-change="ChangeLanguage(idioma)">
+            </select>
+            </label>
+
           </div>
 
           <div class="padding">
             <button class="button button-block button-positive" ng-click="signIn()">
-              Ingresar
+              {{'login' | translate | uppercase }} 
             </button>
             
             <p class="text-center">
-              <a href="" ng-click="forgotPasword()">¿Olvidaste tu contraseña?</a>
+              <a href="" ng-click="forgotPasword()">{{'forgot_password' | translate}}  </a>
             </p>
               <p class="text-center">
-              <a href="" ng-click="signup()">Crear usuario</a>
+              <a href="" ng-click="signup()">{{'create_user' | translate}} </a>
             </p>
              <div class="card">
             <div class="item item-text-wrap">

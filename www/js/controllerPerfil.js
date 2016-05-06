@@ -1,5 +1,5 @@
 angular.module('Agenvida.controllerPerfil', [])
-.controller('controllerPerfil', function($scope,$rootScope, $state, $http ,$window, $ionicHistory, $ionicPopup){
+.controller('controllerPerfil', function($scope,$rootScope, $state, $http ,$window, $ionicHistory, $ionicPopup, $translate){
 
 // $rootScope.domain = "http://agenvida.herokuapp.com/";
 
@@ -46,11 +46,35 @@ $scope.verNotificaciones = function(){
 }
 
 
+
+
 $rootScope.LoadingShow();
+
+/* Posibles Idiomas */
+$scope.idiomas = [{
+    name: "Español",
+    codigo:"es"
+   
+}, {
+    name: "Ingles",
+    codigo:"en"
+   
+   }]
+
 
 $http.get($rootScope.domain + "userProfile/").then(function(result){
 
 	$scope.perfil = result.data;
+
+console.log($scope.perfil.idioma);
+if ($scope.perfil.idioma=="es") {
+    $scope.idiomaSelect = $scope.idiomas[0];
+   
+};   
+
+if ($scope.perfil.idioma=="en") {
+    $scope.idiomaSelect =  $scope.idiomas[1];
+}; 
 
 
 });
@@ -113,14 +137,14 @@ $scope.editar = function(campo) {
 
    var myPopup = $ionicPopup.show({
      template: $scope.template,
-     title: 'Editar ',
+     title:  $translate.instant('edit'),
      subTitle: '',
      scope: $scope,
      buttons: [
-       { text: 'Cancelar' },
+       { text:  $translate.instant('cancel')},
        
         {
-         text: '<b>Guardar</b>',
+         text: '<b>'+$translate.instant('save')+'</b>',
          type: 'button-positive',
          onTap: function(e) {
 
@@ -163,14 +187,14 @@ $scope.editarUser  = function(campo){
 
 	 var myPopup = $ionicPopup.show({
      template: $scope.template,
-     title: 'Editar ',
+     title:  $translate.instant('edit'),
      subTitle: '',
      scope: $scope,
      buttons: [
-       { text: 'Cancelar' },
+       { text:  $translate.instant('cancel') },
        
         {
-         text: '<b>Guardar</b>',
+         text: '<b>'+$translate.instant('save')+'</b>',
          type: 'button-positive',
          onTap: function(e) {
 
@@ -236,8 +260,31 @@ $scope.editarPassword = function(campo){
      ]
    }); 
 
-}
+};
 
+
+
+
+
+
+
+
+$scope.editarIdioma = function(idioma){
+
+    $scope.perfil.idioma = idioma.codigo;
+
+
+    $http.put($rootScope.domain + "userProfile/", $scope.perfil).then(function(result){
+
+                        $scope.perfil = result.data;
+                        $window.localStorage.language = $scope.perfil.idioma;
+                 })
+
+$translate.use(idioma.codigo);
+console.log(idioma.name); 
+
+
+}
 
 
 

@@ -1,6 +1,6 @@
-angular.module('Agenvida.controllerMarcacion', [])
+angular.module('Agenvida.controllerMarcacion', ["slugifier"])
 
-.controller('controllerMarcacion', function($scope, $rootScope, $http , $state, $ionicHistory, $ionicSideMenuDelegate,$filter, $ionicModal,$ionicPopup , $ionicActionSheet,$window,$ionicLoading) {
+.controller('controllerMarcacion', function($scope, $rootScope, $http , $state, $ionicHistory, $ionicSideMenuDelegate,$filter, $ionicModal,$ionicPopup , $ionicActionSheet,$window,$ionicLoading,   $translate) {
   /**************************************************/
   /**************** VARIABLES **********************/
   /*************************************************/
@@ -293,14 +293,14 @@ $scope.CreateProposito = function(vinculacionID) {
    // An elaborate, custom popup
    var myPopup = $ionicPopup.show({
      template: '<input type="text" ng-model="PropositoNuevo.proposito">',
-     title: 'Crear nuevo Proposito',
-     subTitle: 'Escribe el nombre del proposito',
+     title: $translate.instant('create_p'),
+     subTitle:   $translate.instant('add_p_message') ,
      scope: $scope,
      buttons: [
-       { text: 'Cancelar' },
+       { text: $translate.instant('cancel') },
        
         {
-         text: '<b>Guardar</b>',
+         text: '<b>'+ $translate.instant('save') +'</b>',
          type: 'button-positive',
          onTap: function(e) {
               if($scope.PropositoNuevo.proposito == ""){
@@ -377,14 +377,14 @@ $scope.CreateProposito = function(vinculacionID) {
 
     var myPopup = $ionicPopup.show({
      template: '<input type="text" ng-model="editProposito.proposito">',
-     title: 'Crear nuevo Proposito',
+     title: $translate.instant('create_p'),
      subTitle: 'Escribe el nombre del proposito',
      scope: $scope,
      buttons: [
-       { text: 'Cancelar' },
+       { text: $translate.instant('save') },
        
         {
-         text: '<b>Guardar</b>',
+         text: '<b>'+$translate.instant('save') +'</b>',
          type: 'button-positive',
          onTap: function(e) {
               if(proposito.proposito == ""){

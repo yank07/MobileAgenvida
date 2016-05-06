@@ -1,10 +1,10 @@
 
 
-      <ion-view view-title="Configuracion"  >
+      <ion-view view-title=" {{'configuration' | translate | capitalize}}"  >
 
 <ion-nav-bar class="bar-positive">
   <ion-nav-back-button class="button-clear">
-    <i class="ion-arrow-left-c"></i> Atrás
+    <i class="ion-arrow-left-c"></i> {{'back'| translate}}
   </ion-nav-back-button>
 </ion-nav-bar>
 
@@ -18,7 +18,7 @@
   <div class="item item-icon-right" href="#">
    
     <h2>{{user.email}}</h2>
-      <p>correo electronico</p>
+      <p>{{'email'| translate }}</p>
 
        <i class="icon ion-edit" ng-click="editarUser('email')"></i>
   
@@ -27,13 +27,24 @@
   <div class="item item-icon-right" href="#">
    
      <h2>**********</h2>
-      <p>Contraseña</p>
+      <p>{{'password'| translate }}</p>
 
        <i class="icon ion-edit" ng-click="editarPassword('password')"></i>
   
 
   </div>
+  <label class="item item-input item-select">
+    <div class="input-label">
+      {{'language'| translate }}  
+    </div>
+  <select 
+        ng-model="idioma" 
+        ng-options="idioma.name for idioma in idiomas" ng-change="editarIdioma(idioma)">
+</select>
+  </label>
 
+
+<!--
   <div class="item item-icon-right" ng-click="verNotificaciones()">
     
   Notificaciones
@@ -48,7 +59,7 @@
 
  <i class="icon ion-android-mail"></i>
 
-  </div>
+  </div>-->
 
 
 

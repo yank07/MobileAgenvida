@@ -50,14 +50,13 @@
 
                                <div class=" item item-body">
                                   
-                                  <h2> <b>Ideal Personal:</b> "{{perfil.ideal_personal}}"</h2>
+                                  <h2> <b> {{"ideal_personal" | translate  | capitalize }}:</b> "{{perfil.ideal_personal}}"</h2>
 <!--*************************************** PROPOSITO PARTIULAR ************************************-->
                                    <p class="item-icon-right pps" ng-show="true" ng-value= " pps = ( propositos | filter:{ vinculacion: propositoParticular.id , mes_ano: ano + '-'+ mes +'-' , })[0]" on-double-tap="showOpciones(pps)" on-hold="showOpciones(proposito)" ><b>P. Particular:</b>   
 
 
 
-                                    <span ng-if="pps != null">
-                                             {{pps.proposito | limitTo:25}}
+                                    <span ng-if="pps != null">{{ pps.proposito | translate | limitTo:25 }}
 
                                            <ion-spinner class="cargando" ng-show="loading == 'undefined-undefined'"></ion-spinner>
                                           <span class="icon ion-ios-checkmark-outline mas " ng-class="{'mas-mark' : (pps.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 1 }).length != 0 } " ng-click="marcar(pps, 1 , sectionIndex, $index)"></span>
@@ -68,7 +67,7 @@
                                   </span>
                                   <span ng-if="pps == null">
 
-                                      Agregar un proposito particular
+                                      {{'add_pp' | translate}}
                                        <span class="icon ion-ios-plus-outline"  ng-click="CreateProposito(propositoParticular.id)"></span>
                                   </span>
 
@@ -90,7 +89,7 @@
                                             ng-class="{active: shownGroup[vinculacion.id]}">
                                       <i class="icon" ng-class="shownGroup[vinculacion.id] ? 'ion-chevron-down' : 'ion-chevron-right'"></i>
                                     &nbsp;
-                                     {{vinculacion.nombre}}
+                                     {{vinculacion.nombre | slugify | translate }}
                                   </ion-item>
                                   <ion-item class="item-accordion  item-icon-right"
                                             ng-repeat="proposito in filtered =(propositos | filter:{ vinculacion: vinculacion.id , mes_ano: ano + '-'+ mes +'-' , }) "
@@ -99,6 +98,7 @@
 
 
                                             >
+                                    <i class="icon ion-edit" ng-click="showOpciones(proposito)" style="right: 103px;"></i>
                     
                                     {{proposito.proposito | limitTo:30}} 
 

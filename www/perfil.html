@@ -1,10 +1,10 @@
 
 
-      <ion-view view-title="Mi perfil"  >
+      <ion-view view-title=" {{'my_profile' | translate}}"  >
 
 <ion-nav-bar class="bar-positive">
   <ion-nav-back-button class="button-clear">
-    <i class="ion-arrow-left-c"></i> Atrás
+    <i class="ion-arrow-left-c"></i> {{'back'| translate}}
   </ion-nav-back-button>
 </ion-nav-bar>
 
@@ -14,13 +14,13 @@
             <div class="list">
 
     <div class="item item-divider">
-    Datos Personales
+    {{"my_profile" | translate}}
   </div>
 
   <div class="item item-icon-right" href="#">
    
     <h2>{{user.first_name}} </h2>
-      <p>Nombre</p>
+      <p>{{"name" | translate}}</p>
 
        <i class="icon ion-edit" ng-click="editarUser('first_name')"></i>
   
@@ -29,7 +29,7 @@
   <div class="item item-icon-right" href="#">
    
     <h2>{{user.last_name}} </h2>
-      <p>Apellido</p>
+      <p>{{"lastname" | translate}}</p>
 
        <i class="icon ion-edit" ng-click="editarUser('last_name')"></i>
   
@@ -38,7 +38,7 @@
   <div class="item item-icon-right" href="#">
    
     <h2>{{user.username}}</h2>
-      <p>Usuario</p>
+      <p>{{"username" | translate}}</p>
 
        <i class="icon ion-edit" ng-click="editarUser('username')" ></i>
   
@@ -48,7 +48,7 @@
   <div class="item item-body item-icon-right" href="#">
    
     <h2>{{perfil.ideal_personal}}</h2>
-      <p>Ideal personal</p>
+      <p>{{"ideal_personal" | translate}}</p>
 
        <i class="icon ion-edit" ng-click="editar('ideal_personal')"></i>
   
@@ -57,7 +57,7 @@
   <div class="item item-icon-right" >
    
      <h2>{{perfil.nacimiento}}</h2>
-      <p>Fecha de nacimiento</p>
+      <p>{{"date_birth"|translate}}</p>
 
        <i class="icon ion-edit" ng-click="editar('nacimiento')"></i>
   
@@ -67,7 +67,7 @@
   <div class="item item-icon-right" >
     
     <h2>{{perfil.pais}}</h2>
-      <p>País</p>
+      <p>{{"country" | translate}}</p>
 
       <i class="icon ion-edit" ng-click="editar('pais')"></i>
   
@@ -75,7 +75,7 @@
 
  
   <div class="item item-divider  item-icon-right " ng-click="goContratoPedagogico()">
-    Contrato Pedagógico
+    {{"pedagogic_contract" | translate}}
 
  <i class="icon ion-ios-compose-outline"></i>
 
@@ -84,14 +84,14 @@
 
 
   <div class="item item-divider item-icon-right" ng-click="goConfiguracion()">
-    Configuración
+    {{"configuration" | translate | capitalize }}
 
  <i class="icon   ion-ios-gear-outline"></i>
   
   </div>
 
     <div class="item item-divider item-icon-right" ng-click="cerraSesion()">
-    Salir
+    {{"logout" | translate}}
 
  <i class="icon   ion-log-out"></i>
   
