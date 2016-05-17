@@ -8,7 +8,7 @@ agenvidaApp = angular.module('agenvida', ['ionic',
   'ngCordova',  
   'Agenvida.controllerLogin', 
   'Agenvida.controllerSignUp', 
-  'Agenvida.controllerMarcacion',
+ 'Agenvida.controllerMarcacion',
  "Agenvida.routes", 
  'ionic-datepicker', 
  'DateFilters', 
@@ -21,7 +21,7 @@ agenvidaApp = angular.module('agenvida', ['ionic',
  'Agenvida.controllerTelefono', 
  'Agenvida.controllerOraciones',
  'pascalprecht.translate', // Translate
- 'ngSanitize'])
+ 'ngSanitize', 'ionic-material'])
 
 .run( [ '$state', '$rootScope','$ionicLoading',   function($state,  $rootScope, $ionicLoading){
 
@@ -36,13 +36,13 @@ agenvidaApp = angular.module('agenvida', ['ionic',
 
   $rootScope.domain = "";
 
-  $rootScope.domain = "http://localhost:8000/";
+ // $rootScope.domain = "http://localhost:8000/";
 
 
- //   $rootScope.domain = "http://agenvida.herokuapp.com/"
-  $rootScope.client_id = "zk31U7ywB3j5cxnEXxnRQGOdf2ksnLHDO4MMdMKe"; //desarrollo
+    $rootScope.domain = "http://agenvida.herokuapp.com/"
+//  $rootScope.client_id = "zk31U7ywB3j5cxnEXxnRQGOdf2ksnLHDO4MMdMKe"; //desarrollo
 
- // $rootScope.client_id = "FCMnar3EJW84jY4Lgsh9GSEgSAY9HGbIzv9vpxsr"; //Produccion
+  $rootScope.client_id = "FCMnar3EJW84jY4Lgsh9GSEgSAY9HGbIzv9vpxsr"; //Produccion
 
   $rootScope.dias_semana = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"];
    $rootScope.meses =["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agost", "Sept", "Oct", "Nov", "Dic"];
@@ -64,12 +64,15 @@ $rootScope.idiomas = [{
 
      $rootScope.LoadingShow = function() {
     $ionicLoading.show({
-      template: 'Cargando...'
+      template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
     });
   };
   $rootScope.LoadingHide= function(){
     $ionicLoading.hide();
   };
+
+
+ 
 
    
 

@@ -1,6 +1,7 @@
 
 angular.module('Agenvida.controllerOraciones',[])
-.controller('controllerOraciones', function($scope, $state, $http ,$window, $rootScope, $ionicLoading, $sce , $ionicModal, $location) {
+.controller('controllerOraciones', function($scope, $state, $http ,$window,
+ $rootScope, $ionicLoading, $sce , $ionicModal, $location, ionicMaterialInk) {
 
 
 	
@@ -42,6 +43,10 @@ $scope.getOracion = function (id){
 		$rootScope.oracionTitulo = result.data.nombre;
 		$rootScope.oracionContenido = $sce.trustAsHtml(result.data.contenido);
 		$rootScope.LoadingHide();	
+
+		 $timeout(function() {
+         ionicMaterialInk.displayEffect();
+    }, 50);
 		//console.log(result.data)
 		 //$scope.modal.show();
 		

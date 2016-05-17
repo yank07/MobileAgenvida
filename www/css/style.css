@@ -1,11 +1,103 @@
+@font-face {
+    font-family: Roboto;
+    src: url(../fonts/Roboto-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+    
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url(../fonts/Roboto-Italic.ttf);
+    font-weight: normal;
+    font-style: italic;
+    
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url(../fonts/Roboto-Bold.ttf);
+    font-weight: bold;
+    font-style: normal;
+    
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url(../fonts/Roboto-BoldItalic.ttf);
+    font-weight: bold;
+    font-style: italic;
+    
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url(../fonts/Roboto-Thin.ttf);
+    font-weight: 300;
+    font-style: normal;
+    
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url(../fonts/Roboto-ThinItalic.ttf);
+    font-weight: 300;
+    font-style: italic;
+    
+}
+
+
+@font-face {
+    font-family: Roboto;
+    src: url(../fonts/Roboto-Black.ttf);
+    font-weight: 900;
+    font-style: normal;
+    
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url(../fonts/Roboto-BlackItalic.ttf);
+    font-weight: 900;
+    font-style: italic;
+    
+}
+
+
+.icon-praying-hands:before {
+    content: "\e900";
+}
+
+
+h1,h2,h3,h4,h5 {
+  color: #6F6F6F;
+}
+
+
+.item h2 {
+    font-weight: bold;
+}
+
+p.descripcion{
+    font-style: italic;
+    font-size: 10px;
+}
+
+
+
+
+
+
 /* Empty. Add your own CSS if you like */
 
 
 .list .item.item-accordion {
-  line-height: 38px;
-  padding-top: 0;
-  padding-bottom: 0;
-  transition: 0.04s all linear;
+        line-height: 38px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #BDBDBD;
+    transition: 0.04s all linear;
+    margin: 0px 0px;
 }
 .list .item.item-accordion.ng-hide {
   line-height: 0px;
@@ -20,7 +112,7 @@
 color: #ddd;
 	}
 
-
+ 
 .cargando {
     float: right;
     position: absolute;
@@ -42,7 +134,7 @@ span.icon.neutro {
 }
 
 span.icon.mas.mas-mark {
-    color: green;
+    color: #43A047;
 }
 
 
@@ -75,6 +167,7 @@ span.icon.neutro.neutro-mark {
 
 
 .center{
+    text-align: center;
  
 }
 
@@ -82,6 +175,13 @@ span.icon.neutro.neutro-mark {
 .icono-login {
   text-align: center;
   margin: 0px 0px;
+}
+
+.icono-login {
+    background: #800416;
+    text-align: center;
+    margin: 0px 0px;
+    color: white;
 }
 
 
@@ -98,7 +198,46 @@ span.icon.neutro.neutro-mark {
     background-color: #387ef5;
     color: #fff;
 }
+.item.item-positive {
+    /* border-color: #387EF5; 
+    background-color: #fafafa !important;
+    color: #616161 !important ;*/
+    border-bottom: solid 2px white;
+    border-top: transparent;
+    padding: 4px 10px;
+    
+    font-weight: bold;
+}
 
+.item.active, .item.activated, .item-complex.active .item-content, .item-complex.activated .item-content, .item .item-content.active, .item .item-content.activated {
+    border-color: transparent;
+    background-color: #FAFAFA;
+}
+
+.item {
+  border-color: transparent;
+  font-size: 16px !important;
+}
+
+.item-divider {
+   
+
+    padding: 0px 15px !important;
+    min-height: 30px;
+    background-color: #FAFAFA;
+   color: #616161;
+    font-style: italic;
+    font-weight: 900;
+    font-size: 18px !important;
+    color: #424242 !important;
+}
+
+
+.button .badge {
+    position: absolute;
+    top: 15px;
+    right: -4px;
+}
 
 /* REPORTE */
 
@@ -174,6 +313,18 @@ span.icon.neutro.neutro-mark {
     background-color: #387ef5;
     background-image: linear-gradient(0deg, #0c63ee, #0c63ee 50%, transparent 50%);
     color: #fff;
+}
+
+.expanded.bar.bar-header {
+    background: rebeccapurple;
+}
+
+.bar-subheader {
+    margin-top: 10px;
+}
+
+.dark {
+    color: #797979 !important;
 }
 
 

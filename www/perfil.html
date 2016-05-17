@@ -1,80 +1,88 @@
 
 
-      <ion-view view-title=" {{'my_profile' | translate}}"  >
+<ion-view view-title=" {{'my_profile' | translate}}" ng-init="actualizar(false)" >
 
 <ion-nav-bar class="bar-positive">
   <ion-nav-back-button class="button-clear">
-    <i class="ion-arrow-left-c"></i> {{'back'| translate}}
+    <i class="ion-arrow-left-c"></i>
   </ion-nav-back-button>
 </ion-nav-bar>
 
 
+
+
         <ion-content >
+
+           <ion-refresher
+                        pulling-text="Pull to refresh..."
+                        on-refresh="actualizar(true)">
+              </ion-refresher>
+
             
-            <div class="list">
+            <div class="list animate-ripple">
 
     <div class="item item-divider">
     {{"my_profile" | translate}}
   </div>
 
-  <div class="item item-icon-right" href="#">
+  <div class="item item-icon-right ink ink-dark" href="#">
    
     <h2>{{user.first_name}} </h2>
-      <p>{{"name" | translate}}</p>
+      <p class="descripcion" >{{"name" | translate}}</p>
 
        <i class="icon ion-edit" ng-click="editarUser('first_name')"></i>
   
   </div>
 
-  <div class="item item-icon-right" href="#">
+  <div class="item item-icon-right ink ink-dark" href="#">
    
     <h2>{{user.last_name}} </h2>
-      <p>{{"lastname" | translate}}</p>
+      <p class="descripcion">{{"lastname" | translate}}</p>
 
        <i class="icon ion-edit" ng-click="editarUser('last_name')"></i>
   
   </div>
 
-  <div class="item item-icon-right" href="#">
+  <div class="item item-icon-right ink ink-dark" href="#">
    
     <h2>{{user.username}}</h2>
-      <p>{{"username" | translate}}</p>
+      <p class="descripcion">{{"username" | translate}}</p>
 
        <i class="icon ion-edit" ng-click="editarUser('username')" ></i>
   
   </div>
 
 
-  <div class="item item-body item-icon-right" href="#">
+  <div class="item item-body item-icon-right ink ink-dark" href="#">
    
     <h2>{{perfil.ideal_personal}}</h2>
-      <p>{{"ideal_personal" | translate}}</p>
+      <p class="descripcion">{{"ideal_personal" | translate}}</p>
 
        <i class="icon ion-edit" ng-click="editar('ideal_personal')"></i>
   
   </div>
 
-  <div class="item item-icon-right" >
+  <div class="item item-icon-right ink ink-dark" >
    
      <h2>{{perfil.nacimiento}}</h2>
-      <p>{{"date_birth"|translate}}</p>
+      <p class="descripcion">{{"date_birth"|translate}}</p>
 
        <i class="icon ion-edit" ng-click="editar('nacimiento')"></i>
   
 
   </div>
 
-  <div class="item item-icon-right" >
+  <div class="item item-icon-right ink ink-dark" >
     
     <h2>{{perfil.pais}}</h2>
-      <p>{{"country" | translate}}</p>
+      <p class="descripcion">{{"country" | translate}}</p>
 
       <i class="icon ion-edit" ng-click="editar('pais')"></i>
   
   </div>
 
  
-  <div class="item item-divider  item-icon-right " ng-click="goContratoPedagogico()">
+  <div class="item item-divider  item-icon-right ink ink-dark " ng-click="goContratoPedagogico()">
     {{"pedagogic_contract" | translate}}
 
  <i class="icon ion-ios-compose-outline"></i>
@@ -83,14 +91,14 @@
 
 
 
-  <div class="item item-divider item-icon-right" ng-click="goConfiguracion()">
+  <div class="item item-divider item-icon-right ink ink-dark" ng-click="goConfiguracion()">
     {{"configuration" | translate | capitalize }}
 
  <i class="icon   ion-ios-gear-outline"></i>
   
   </div>
 
-    <div class="item item-divider item-icon-right" ng-click="cerraSesion()">
+    <div class="item item-divider item-icon-right ink ink-dark" ng-click="cerraSesion()">
     {{"logout" | translate}}
 
  <i class="icon   ion-log-out"></i>

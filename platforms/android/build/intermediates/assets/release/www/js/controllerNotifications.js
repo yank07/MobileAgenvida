@@ -1,0 +1,1 @@
+angular.module("Agenvida.controllerNotifications",[]).controller("controllerNotifications",["$scope","$rootScope","$http","$window",function(o,t,n,i){}]);

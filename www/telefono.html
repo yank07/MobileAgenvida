@@ -3,7 +3,7 @@
   <ion-nav-bar class="bar-positive">
                     <ion-nav-buttons side="left">
                      <!-- Toggle left side menu -->
-                     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+                     <button menu-toggle="left" class="button button-clear button-icon icon ion-navicon"></button>
                     </ion-nav-buttons>
          
                   </ion-nav-bar>
@@ -31,19 +31,41 @@
 
   </div>
 
-  <div class="item tabs tabs-secondary tabs-icon-left">
-    <a class="tab-item" href="#" ng-click="nuevaFrase()">
-      <i class="icon ion-ios-refresh-empty"></i>
+  <div class="item ">
+   
+
+    <button class="button button-block button-calm" ng-click="nuevaFrase()">
+               <i class="icon ion-ios-refresh-empty"></i>
       Otra Frase
-    </a>
+            </button>
    
   <!-- <a class="tab-item" href="#">
       <i class="icon ion-share"></i>
       Compartir
     </a> -->
   </div>
+<style type="text/css">
+.bar .button.button-fab i, .button.button-fab i {
+    font-size: 1.2rem;
+    margin-top: 0;
+}
 
-</div> 
+.social {
+  margin: 10px 0px;
+}
+
+</style>
+
+<div class="center social">
+   <button class="button button-fab " ng-click="shareViaWhatsapp()"><i class="fa fa-whatsapp"></i></button>
+ <button class="button button-fab" ng-click="shareViaFacebook()"><i class="fa fa-facebook"></i></button>
+ <button class="button button-fab" ng-click="shareViaTwitter()"><i class="fa fa-twitter"></i></button>
+
+</div>
+
+
+
+
 
 
 

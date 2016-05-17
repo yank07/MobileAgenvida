@@ -6,7 +6,7 @@ Instalar Cordova
 Instalar Ionic
 
 ```bash
-
+sudo apt-get install lib32z1
 
 ionic serve --lab
 

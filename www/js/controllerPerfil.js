@@ -1,5 +1,6 @@
 angular.module('Agenvida.controllerPerfil', [])
-.controller('controllerPerfil', function($scope,$rootScope, $state, $http ,$window, $ionicHistory, $ionicPopup, $translate){
+.controller('controllerPerfil', function($scope,$rootScope, $state, $http ,$window,
+    $ionicHistory, $ionicPopup, $translate,  ionicMaterialInk, ionicMaterialMotion, $timeout){
 
 // $rootScope.domain = "http://agenvida.herokuapp.com/";
 
@@ -48,7 +49,7 @@ $scope.verNotificaciones = function(){
 
 
 
-$rootScope.LoadingShow();
+
 
 /* Posibles Idiomas */
 $scope.idiomas = [{
@@ -60,39 +61,85 @@ $scope.idiomas = [{
     codigo:"en"
    
    }]
+$scope.actualizar = function(fullrefresh){ 
+       
+
+        if (fullrefresh) {
+                 $rootScope.LoadingShow();
+      
+
+                $http.get($rootScope.domain + "userProfile/").then(
+
+                function(result){
+
+                	$scope.perfil = result.data;
+                     $timeout(function() {
+                     ionicMaterialInk.displayEffect();
+                     ionicMaterialMotion.blinds();
+                }, 50);
+                    
+                },
+
+                function(result){ // si algo va mal.
+                    $rootScope.banner([$translate.instant("net_error"),$translate.instant("try_again") ])
+
+                    $rootScope.LoadingHide();
+                }
 
 
-$http.get($rootScope.domain + "userProfile/").then(function(result){
-
-	$scope.perfil = result.data;
-
-console.log($scope.perfil.idioma);
-if ($scope.perfil.idioma=="es") {
-    $scope.idiomaSelect = $scope.idiomas[0];
-   
-};   
-
-if ($scope.perfil.idioma=="en") {
-    $scope.idiomaSelect =  $scope.idiomas[1];
-}; 
+                );
 
 
-});
+                    $http.get($rootScope.domain + "users/").then(
+                    function(result){
+
+                    	$scope.user = result.data;
+
+                    	console.log($scope.user);
+                        
+                         $window.localStorage.user = JSON.stringify($scope.user);
+
+                        $rootScope.LoadingHide();
 
 
-$http.get($rootScope.domain + "users/").then(function(result){
+                    },
+                    function(result){ // si algo va mal.
+                        $rootScope.LoadingHide();
+                $rootScope.banner([$translate.instant("net_error"),$translate.instant("try_again") ])
 
-	$scope.user = result.data;
+                    }
 
-	console.log($scope.user);
+                    );
 
-    $rootScope.LoadingHide();
+                $scope.$broadcast('scroll.refreshComplete');
+
+        }
+        else { // no full refresh
+            if ($window.localStorage.perfil && $window.localStorage.user ){
+
+                $scope.perfil =  JSON.parse($window.localStorage.perfil);
+                $scope.user = JSON.parse($window.localStorage.user);
+                console.log($scope.perfil);
+                $timeout(function() {
+                     ionicMaterialInk.displayEffect();
+                     ionicMaterialMotion.ripple();
+                }, 50);
+
+            }
+            else {
+                $scope.actualizar(true);
+            }
+            
 
 
-});
+        }
+
+
+
+}
 
 /**********************************************/
-/**** Show pop Up de Crear nuevo proposito****/
+/**** Show pop Up de Editar algo del perfil****/
 /*********************************************/
 $scope.editar = function(campo) {
 
@@ -158,6 +205,7 @@ $scope.editar = function(campo) {
          		 $http.put($rootScope.domain + "userProfile/", data).then(function(result){
 
          		 		$scope.perfil = result.data;
+                       
          		 })
          	}
 
@@ -167,9 +215,14 @@ $scope.editar = function(campo) {
          		$http.put($rootScope.domain + "userProfile/", $scope.perfil).then(function(result){
 
          		 		$scope.perfil = result.data;
+
          		 })
 
          	}
+
+             $window.localStorage.perfil = JSON.stringify($scope.perfil );
+
+
             
               
          }
@@ -203,7 +256,8 @@ $scope.editarUser  = function(campo){
 
          		$http.put($rootScope.domain + "users/", $scope.user).then(function(result){
 
-         		 		$scope.perfil = result.data;
+         		 		$scope.user = result.data;
+                         $window.localStorage.user = JSON.stringify($scope.user );
          		 })
 
          	
@@ -277,6 +331,8 @@ $scope.editarIdioma = function(idioma){
     $http.put($rootScope.domain + "userProfile/", $scope.perfil).then(function(result){
 
                         $scope.perfil = result.data;
+                        console.log($scope.perfil.idioma);
+
                         $window.localStorage.language = $scope.perfil.idioma;
                  })
 

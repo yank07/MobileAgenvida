@@ -1,0 +1,1 @@
+angular.module("Agenvida.controllerConfiguracion",[]).controller("controllerConfiguracion",["$scope","$state","$http","$window","$ionicHistory",function(o,n,i,r,t){}]);
