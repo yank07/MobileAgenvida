@@ -21,9 +21,20 @@ agenvidaApp = angular.module('agenvida', ['ionic',
  'Agenvida.controllerTelefono', 
  'Agenvida.controllerOraciones',
  'pascalprecht.translate', // Translate
- 'ngSanitize', 'ionic-material'])
+ 'ngSanitize', 'ionic-material','ionic-timepicker'])
 
-.run( [ '$state', '$rootScope','$ionicLoading',   function($state,  $rootScope, $ionicLoading){
+.run(function($state, $rootScope, $ionicLoading){
+
+   if (window.StatusBar) {
+        // org.apache.cordova.statusbar required
+        
+        StatusBar.styleDefault();
+        StatusBar.backgroundColorByName("blue");
+      }
+
+
+
+
 
   if(window.localStorage.token){
 
@@ -74,11 +85,11 @@ $rootScope.idiomas = [{
 
  
 
-   
+ 
 
 
 
-}])
+})
 
 
 
@@ -114,7 +125,6 @@ $rootScope.idiomas = [{
       return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
     }
 });
-
 
 
 

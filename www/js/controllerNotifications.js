@@ -1,112 +1,190 @@
 angular.module('Agenvida.controllerNotifications', [ ])
 
-.controller('controllerNotifications', function($scope, $rootScope, $http ,$window/*, $ionicUser , $cordovaLocalNotification, $ionicPlatform*/) {
-/*
-$scope.identifyUser = function() {
- var user = $ionicUser.get();
- if(!user.user_id) {
- // Set your user_id here, or generate a random one.
- user.user_id = $ionicUser.generateGUID();
- };
- 
- // Metadata
- angular.extend(user, {
- name: 'Simon',
- bio: 'Author of Devdactic'
- });
- 
- // Identify your user with the Ionic User Service
- $ionicUser.identify(user).then(function(){
- $scope.identified = true;
- console.log('Identified user ' + user.name + '\n ID ' + user.user_id);
- });
-};
-
-
-// Registers a device for push notifications
-$scope.pushRegister = function() {
- console.log('Ionic Push: Registering user');
- 
- // Register with the Ionic Push service.  All parameters are optional.
- $ionicPush.register({
-   canShowAlert: true, //Can pushes show an alert on your screen?
-   canSetBadge: true, //Can pushes update app icon badges?
-   canPlaySound: true, //Can notifications play a sound?
-   canRunActionsOnWake: true, //Can run actions outside the app,
-   onNotification: function(notification) {
-     // Handle new push notifications here
-     return true;
-   }
- });
-};
-
-$rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
-  alert("Successfully registered token " + data.token);
-  console.log('Ionic Push: Got token ', data.token, data.platform);
-  $scope.token = data.token;
-});*/
-
-/*
+.controller('controllerNotifications', function($scope, $ionicPlatform , $rootScope,
+ $http ,$window ,$cordovaLocalNotification,$state , ionicTimePicker) {
 $ionicPlatform.ready(function () {
-         
-        $scope.scheduleSingleNotification = function () {
-          $cordovaLocalNotification.schedule({
-            id: 1,
-            title: 'Warning',
-            text: 'Youre so sexy!',
-            data: {
-              customProperty: 'custom value'
-            }
-          }).then(function (result) {
-            console.log('Notification 1 triggered');
-          });
-        };
-         
-        $scope.scheduleDelayedNotification = function () {
-          var now = new Date().getTime();
-          var _10SecondsFromNow = new Date(now + 10 * 1000);
- 
-          $cordovaLocalNotification.schedule({
-            id: 2,
-            title: 'Warning',
-            text: 'Im so late',
-            at: _10SecondsFromNow
-          }).then(function (result) {
-            console.log('Notification 2 triggered');
-          });
-        };
- 
-        $scope.scheduleEveryMinuteNotification = function () {
-          $cordovaLocalNotification.schedule({
-            id: 3,
-            title: 'Warning',
-            text: 'Dont fall asleep',
-            every: 'minute'
-          }).then(function (result) {
-            console.log('Notification 3 triggered');
-          });
-        };      
-         
-        $scope.updateSingleNotification = function () {
-          $cordovaLocalNotification.update({
-            id: 2,
-            title: 'Warning Update',
-            text: 'This is updated text!'
-          }).then(function (result) {
-            console.log('Notification 1 Updated');
-          });
-        };  
- 
-        $scope.cancelSingleNotification = function () {
-          $cordovaLocalNotification.cancel(3).then(function (result) {
-            console.log('Notification 3 Canceled');
-          });
-        };      
-         
-    });
-*/
+          if (ionic.Platform.isWebView()) {
+
+
+    if(device.platform === "iOS") {
+        window.plugin.notification.local.promptForPermission();
+    }
 
 
 
+     cordova.plugins.notification.local.on("click", function (notification, state) {
+                    $state.go('app.marcacion');
+            }, this)
+
+
+
+                $scope.scheduleInstantNotification = function () {
+        $cordovaLocalNotification.schedule({
+          id: 1,
+          text: 'Instant Notification',
+          title: 'Instant'
+        }).then(function () {
+          alert("Instant Notification set");
+        });;
+      };
+
+      $scope.scheduleDelayedNotification = function () {
+        var now = new Date().getTime();
+        var _5SecondsFromNow = new Date(now + 5000);
+
+        $cordovaLocalNotification.schedule({
+          id: 2,
+          at: _5SecondsFromNow,
+          text: 'Notification After 5 Seconds Has Been Triggered',
+          title: 'After 5 Seconds'
+        }).then(function (result) {
+          console.log('After 5 sec Notification Set');
+        });
+      }
+
+      //Scheduled Every X Seconds / Minutes
+      //Every Options: second, minute, hour, day, week, month, year
+      $scope.scheduleEveryMinuteNotification = function (time) {
+        $cordovaLocalNotification.schedule({
+          id: 3,
+            title: 'Hora de tu HE',
+              text: 'Acordate de marcar tus propositos',
+             // at: new Date(time*1000),
+             every:'minute',
+             
+             
+        }/*,
+        function () {
+                          $window.plugin.notification.local.update({
+                                id: 3,
+                                title: 'Hora de tu HE',
+                                  text: 'Acordate de marcar tus propositos',
+                                  every: 'minute',
+                                  firstAt: new Date(time*1000)
+                          });
+                      }*/
+
+
+        ).then(function (result) {
+          console.log('Every Minute Notification Set');
+        });
+      };
+
+
+      // Update a Scheduled Notification
+      $scope.updateNotificationText = function () {
+        $cordovaLocalNotification.isPresent(3).then(function (present) {
+          if (present) {
+            $cordovaLocalNotification.update({
+              id: 3,
+              title: 'Notificaton  Update',
+              text: 'Notification Update Details'
+            }).then(function (result) {
+              console.log('Updated Notification Text');
+            });
+          } else {
+            alert("Must Schedule Every Minute First");
+          }
+        });
+      };
+
+      $scope.updateNotificationEvery = function () {
+        $cordovaLocalNotification.isPresent(3).then(function (present) {
+          if (present) {
+            $cordovaLocalNotification.update({
+              id: 3,
+              title: 'Hora de tu HE',
+              text: 'Acordate de marcar tus propositos',
+              every: 'second'
+
+            }).then(function (result) {
+              console.log('Updated Notification Every');
+            });
+          } else {
+            alert("Must Schedule Every Minute First");
+          }
+        });
+      };
+
+      //Cancel a Notification
+      $scope.cancelNotification = function () {
+        $cordovaLocalNotification.isPresent(3).then(function (present) {
+          if (present) {
+            $cordovaLocalNotification.cancel(3).then(function (result) {
+              console.log('Notification EveryMinute Cancelled');
+              alert('Cancelled Every Minute');
+               $scope.notificacion = "not_set";
+                $window.localStorage.notificacion = JSON.stringify($scope.notificacion);
+            });
+          } else {
+            alert("Must Schedule Every Minute First");
+          }
+        });
+
+
+      };
+
+
+
+
+
+          } /* Fin del tema de notificaciones */
+
+          if(!$window.localStorage.notificacion){
+             $scope.notificacion = "not_set";
+          }
+          else{
+            $scope.notificacion = JSON.parse($window.localStorage.notificacion);
+          }
+
+          $scope.openTimePicker1 = function () {
+    console.log("hola");
+      var ipObj1 = {
+        callback: function (val) {
+          if (typeof (val) === 'undefined') {
+            console.log('Time not selected');
+          } else {
+
+            var selectedTime = new Date(val * 1000);
+            console.log(selectedTime);
+
+            console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), 'H :', selectedTime.getUTCMinutes(), 'M');
+          $scope.scheduleEveryMinuteNotification(val);
+          $scope.minutos = selectedTime.getUTCMinutes();
+
+           if (selectedTime.getUTCMinutes() < 10){
+
+            $scope.minutos = '0'+selectedTime.getUTCMinutes();
+           }
+
+           $scope.notificacion =  selectedTime.getUTCHours()+ ':' + $scope.minutos;
+           $window.localStorage.notificacion = JSON.stringify($scope.notificacion);
+          }
+        },
+        inputTime: 50400,
+        format: 12,
+        step: 10,
+        setLabel: 'Elegir',
+        closeLabel:'Cerrar'
+      };
+      ionicTimePicker.openTimePicker(ipObj1);
+    };
+
+
+/*
+    $scope.cancelNotification = function (){
+      $scope.notificacion = "not_set";
+                $window.localStorage.notificacion = JSON.stringify($scope.notificacion);
+
+    }*/
+
+
+})
+
+
+
+
+
+    
 
 })/* FIN AGENVIDACTRL*/

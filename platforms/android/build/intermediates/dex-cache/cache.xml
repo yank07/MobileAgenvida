@@ -6,35 +6,35 @@
         jumboMode="false"
         revision="23.0.3"
         sha1="e460bc069dfd21d22770cf2a2370c9021b9c98a2">
-        <dex dex="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/pre-dexed/release/internal_impl-24.0.0-alpha2_5da392884c6f8f7e51840b0b647822a0dc92437d.jar" />
+        <dex dex="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/pre-dexed/debug/internal_impl-24.0.0-alpha2_5da392884c6f8f7e51840b0b647822a0dc92437d.jar" />
     </item>
     <item
-        jar="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0-alpha2/jars/classes.jar"
+        jar="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/exploded-aar/android/CordovaLib/unspecified/debug/jars/classes.jar"
         jumboMode="false"
         revision="23.0.3"
-        sha1="32ab8bede8cd600f25a5bb3fe15068c81c8910dc">
-        <dex dex="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/pre-dexed/release/com.android.support-support-v4-24.0.0-alpha2_a846884c569f07b0675e5094d177baca736bf4a2.jar" />
+        sha1="f658c32263813713e7df2df3f1a66827cbab5f5d">
+        <dex dex="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/pre-dexed/debug/CordovaLib-unspecified-debug_52088928c68afc8ddd10a38c978bdaeff26ed9f8.jar" />
+    </item>
+    <item
+        jar="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/exploded-aar/android/CordovaLib/unspecified/release/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="2ae901868fee1a0cdcb92b9d379dcef1058f8830">
+        <dex dex="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/pre-dexed/release/CordovaLib-unspecified-release_f25bd318ef0d24160d80e5a91eb5e7f6b52e6f96.jar" />
     </item>
     <item
         jar="/home/rodrigo/android-sdk-linux/extras/android/m2repository/com/android/support/support-annotations/24.0.0-alpha2/support-annotations-24.0.0-alpha2.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="8071e1e6cd07e9253720313d6c14286a7ee424e0">
-        <dex dex="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/pre-dexed/release/support-annotations-24.0.0-alpha2_77a5008165ec30cae696ed4177aabebf24faa471.jar" />
+        <dex dex="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/pre-dexed/debug/support-annotations-24.0.0-alpha2_77a5008165ec30cae696ed4177aabebf24faa471.jar" />
     </item>
     <item
-        jar="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/exploded-aar/android/CordovaLib/unspecified/release/jars/classes.jar"
+        jar="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0-alpha2/jars/classes.jar"
         jumboMode="false"
         revision="23.0.3"
-        sha1="834b94cb279c36571b08fe2a6cccb8b64e038f27">
-        <dex dex="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/pre-dexed/release/CordovaLib-unspecified-release_f25bd318ef0d24160d80e5a91eb5e7f6b52e6f96.jar" />
-    </item>
-    <item
-        jar="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/exploded-aar/android/CordovaLib/unspecified/debug/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="f8ecc069032cbe47b15a60a1d8295331fe8089bd">
-        <dex dex="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/pre-dexed/debug/CordovaLib-unspecified-debug_52088928c68afc8ddd10a38c978bdaeff26ed9f8.jar" />
+        sha1="32ab8bede8cd600f25a5bb3fe15068c81c8910dc">
+        <dex dex="/home/rodrigo/MobileAgenvida/platforms/android/build/intermediates/pre-dexed/debug/com.android.support-support-v4-24.0.0-alpha2_a846884c569f07b0675e5094d177baca736bf4a2.jar" />
     </item>
 
 </items>

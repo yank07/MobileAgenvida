@@ -1,1 +1,11 @@
-angular.module("Agenvida.LoadingCtrl",["ionic"]).controller("LoadingCtrl",["$scope","$ionicLoading",function(n,o){n.show=function(){o.show({template:"Loading..."})},n.hide=function(){o.hide()}}]);
+angular.module('Agenvida.LoadingCtrl', ['ionic'])
+.controller('LoadingCtrl', function($scope, $ionicLoading) {
+  $scope.show = function() {
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
+  };
+  $scope.hide = function(){
+    $ionicLoading.hide();
+  };
+});

@@ -1,1 +1,67 @@
-angular.module("Agenvida.controllerSignUp",[]).controller("controllerSignUp",["$scope","$state","$http","$window","$rootScope","$ionicLoading",function(o,n,e,i,a,t){o.user={},o.forgot={},o.mensajeEnviado=!1,o.LoadingShow=function(){t.show({template:"Cargando..."})},o.LoadingHide=function(){t.hide()},o.crearUsuario=function(){o.LoadingShow(),e.post(a.domain+"usuario_create/",o.user).then(function(e){i.localStorage.username=o.user.username,o.LoadingHide(),n.go("signin")},function(){o.LoadingHide()})},o.resetPassword=function(){e.post(a.domain+"auth/password/reset/",o.forgot).then(function(n){o.mensajeEnviado=!0})}}]);
+angular.module('Agenvida.controllerSignUp', [])
+.controller('controllerSignUp', function($scope, $state, $http ,$window, $rootScope, $ionicLoading) {
+
+$scope.user = {}
+$scope.forgot = {}
+$scope.mensajeEnviado = false;
+
+	console.log("Crear usuario");
+
+   $scope.LoadingShow = function() {
+    $ionicLoading.show({
+      template: 'Cargando...'
+    });
+  };
+  $scope.LoadingHide= function(){
+    $ionicLoading.hide();
+  };
+
+
+	$scope.crearUsuario= function(){
+
+
+ $scope.LoadingShow();
+		console.log( $scope.user );
+  $http.post($rootScope.domain + 'usuario_create/', $scope.user).then(function(result){
+
+                                                         
+                                                        $window.localStorage.username = $scope.user.username; 
+                                                        $scope.LoadingHide();                  
+  														$state.go('signin');
+
+                                                                               },
+
+                                                                               function(){
+
+                                                                               	console.log("hubo un error");
+                                                                                $scope.LoadingHide();
+                                                                               }
+
+
+
+
+                                                                               );
+
+
+
+	} 
+
+
+$scope.resetPassword = function(){
+
+console.log($scope.forgot.email);
+
+$http.post($rootScope.domain + 'auth/password/reset/', $scope.forgot).then(function(result){
+  console.log("email enviado");
+  $scope.mensajeEnviado = true;
+})
+
+}
+
+
+
+
+
+
+
+	});

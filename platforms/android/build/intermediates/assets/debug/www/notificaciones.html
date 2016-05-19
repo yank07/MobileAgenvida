@@ -2,7 +2,7 @@
 
   <ion-nav-bar class="bar-positive">
   <ion-nav-back-button class="button-clear">
-    <i class="ion-arrow-left-c"></i> {{'back'| translate}}
+    <i class="ion-arrow-left-c"></i>
   </ion-nav-back-button>
 </ion-nav-bar>
 
@@ -10,22 +10,30 @@
 
   
   <ion-content >
- <!--  <div class="list">
-    	<div class="item item-icon-right" ng-click="add()">
-    	Notificaciones diaras
-
-        <i class="icon ion-android-notifications"></i>
-
-
-    	</div>
-
-      <div class="item item-icon-right" ng-click="isScheduled()">
+  <div class="im-wrapper">
+ 
+</div>
       
-Is Scheduled
-        <i class="icon ion-android-notifications"></i>
+<div class="card">
 
+
+      <div class="item item-body item-energized">
+        <h1 class="center">{{notificacion}} </h1>
 
       </div>
+
+    
+      <div class="button-bar">
+     
+  <a ng-if="notificacion!='not_set'" class="button" ng-click="cancelNotification()">Cancelar</a>
+
+
+              
+              <a class="button" ng-click="openTimePicker1()">Establecer</a> 
+      </div>
+</div>
+  <!-- <div class="list">
+
 
 
       <button class="button button-full button-positive" ng-click="scheduleSingleNotification()">
@@ -40,10 +48,13 @@ Is Scheduled
         <button class="button button-full button-positive" ng-click="updateSingleNotification()">
           Update Notification 2 (after 10 sec)
         </button> 
-        <button class="button button-full button-positive" ng-click="cancelSingleNotification()">
+        <button class="button button-full button-positive" ng-click="cancelNotification()">
           Cancel Notification 3 (every 1 min)
         </button> 
 
+        <button class="button button-full button-positive" ng-click="openTimePicker1()">
+          Cancel Notification 3 (every 1 min)
+        </button> 
    
     </div> -->
   </ion-content>

@@ -112,7 +112,7 @@ $rootScope.banner = function(mensajes, intervalo, autoclose, type, transition){
                                                           $timeout(function() {
                                                          ionicMaterialInk.displayEffect();
                                                          ionicMaterialMotion.ripple();
-                                                    }, 50);
+                                                    }, 100);
 
 
 
@@ -209,11 +209,11 @@ $scope.actualizar = function(fullrefresh){
     $timeout(function() {
          ionicMaterialInk.displayEffect();
          ionicMaterialMotion.ripple();
-    }, 50);
+    }, 100);
       
   }
   else{
-    actualizar(true)
+    $scope.actualizar(true);
   }
     
 
@@ -582,6 +582,11 @@ $scope.verPerfil = function (){
 
 $scope.verReporte = function(){
    $state.go('app.reporte-mensual');
+}
+
+
+$scope.verNotificaciones = function(){
+   $state.go('app.notificaciones');
 }
 
 $scope.verSugerencias = function(){

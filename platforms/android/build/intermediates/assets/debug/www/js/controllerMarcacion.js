@@ -1,1 +1,650 @@
-angular.module("Agenvida.controllerMarcacion",["slugifier","jett.ionic.content.banner","ion-floating-menu"]).controller("controllerMarcacion",["$scope","$rootScope","$http","$state","$ionicHistory","$ionicSideMenuDelegate","$filter","$ionicModal","$ionicPopup","$ionicActionSheet","$window","$ionicLoading","$translate","$ionicContentBanner","$timeout","ionicMaterialInk","ionicMaterialMotion",function(o,t,e,i,n,a,r,s,p,c,l,d,u,m,g,f,h){function b(t){for(var e=0;e<t.length;e++)if(t[e].dia===o.fechaTotal)return t[e]}t.banner=function(o,t,e,i,n){m.show({text:o,interval:t||2e3,autoClose:e||6e3,type:i||"error",transition:n||"fade"})},n.clearHistory(),o.date=new Date,o.dia=("0"+o.date.getDate()).slice(-2),o.mes=("0"+(o.date.getMonth()+1)).slice(-2),o.ano=o.date.getFullYear(),o.fechaTotal=o.ano+"-"+o.mes+"-"+o.dia,o.showInput=[!1,!1,!1,!1,!1],o.NuevoProposito=["","","",""],o.vinculaciones=[{id:1,nombre:"Dios"},{id:2,nombre:"Conmigo"},{id:3,nombre:"Con los Demás"},{id:4,nombre:"Con la Naturaleza"},{id:7,nombre:"Propósitos Semanales"},{id:8,nombre:"Propósitos Mensuales"}],o.extras=[{id:7,nombre:"Proposito Semanales"},{id:8,nombre:"Proposito Mensuales"}],o.propositoParticular={id:5,nombre:"Proposito Particular"},o.weekDaysList=t.dias_semana,o.monthList=t.meses,o.datepickerObject={titleLabel:"Elegir día",todayLabel:"Hoy",closeLabel:"Cerrar",setLabel:"Ir",setButtonType:"button-assertive",todayButtonType:"button-assertive",inputDate:new Date,mondayFirst:!1,weekDaysList:o.weekDaysList,monthList:o.monthList,templateType:"modal",showTodayButton:"true",modalHeaderColor:"bar-positive",modalFooterColor:"bar-positive",from:new Date(2012,1,2),to:new Date(2018,8,25),callback:function(t){t&&(o.dia=("0"+t.getDate()).slice(-2),o.mes=("0"+(t.getMonth()+1)).slice(-2),o.ano=t.getFullYear(),o.date.setDate(o.dia),o.date.setMonth(o.mes-1),o.date.setFullYear(o.ano),o.fechaTotal=o.ano+"-"+o.mes+"-"+o.dia)}},o.getPropositos=function(){t.LoadingShow(),e.get(t.domain+"propositos/").then(function(e){o.propositos=e.data,t.propositos=e.data,l.localStorage.propositos=JSON.stringify(e.data),o.pps={},t.LoadingHide(),f.displayEffect()},function(o){"UNAUTHORIZED"==o.statusText?(t.mensaje="No autorizado",delete l.localStorage.token,i.go("signin")):"Invalid token header. No credentials provided."==o.detail?(delete l.localStorage.token,i.go("signin")):t.banner([u.instant("net_error"),u.instant("try_again")]),t.LoadingHide()})},o.actualizar=function(i){1==i?(o.getPropositos(),e.get(t.domain+"userProfile/").then(function(e){t.perfil=e.data,l.localStorage.perfil=JSON.stringify(o.perfil)})):l.localStorage.perfil&&l.localStorage.user?(o.propositos=JSON.parse(l.localStorage.propositos),t.perfil=JSON.parse(l.localStorage.perfil),g(function(){f.displayEffect()},50)):actualizar(!0),f.displayEffect(),o.$broadcast("scroll.refreshComplete")},f.displayEffect(),o.marcar=function(i,n,a,r){marcacion=b(i.marcaciones),marcacion?marcacion.cumplimiento!=n&&(o.loading=a+"-"+r,e.put(t.domain+"marcaciones/"+marcacion.id+"/",marcacion).then(function(t){marcacion.cumplimiento=n,l.localStorage.propositos=JSON.stringify(o.propositos),o.loading="",marcacion.cumplimiento=n},function(e){o.loading="",t.banner([u.instant("net_error"),u.instant("try_again")])})):(data={dia:o.ano+"-"+o.mes+"-"+o.dia,cumplimiento:n,proposito:i.id},o.loading=a+"-"+r,e.post(t.domain+"marcaciones/",data).then(function(t){i.marcaciones.push(t.data),o.loading="",l.localStorage.propositos=JSON.stringify(o.propositos)},function(e){o.loading="",t.banner([u.instant("net_error"),u.instant("try_again")])}))},o.diaUp=function(){o.tomorrow=new Date,o.tomorrow.setTime(o.date.getTime()+864e5),o.dia=("0"+o.tomorrow.getDate()).slice(-2),o.mes=("0"+(o.tomorrow.getMonth()+1)).slice(-2),o.ano=o.tomorrow.getFullYear(),o.fechaTotal=o.ano+"-"+o.mes+"-"+o.dia,o.date.setTime(o.tomorrow.getTime())},o.diaDown=function(){o.tomorrow=new Date,o.tomorrow.setTime(o.date.getTime()-864e5),o.dia=("0"+o.tomorrow.getDate()).slice(-2),o.mes=("0"+(o.tomorrow.getMonth()+1)).slice(-2),o.ano=o.tomorrow.getFullYear(),o.fechaTotal=o.ano+"-"+o.mes+"-"+o.dia,o.date.setTime(o.tomorrow.getTime())},o.CreateProposito=function(i){o.PropositoNuevo={vinculacion:i,mes_ano:o.fechaTotal};p.show({template:'<input type="text" ng-model="PropositoNuevo.proposito">',title:u.instant("create_p"),subTitle:u.instant("add_p_message"),scope:o,buttons:[{text:u.instant("cancel")},{text:"<b>"+u.instant("save")+"</b>",type:"button-positive",onTap:function(i){""==o.PropositoNuevo.proposito?i.preventDefault():(t.LoadingShow(),e.post(t.domain+"propositos/",o.PropositoNuevo).then(function(e){o.propositos.push(e.data),l.localStorage.propositos=JSON.stringify(o.propositos),t.LoadingHide()},function(o){t.banner([u.instant("net_error"),u.instant("try_again")]),t.LoadingHide()}))}}]})},o.showOpciones=function(i){c.show({buttons:[{text:"<b>"+u.instant("edit")+"</b>"}],destructiveText:u.instant("delete_mssg"),titleText:u.instant("edit_p"),cancelText:u.instant("cancel"),cancel:function(){return!0},destructiveButtonClicked:function(){return e["delete"](t.domain+"propositos/"+i.id+"/").then(function(){o.index=o.propositos.indexOf(i),o.propositos.splice(o.index,1)}),!0},buttonClicked:function(){o.editProposito={},o.editProposito.id=i.id,o.editProposito.proposito=i.proposito,o.editProposito.mes_ano=i.mes_ano;p.show({template:'<input type="text" ng-model="editProposito.proposito">',title:u.instant("create_p"),subTitle:u.instant("add_p_message"),scope:o,buttons:[{text:u.instant("cancel")},{text:"<b>"+u.instant("save")+"</b>",type:"button-positive",onTap:function(n){""==i.proposito?n.preventDefault():e.put(t.domain+"propositos/"+o.editProposito.id+"/",o.editProposito).then(function(o){i.proposito=o.data.proposito})}}]});return!0}})},o.shownGroup=[!0,!0,!0,!0,!0,!0,!0,!0,!0,!0,!0],o.toggleGroup=function(t){o.isGroupShown(t),h.ripple({selector:"#listaproposito"})},o.isGroupShown=function(t){1==o.shownGroup[t.id]?o.shownGroup[t.id]=!1:o.shownGroup[t.id]=!0},o.toggleLeft=function(){a.toggleLeft()},o.verPerfil=function(){i.go("app.perfil")},o.verReporte=function(){i.go("app.reporte-mensual")},o.verSugerencias=function(){o.screen_width=l.innerWidth,i.go("app.sugerencias")},o.verEvangelio=function(){i.go("app.evangelio")},o.verTelefono=function(){i.go("app.telefono")},o.verMarcacion=function(){i.go("app.marcacion")},o.verOraciones=function(){i.go("app.oraciones")},o.abierto=!1,o.desplegar=function(){1==o.abierto?(o.shownGroup=[!0,!0,!0,!0,!0,!0,!0,!0,!0,!0,!0],o.abierto=!1):(o.shownGroup=[!1,!1,!1,!1,!1,!1,!1,!1],o.abierto=!0)}}]);
+angular.module('Agenvida.controllerMarcacion', ["slugifier", "jett.ionic.content.banner",
+ 'ion-floating-menu'])
+
+.controller('controllerMarcacion', function($scope, $rootScope, $http , $state, 
+  $ionicHistory, $ionicSideMenuDelegate,$filter, $ionicModal,$ionicPopup , 
+  $ionicActionSheet,$window,$ionicLoading,   $translate , $ionicContentBanner, $timeout, ionicMaterialInk, ionicMaterialMotion) {
+  /**************************************************/
+  /**************** VARIABLES **********************/
+  /*************************************************/
+
+
+
+$rootScope.banner = function(mensajes, intervalo, autoclose, type, transition){
+
+  $ionicContentBanner.show(
+  {text: mensajes ,
+          interval: intervalo || 2000,
+          autoClose: autoclose ||  6000,
+          type:  type || "error", //info,
+          transition: transition || 'fade' // 'vertical'
+        });
+
+ } 
+
+
+
+  $ionicHistory.clearHistory();
+  console.log($ionicHistory.viewHistory());
+  //$rootScope.domain = "http://agenvida.herokuapp.com/";
+  //$rootScope.domain = "http://localhost:8000/";
+  $scope.date = new Date( );
+  $scope.dia = ("0" + $scope.date.getDate()).slice(-2);
+  $scope.mes = ("0" + ($scope.date.getMonth() + 1)).slice(-2);
+  $scope.ano = $scope.date.getFullYear();
+  $scope.fechaTotal = $scope.ano + "-" + $scope.mes + "-" + $scope.dia;
+  console.log( $scope.dia + '-' +  $scope.mes + '-' + $scope.ano);
+  $scope.showInput = [false, false, false, false, false] ;
+  $scope.NuevoProposito = ['','','',''];
+  $scope.vinculaciones = [{"id":1,"nombre":"Dios"}, {"id":2,"nombre":"Conmigo"},{"id":3,"nombre":"Con los Demás"}, {"id":4,"nombre":"Con la Naturaleza"},{"id":7,"nombre":"Propósitos Semanales"}, {"id":8,"nombre":"Propósitos Mensuales"},]
+  $scope.extras = [{"id":7,"nombre":"Proposito Semanales"}, {"id":8,"nombre":"Proposito Mensuales"}]
+  $scope.propositoParticular = {"id":5, "nombre":"Proposito Particular"}
+  $scope.weekDaysList = $rootScope.dias_semana; // esto esta definido en app.js
+  $scope.monthList = $rootScope.meses; // esto esta definido en app.js
+  
+  /***************************************************/
+  /* Configuracion del Calendario para elegir fechas */
+   /***************************************************/
+  $scope.datepickerObject = {
+    titleLabel: 'Elegir día',  //Optional
+      todayLabel: 'Hoy',  //Optional
+      closeLabel: 'Cerrar',  //Optional
+      setLabel: 'Ir',  //Optional
+      setButtonType : 'button-assertive',  //Optional
+      todayButtonType : 'button-assertive',  //Optional
+  //  closeButtonType : 'button-assertive',  //Optional
+      inputDate: new Date(),    //Optional
+      mondayFirst: false,    //Optional
+  //  disabledDates: disabledDates, //Optional
+    weekDaysList: $scope.weekDaysList,   //Optional
+    monthList:  $scope.monthList, //Optional
+
+      templateType: 'modal', //Optional
+      showTodayButton: 'true', //Optional
+      modalHeaderColor: 'bar-positive', //Optional
+      modalFooterColor: 'bar-positive', //Optional
+      from: new Date(2012, 1, 2),   //Optional
+      to: new Date(2018, 8, 25),    //Optional
+      callback: function (val) {    //Mandatory
+       
+       if (val){
+           $scope.dia = ("0" + val.getDate()).slice(-2)
+           $scope.mes =  ("0" + (val.getMonth() + 1)).slice(-2)
+           $scope.ano =  val.getFullYear();
+
+           $scope.date.setDate($scope.dia);
+           $scope.date.setMonth($scope.mes-1);
+           $scope.date.setFullYear($scope.ano);
+           $scope.fechaTotal = $scope.ano + "-" + $scope.mes + "-" + $scope.dia;
+
+        // console.log($scope.date);
+
+       }
+  
+
+      }
+    };
+
+
+ 
+
+
+
+
+  // FIN DE CONFIGURACION DE CALENDARIO
+      /*************************************************/
+      /* TRAIGO TODOS LOS PROPOSITOS DEL USUARIO */ 
+      /*************************************************/
+      $scope.getPropositos = function() {  
+
+      $rootScope.LoadingShow();
+
+  // $http.defaults.headers.common['Authorization']= 'Bearer '+TokenService.getToken();     //para colocar el token en el header
+      $http.get($rootScope.domain + 'propositos/').then(function(result){//si el get va bien
+                                                        $scope.propositos = result.data;
+                                                        $rootScope.propositos = result.data;
+                                                        $window.localStorage.propositos = JSON.stringify(result.data) ;
+                                                        console.log( $scope.propositos);
+                                                        $scope.pps = {};
+                                                       // $scope.pps = $filter('filter')($scope.propositos, { vinculacion: $scope.propositoParticular.id , mes_ano: ano + '-'+ mes +'-'  } )[0];
+                                                      //  console.log($scope.pps);
+                                                        $rootScope.LoadingHide();
+                                                          $timeout(function() {
+                                                         ionicMaterialInk.displayEffect();
+                                                         ionicMaterialMotion.ripple();
+                                                    }, 100);
+
+
+
+                                                      
+                                                        },
+                                                      function(result){ // algo salio mal #TODO volver a registrar
+                                                              console.log("algo salio mal");
+                                                              if(result.statusText=="UNAUTHORIZED"){
+                                                                $rootScope.mensaje = "No autorizado";
+                                                                console.log("no estas autorizado");
+                                                                delete $window.localStorage.token;
+
+                                                                $state.go("signin");
+
+
+                                                                
+                                                              }
+
+
+
+                                                              else if (result.detail=="Invalid token header. No credentials provided."){
+                                                                delete $window.localStorage.token;
+                                                                console.log("Invalid Token");
+                                                                 $state.go("signin");
+
+
+                                                              }
+                                                              else{
+                                                                $rootScope.banner([$translate.instant("net_error"),$translate.instant("try_again") ])
+                                                                console.log(result);
+                                                              }
+
+                                                              $rootScope.LoadingHide();
+
+
+                                                              
+                                                       } 
+                                                    );
+
+                                          }         // FIN GET PROPOSITOS
+
+
+      /*************************************************/
+      /******* Busco la fecha de la marcacion  ******** */ 
+      /*************************************************/
+
+        function searchFecha(myArray){
+          console.log(myArray);
+          console.log($scope.ano + "-" + $scope.mes + "-" + $scope.dia);
+              for (var i=0; i < myArray.length; i++) {
+
+                  if (myArray[i].dia === $scope.fechaTotal) {
+                      console.log(myArray[i].dia)
+                      return myArray[i];
+                  }
+              }
+          }
+
+
+
+$scope.actualizar = function(fullrefresh){
+
+  console.log("estoy en actualizar");
+  console.log(fullrefresh);
+ 
+
+  if(fullrefresh == true) {
+  
+
+  
+      console.log("no tengo nada");
+       $scope.getPropositos();
+
+
+
+       console.log("no tengo nada");
+      
+
+     $http.get($rootScope.domain + "userProfile/").then(function(result){
+      $rootScope.perfil = result.data;
+      $window.localStorage.perfil = JSON.stringify($scope.perfil);
+      });
+
+    
+
+
+  }
+  else {
+      if ($window.localStorage.perfil && $window.localStorage.user ){
+
+    $scope.propositos =  JSON.parse($window.localStorage.propositos);
+    $rootScope.perfil = JSON.parse($window.localStorage.perfil);
+
+    $timeout(function() {
+         ionicMaterialInk.displayEffect();
+         ionicMaterialMotion.ripple();
+    }, 100);
+      
+  }
+  else{
+    $scope.actualizar(true);
+  }
+    
+
+  }
+    ionicMaterialInk.displayEffect();
+  
+  $scope.$broadcast('scroll.refreshComplete');
+
+
+
+   
+
+}
+
+  ionicMaterialInk.displayEffect();
+
+           
+
+   
+
+      /*************************************************/
+     /* MARCO LOS NUEVOS MARCACIONES DE LOS PROPOSITOS */ 
+     /*************************************************/
+    $scope.marcar = function( proposito, valorMarcacion,  sectionIndex, index){
+                  //  console.log(proposito);
+                  //  console.log($scope.ano + "-" + $scope.mes + "-" + $scope.dia);
+                  //  console.log( searchFecha( $scope.dia , proposito.marcaciones) );
+
+                    /* busco si ya existe una marcacion de ese proposito en esa fecha */
+                    marcacion = searchFecha(proposito.marcaciones);
+
+                 
+
+
+                    /* Si ya hay una maracion, entonces actualizo */   
+                    if (marcacion){
+                      
+
+
+                      if (marcacion.cumplimiento != valorMarcacion) /* Corroboro que realmente haya un cambio */
+                        {   
+                          /* Si hay un cambio entonces actualizo el valor en el servidor mediante un PUT*/
+                          console.log("hay marcacion y hay un cambio");
+                         // marcacion.loading = -1; 
+                          
+                          $scope.loading = sectionIndex + '-' + index; //pongo loading hasta que llegue la respuesta
+                          console.log($scope.loading);
+                           
+                          $http.put($rootScope.domain +'marcaciones/' + marcacion.id + "/", marcacion).then(
+                            function(result){ // si todo va bien
+                              console.log("volvi");
+                              console.log(result); 
+                              marcacion.cumplimiento = valorMarcacion;
+                              $window.localStorage.propositos = JSON.stringify($scope.propositos);
+
+                              $scope.loading = "";
+                             marcacion.cumplimiento = valorMarcacion;
+                            },
+                            function(result){ // por si algo sale mal
+                              $scope.loading = "";
+                              console.log(result);
+                               $rootScope.banner([$translate.instant("net_error"),$translate.instant("try_again") ])
+                             // marcacion.cumplimiento = null;
+                            }
+
+                            );
+
+                         } //endif
+                     
+                    }//endif
+
+                    /* Si no hay marcacion entonces creo una nueva*/ 
+
+                    else{
+                      console.log(" NO hay marcacion");
+                      data = { 
+                              "dia": $scope.ano + "-" + $scope.mes + "-" + $scope.dia,
+                              "cumplimiento": valorMarcacion,
+                              "proposito": proposito.id
+                      }
+                      
+                      //console.log(data);
+                      $scope.loading = sectionIndex + '-' + index; //pongo loading hasta que llegue la respuesta
+                      $http.post($rootScope.domain + 'marcaciones/', data).then(
+                        function(result){
+
+                            //console.log(result);
+                            proposito.marcaciones.push(result.data);
+                            //$scope.loading(proposito.id);
+                            $scope.loading = ""; //pongo loading hasta que llegue la respuesta
+                            $window.localStorage.propositos = JSON.stringify($scope.propositos);
+                           },
+                        function (result){ // por si algo sale mal
+                          console.log("algo salio mal en No hay marcacion");
+                           $scope.loading = "";
+                            $rootScope.banner([$translate.instant("net_error"),$translate.instant("try_again") ])
+                        }
+
+                                                                               );
+                    }/* Fin else*/
+  }//Fin funcion marcar
+
+
+  
+
+/*********************************************/
+/* Funcion para aumentar y disminuir un dia con flechita */
+/*********************************************/
+
+  $scope.diaUp = function(){
+
+  $scope.tomorrow = new Date();
+   
+  $scope.tomorrow.setTime($scope.date.getTime()+ 864e5);
+
+  $scope.dia = ("0" + $scope.tomorrow.getDate()).slice(-2);
+  $scope.mes =  ("0" + ($scope.tomorrow.getMonth() + 1)).slice(-2);
+
+  console.log($scope.dia);
+
+  $scope.ano= $scope.tomorrow.getFullYear();
+
+  $scope.fechaTotal = $scope.ano + "-" + $scope.mes + "-" + $scope.dia;
+  
+  $scope.date.setTime($scope.tomorrow.getTime());
+
+
+  }
+
+  $scope.diaDown = function(){
+
+  $scope.tomorrow = new Date();
+   
+  $scope.tomorrow.setTime($scope.date.getTime() - 864e5);
+
+  $scope.dia = ("0" + $scope.tomorrow.getDate()).slice(-2);
+  $scope.mes =  ("0" + ($scope.tomorrow.getMonth() + 1)).slice(-2);
+
+  $scope.ano= $scope.tomorrow.getFullYear();
+
+  console.log($scope.dia);
+
+  $scope.fechaTotal = $scope.ano + "-" + $scope.mes + "-" + $scope.dia;
+
+
+  $scope.date.setTime($scope.tomorrow.getTime());
+
+  }
+
+
+/*********************************************/
+/* FIN Funcion  aumentar un dia con flechita */
+/*********************************************/
+
+  /*********************************************/
+/* TRAigo mis datos personales */
+/*********************************************/
+
+
+ 
+
+ 
+/**********************************************/
+/**** Show pop Up de Crear nuevo proposito****/
+/*********************************************/
+$scope.CreateProposito = function(vinculacionID) {
+   $scope.PropositoNuevo = {vinculacion: vinculacionID , mes_ano:$scope.fechaTotal} ;
+
+   // An elaborate, custom popup
+   var myPopup = $ionicPopup.show({
+     template: '<input type="text" ng-model="PropositoNuevo.proposito">',
+     title: $translate.instant('create_p'),
+     subTitle:   $translate.instant('add_p_message') ,
+     scope: $scope,
+     buttons: [
+       { text: $translate.instant('cancel') },
+       
+        {
+         text: '<b>'+ $translate.instant('save') +'</b>',
+         type: 'button-positive',
+         onTap: function(e) {
+              if($scope.PropositoNuevo.proposito == ""){
+                  e.preventDefault();              
+
+              }
+              else {
+
+                console.log($scope.PropositoNuevo);
+                $rootScope.LoadingShow();
+
+                $http.post($rootScope.domain +'propositos/', $scope.PropositoNuevo).then(
+                                      function(result){
+                                        console.log(result);
+                                        $scope.propositos.push(result.data);
+                                        $window.localStorage.propositos = JSON.stringify($scope.propositos);
+                                        $rootScope.LoadingHide();
+
+                                      },
+                                      function(result){ // por si algo sale mal
+                                         $rootScope.banner([$translate.instant("net_error"),$translate.instant("try_again") ])
+                                        $rootScope.LoadingHide();
+                                      }
+
+                  )
+
+              }
+              
+         }
+       },
+     ]
+   }); }
+
+/* FIN de POPUP */
+  /**************************************************************************/
+  /*****Muestro las opciones de edicion de un proposito al hacer doble tab***/
+  /**************************************************************************/
+
+ $scope.showOpciones = function(proposito) {
+
+   // Show the action sheet
+   var hideSheet = $ionicActionSheet.show({
+     buttons: [
+       { text: '<b>'+$translate.instant('edit')+'</b>' },
+      
+     ],
+     destructiveText: $translate.instant('delete_mssg') ,
+     titleText: $translate.instant('edit_p'),
+     cancelText: $translate.instant('cancel'),
+     cancel: function() {
+          // add cancel code..
+          //console.log(propositoID);
+          return true;
+        },
+
+    destructiveButtonClicked: function(){ //Cuando hago tab en eliminar
+      console.log("Eliminado");
+       $http.delete($rootScope.domain +'propositos/' + proposito.id + "/").then(
+
+        function(){
+          console.log("Proposito eliminado");
+          $scope.index = $scope.propositos.indexOf(proposito)
+           $scope.propositos.splice($scope.index, 1);
+
+
+
+            }
+
+     );
+       
+     
+      return true;
+    },
+     buttonClicked: function() { //cuando hago click en editar
+      console.log(proposito);
+     // delete proposito.marcaciones;
+      $scope.editProposito = {}
+
+      console.log(proposito);
+      $scope.editProposito.id = proposito.id;
+      $scope.editProposito.proposito = proposito.proposito;
+      $scope.editProposito.mes_ano = proposito.mes_ano;
+
+    var myPopup = $ionicPopup.show({
+     template: '<input type="text" ng-model="editProposito.proposito">',
+     title: $translate.instant('create_p'),
+     subTitle: $translate.instant('add_p_message'),
+     scope: $scope,
+     buttons: [
+       { text: $translate.instant('cancel') },
+       
+        {
+         text: '<b>'+$translate.instant('save') +'</b>',
+         type: 'button-positive',
+         onTap: function(e) {
+              if(proposito.proposito == ""){
+                  e.preventDefault();              
+
+              }
+              else {
+
+                
+                $http.put($rootScope.domain +'propositos/'+$scope.editProposito.id + "/", $scope.editProposito).then(
+                                                                                        function(result){
+                                                                                          console.log(result);
+                                                                                          proposito.proposito = result.data.proposito;
+                                                                                        //  $scope.propositos.push(result.data);
+
+                                                                                        }
+                  )
+
+              }
+              
+         }
+       },
+     ]
+   }); 
+       return true;
+     }
+   });
+
+
+ };
+
+//FIN de botones de edicion
+
+
+    /************************************
+   * if given group is the selected group, deselect it
+   * else, select the given group
+   * Es el acordeon
+   *************************************/
+
+  
+ /* $scope.toggleGroup = function(group) {
+    if ($scope.isGroupShown(group)) {
+      $scope.shownGroup = null;
+    } else {
+      $scope.shownGroup = group.id;
+    }
+  };
+  $scope.isGroupShown = function(group) {
+    return $scope.shownGroup === group.id;
+  };
+
+
+
+  */
+
+$scope.shownGroup = [true,true, true, true, true, true, true, true, true, true, true,  ];
+
+
+
+
+  $scope.toggleGroup = function(group) {
+   $scope.isGroupShown(group);
+     
+  };
+  
+
+  $scope.isGroupShown = function(group) {
+    if( $scope.shownGroup[group.id] == true ){
+        $scope.shownGroup[group.id] = false;
+    }
+    else {
+        $scope.shownGroup[group.id] = true;
+
+    }
+
+   // return $scope.shownGroup === group.id;
+  };
+
+  
+
+  // Fin de Acorderon 
+
+
+$scope.toggleLeft = function() {
+    $ionicSideMenuDelegate.toggleLeft();
+  };
+
+$scope.verPerfil = function (){
+  console.log("ver perfil");
+  $state.go('app.perfil');
+}
+
+
+$scope.verReporte = function(){
+   $state.go('app.reporte-mensual');
+}
+
+
+$scope.verNotificaciones = function(){
+   $state.go('app.notificaciones');
+}
+
+$scope.verSugerencias = function(){
+  $scope.screen_width = $window.innerWidth;
+  console.log($scope.screen_width);
+
+   $state.go('app.sugerencias');
+}
+
+$scope.verEvangelio = function(){
+  
+
+   $state.go('app.evangelio');
+}
+
+
+
+$scope.verTelefono = function(){
+  
+
+   $state.go('app.telefono');
+}
+
+$scope.verMarcacion= function(){
+   $state.go('app.marcacion');
+}
+
+$scope.verOraciones= function(){
+   $state.go('app.oraciones');
+}
+
+
+
+
+
+$scope.abierto = false;
+
+$scope.desplegar = function(){
+
+ if ($scope.abierto == true){
+
+  $scope.shownGroup = [true,true, true, true, true, true, true, true, true, true, true,  ];
+  console.log($scope.shownGroup);
+  $scope.abierto =  false;
+ }
+
+ else{
+
+$scope.shownGroup = [false, false,false,false,false,false,false,false,];
+console.log($scope.shownGroup);
+ $scope.abierto =  true;
+
+ }
+}
+
+
+
+})/* FIN AGENVIDACTRL*/
+
+
+

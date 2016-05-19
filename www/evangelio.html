@@ -12,7 +12,7 @@
 
 
 <div class="card">	
-	<div class="item item-divider" >
+	<div class="item item-stable" >
 		   <h2 data-ng-bind-html="titulo_evangelio"></h2>
 		   <p>{{hoyLetras}}</p>
   	</div>
@@ -37,9 +37,9 @@
 </style>
 
 <div class="center social">
-   <button class="button button-fab" ng-click="shareViaWhatsapp()"><i class="fa fa-whatsapp"></i></button>
- <button class="button button-fab" ng-click="shareViaFacebook()"><i class="fa fa-facebook"></i></button>
- <button class="button button-fab" ng-click="shareViaTwitter()"><i class="fa fa-twitter"></i></button>
+   <button class="button button-fab" ng-click="shareViaWhatsapp(evangelio)"><i class="fa fa-whatsapp"></i></button>
+ <!--<button class="button button-fab" ng-click="shareViaFacebook()"><i class="fa fa-facebook"></i></button>
+ <button class="button button-fab" ng-click="shareViaTwitter()"><i class="fa fa-twitter"></i></button> -->
 
 </div>
 

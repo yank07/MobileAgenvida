@@ -1,1 +1,82 @@
-angular.module("Agenvida.controllerTelefono",[]).controller("controllerTelefono",["$scope","$state","$http","$window","$rootScope","$ionicLoading","$sce","$cordovaSocialSharing","ionicMaterialMotion","ionicMaterialInk",function(a,n,t,e,o,i,r,s,c,h){t.get("js/frases.json").then(function(n){a.frases=n.data.frases,a.cant_frases=n.data.frases.length,a.ramdom=Math.floor(Math.random()*a.cant_frases),a.frase_elegida=a.frases[a.ramdom],h.displayEffect()}),a.shareAnywhere=function(){s.share("This is your message","This is your subject","http://agenvida.com/static/img/icono.png","http://agenvida.com/")},a.shareViaTwitter=function(a,n,t){s.canShareVia("twitter",a,n,t).then(function(e){s.shareViaTwitter(a,n,t)},function(a){alert("Cannot share on Twitter")})},a.shareViaFacebook=function(a,n,t){s.shareViaFacebook("mensaje","http://agenvida.com/static/img/icono.png","http://agenvida.com/").then(function(a){},function(a){})},a.shareViaWhatsapp=function(a,n,t){s.shareViaWhatsApp("mensaje","http://agenvida.com/static/img/icono.png","http://agenvida.com/").then(function(a){},function(a){})},a.nuevaFrase=function(){a.ramdom=Math.floor(Math.random()*a.cant_frases),a.frase_elegida=a.frases[a.ramdom]}}]);
+
+angular.module('Agenvida.controllerTelefono',[])
+.controller('controllerTelefono', function($scope, $state, $http ,$window, 
+	$rootScope, $ionicLoading, $sce,$cordovaSocialSharing, ionicMaterialMotion , ionicMaterialInk) {
+
+$http.get('js/frases.json').then(function(result){
+	//console.log(result.data.frases);
+	$scope.frases = result.data.frases;
+	//$scope.cards = result.data.frases;
+	 $scope.cant_frases = result.data.frases.length;
+	 $scope.ramdom = Math.floor((Math.random() * $scope.cant_frases) );
+	 //console.log($scope.ramdom);
+
+	 $scope.frase_elegida = $scope.frases[$scope.ramdom ];
+
+	 ionicMaterialInk.displayEffect();
+   ionicMaterialMotion.ripple();
+
+});
+
+$scope.shareAnywhere = function() {
+        $cordovaSocialSharing.share("This is your message", "This is your subject", "http://agenvida.com/static/img/icono.png", "http://agenvida.com/");
+    }
+ 
+$scope.shareViaTwitter = function(message) {
+$cordovaSocialSharing.canShareVia(message, "www/img/padreK.jpg").then(function(result) {
+    $cordovaSocialSharing.shareViaTwitter(message, image, link);
+}, function(error) {
+    alert("Cannot share on Twitter");
+});
+}
+
+
+
+$scope.shareViaFacebook =  function(message) {
+
+
+$cordovaSocialSharing.shareViaFacebook(message, "www/img/padreK.jpg")
+    .then(function(result) {
+      // Success!
+    }, function(err) {
+      // An error occurred. Show a message to the user
+    });
+
+}
+
+
+
+$scope.shareViaWhatsapp =  function(message) { 
+  console.log(message);
+
+ $cordovaSocialSharing
+    .shareViaWhatsApp(message,"","")
+    .then(function(result) {
+      // Success!
+    }, function(err) {
+      // An error occurred. Show a message to the user
+    });
+
+
+}
+
+ 
+
+$scope.nuevaFrase = function(){
+
+	$scope.ramdom = Math.floor((Math.random() * $scope.cant_frases) );
+	 //console.log($scope.ramdom);
+
+	 $scope.frase_elegida = $scope.frases[$scope.ramdom ];
+
+
+}
+
+
+
+
+
+	})
+
+
+

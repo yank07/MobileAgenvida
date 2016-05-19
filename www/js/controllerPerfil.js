@@ -84,6 +84,10 @@ $scope.actualizar = function(fullrefresh){
                     $rootScope.banner([$translate.instant("net_error"),$translate.instant("try_again") ])
 
                     $rootScope.LoadingHide();
+                     $timeout(function() {
+                     ionicMaterialInk.displayEffect();
+                     ionicMaterialMotion.blinds();
+                }, 50);
                 }
 
 
@@ -123,7 +127,7 @@ $scope.actualizar = function(fullrefresh){
                 $timeout(function() {
                      ionicMaterialInk.displayEffect();
                      ionicMaterialMotion.ripple();
-                }, 50);
+                }, 100);
 
             }
             else {

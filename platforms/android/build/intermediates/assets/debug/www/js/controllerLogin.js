@@ -1,1 +1,125 @@
-angular.module("Agenvida.controllerLogin",[]).controller("controllerLogin",["$scope","$state","$http","$window","$rootScope","$ionicLoading","$translate",function(e,o,a,n,s,r,t){n.localStorage.token&&(e.message="Welcome Ya tengo el token"),e.user={},e.user.username=n.localStorage.username,e.user.password=n.localStorage.password,e.language=n.localStorage.language,"undefined"==typeof e.user.password&&(e.user.password=""),e.mensajeShow=!1,e.LoadingShow=function(){r.show({content:"Loading Data",animation:"fade-in",showBackdrop:!1,maxWidth:200,showDelay:500})},e.LoadingHide=function(){r.hide()},e.ChangeLanguage=function(e){n.localStorage.language=e,t.use(e.codigo)},e.signIn=function(){""!=e.user.username&&""!=e.user.password?(e.LoadingShow(),a({method:"POST",url:s.domain+"o/token/",headers:{"Content-Type":"application/x-www-form-urlencoded"},data:"client_id="+s.client_id+"&grant_type=password&username="+e.user.username+"&password="+e.user.password+"&client_secret="}).then(function(a){n.localStorage.username=e.user.username,n.localStorage.password=e.user.password,n.localStorage.token=a.data.access_token,n.localStorage.refresh_token=a.data.refresh_token,e.LoadingHide(),e.message=t.instant("success_login"),e.message_lindo="",e.color_mensaje="green",e.mensajeShow=!0,e.mensajeShow=!1,e.LoadingHide(),o.transitionTo("app.marcacion")},function(o){delete n.localStorage.token,e.message=t.instant(o.data.error),e.message_lindo=t.instant("auth_error"),e.color_mensaje="red",e.mensajeShow=!0,e.LoadingHide()})):(e.message_lindo=t.instant("user_password_message"),e.color_mensaje="red",e.mensajeShow=!0)},e.signup=function(){o.go("signup")},e.forgotPasword=function(){o.go("forgot-password")},e.signIn()}]);
+angular.module('Agenvida.controllerLogin', [])
+.controller('controllerLogin', function($scope, $state, $http ,$window, $rootScope,$ionicLoading,$translate) {
+
+
+ if ( $window.localStorage.token){
+  console.log($window.localStorage.token);
+  $scope.message = 'Welcome Ya tengo el token';
+  console.log($scope.message);    
+ 
+
+ }
+ $scope.user = {};
+
+$scope.user.username = $window.localStorage.username;
+$scope.user.password = $window.localStorage.password;
+$scope.language = $window.localStorage.language ;
+
+if (typeof $scope.user.password === 'undefined'){
+  $scope.user.password = '';
+
+}
+
+
+ $scope.mensajeShow=false;
+
+ 
+   
+
+  $scope.LoadingShow = function() {
+    $ionicLoading.show({
+      content: 'Loading Data',
+      animation: 'fade-in',
+      showBackdrop: false,
+      maxWidth: 200,
+      showDelay: 500
+  });
+  };
+  $scope.LoadingHide = function(){
+    $ionicLoading.hide();
+  };
+
+
+   $scope.ChangeLanguage = function(language){
+   $window.localStorage.language = language;
+   console.log(language.name);
+   $translate.use(language.codigo);
+  };
+
+
+   
+
+  
+  
+  $scope.signIn = function() {
+   
+    console.log($scope.user.password );
+   
+    if($scope.user.username!='' && $scope.user.password != '' ){
+    $scope.LoadingShow();
+    
+    $http({
+    method: 'POST',
+              url:$rootScope.domain+"o/token/",
+              headers: {
+                        'Content-Type': "application/x-www-form-urlencoded",
+                        },
+              data:"client_id="+ $rootScope.client_id+"&grant_type=password&username="+$scope.user.username+"&password="+$scope.user.password+"&client_secret="
+  })
+   .then(function(result){
+    
+      $window.localStorage.username = $scope.user.username;
+      $window.localStorage.password = $scope.user.password;
+      $window.localStorage.token = result.data.access_token;
+      $window.localStorage.refresh_token = result.data.refresh_token;
+      $scope.LoadingHide();
+      $scope.message = $translate.instant('success_login');
+      $scope.message_lindo = ''
+      $scope.color_mensaje = "green";
+      $scope.mensajeShow=true;
+      console.log($scope.message);
+      $scope.mensajeShow=false;
+      $scope.LoadingHide();
+      $state.transitionTo('app.marcacion');
+
+   },
+   function (result){//Si hay algun error en la autenticacion
+
+      // Erase the token if the user fails to log in
+        delete $window.localStorage.token;
+
+        // Handle login errors here
+        console.log(result);
+        $scope.message = $translate.instant(result.data.error);
+        $scope.message_lindo =  $translate.instant("auth_error");
+        $scope.color_mensaje = "red";
+        $scope.mensajeShow=true;
+        $scope.LoadingHide();
+
+
+   }
+   );
+
+  }//endif no intrudujo ningun valor
+  else{
+        $scope.message_lindo = $translate.instant('user_password_message');
+        $scope.color_mensaje = "red";
+        $scope.mensajeShow=true;
+
+  }
+}; /* FIN DE FUNCION signIn */
+
+  $scope.signup = function(){
+    $state.go('signup');
+  };
+
+  $scope.forgotPasword = function(){
+    $state.go("forgot-password");
+  }
+
+  $scope.signIn();
+
+
+});
+
+

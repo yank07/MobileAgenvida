@@ -185,6 +185,14 @@ span.icon.neutro.neutro-mark {
 }
 
 
+.menu .item {
+    font-weight: bold;
+}
+
+.menu-bottom {
+    font-weight: bold;
+}
+
 
 .icono-login img {
   width: 40%;
@@ -316,16 +324,33 @@ span.icon.neutro.neutro-mark {
 }
 
 .expanded.bar.bar-header {
-    background: rebeccapurple;
+    background: #1A237E;
 }
 
 .bar-subheader {
-    margin-top: 10px;
+   /* margin-top: 10px;*/
 }
 
 .dark {
     color: #797979 !important;
 }
 
+.ionic_timepicker_popup .heading {
+    background: rgb(56, 126, 245);
+}
+
+
+.ionic_timepicker_popup  .button_set {
+    background: rgb(56, 126, 245);
+}
+
+.ionic_timepicker_popup  .button_close {
+     background: #F8F8F8;
+     color:#797979;
+}
+.ionic_timepicker_popup .button {
+     padding: 0px;
+}
+   
 
 /* FIN REPORTE */

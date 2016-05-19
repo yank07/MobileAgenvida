@@ -1,7 +1,7 @@
 
 angular.module('Agenvida.controllerOraciones',[])
 .controller('controllerOraciones', function($scope, $state, $http ,$window,
- $rootScope, $ionicLoading, $sce , $ionicModal, $location, ionicMaterialInk) {
+ $rootScope, $ionicLoading, $sce , $ionicModal, $location, ionicMaterialInk, $timeout) {
 
 
 	
@@ -20,11 +20,25 @@ if($location.path() != '/app/oracionDetail'){
 						$scope.oraciones = result.data;
 					//	console.log(result.data);
 						 $rootScope.LoadingHide();	
+
 						 $window.localStorage.oraciones = JSON.stringify(result.data);
 						 console.log($scope.oraciones.length);
 						 console.log($scope.oraciones);
+						  $timeout(function() {
+         ionicMaterialInk.displayEffect();
+    }, 50);
 
-				});
+				},
+				function(result){
+
+					 $rootScope.LoadingHide();	
+					 $state.go('app.oraciones');
+
+				}
+
+
+
+				);
 		}
 		else{
 			$scope.oraciones = JSON.parse( $window.localStorage.oraciones);

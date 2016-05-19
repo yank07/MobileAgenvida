@@ -31,23 +31,40 @@
 
   </div>
 
-  <div class="item tabs tabs-secondary tabs-icon-left">
-    <a class="tab-item" href="#" ng-click="nuevaFrase()">
-      <i class="icon ion-ios-refresh-empty"></i>
+  <div class="item ">
+   
+
+    <button class="button button-block button-calm" ng-click="nuevaFrase()">
+               <i class="icon ion-ios-refresh-empty"></i>
       Otra Frase
-    </a>
+            </button>
    
   <!-- <a class="tab-item" href="#">
       <i class="icon ion-share"></i>
       Compartir
     </a> -->
   </div>
+<style type="text/css">
+.bar .button.button-fab i, .button.button-fab i {
+    font-size: 1.2rem;
+    margin-top: 0;
+}
 
- <button class="button" ng-click="shareAnywhere()">Share anywhere</button>
- <button class="button" ng-click="shareviaFacebook()">Share Facebook</button>
- <button class="button" ng-click="shareViaWhatsapp()">Share Whatapp</button>
+.social {
+  margin: 10px 0px;
+}
 
-<button class="button" ng-click="shareViaTwitter('some message', null, 'https://www.thepolyglotdeveloper.com')">Share on Twitter</button>
+</style>
+
+<div class="center social">
+   <button class="button button-fab " ng-click="shareViaWhatsapp(frase_elegida)"><i class="fa fa-whatsapp"></i></button>
+ <!--<button class="button button-fab" ng-click="shareViaFacebook(frase_elegida)"><i class="fa fa-facebook"></i></button> -->
+ <button class="button button-fab" ng-click="shareViaTwitter(frase_elegida)"><i class="fa fa-twitter"></i></button>
+
+</div>
+
+
+
 
 
 

@@ -9,34 +9,10 @@
                   </ion-nav-bar>
   
   <ion-content >
-<!-- 
-<div class="card">	
-	<div  class="item item-text-wrap">
-		<h2 data-ng-bind-html="titulo_primera_lectura"></h2>
-		<div data-ng-bind-html="primera_lectura"></div>
-	</div>
 
-
-</div>
 
 <div class="card">	
-<div  class="item item-text-wrap">
-			<h2 data-ng-bind-html="titulo_segunda_lectura"></h2>
-		<div data-ng-bind-html="segunda_lectura"></div>
-
-</div>
-</div>
-
-<div class="card">	
-<div  class="item item-text-wrap">
-		<h2 data-ng-bind-html="titulo_salmo"></h2>
-		<div data-ng-bind-html="salmo"></div>
-
-</div>
-</div> -->
-
-<div class="card">	
-	<div class="item item-divider" >
+	<div class="item item-stable" >
 		   <h2 data-ng-bind-html="titulo_evangelio"></h2>
 		   <p>{{hoyLetras}}</p>
   	</div>
@@ -48,6 +24,24 @@
 			<div ng-hide="palabra_de_dios">Palabra de Dios</div>
 
 
+			<style type="text/css">
+.bar .button.button-fab i, .button.button-fab i {
+    font-size: 1.2rem;
+    margin-top: 0;
+}
+
+.social {
+  margin: 10px 0px;
+}
+
+</style>
+
+<div class="center social">
+   <button class="button button-fab" ng-click="shareViaWhatsapp(evangelio)"><i class="fa fa-whatsapp"></i></button>
+ <!--<button class="button button-fab" ng-click="shareViaFacebook()"><i class="fa fa-facebook"></i></button>
+ <button class="button button-fab" ng-click="shareViaTwitter()"><i class="fa fa-twitter"></i></button> -->
+
+</div>
 
 	</div>
 </div>

@@ -1,1 +1,354 @@
-angular.module("Agenvida.controllerPerfil",[]).controller("controllerPerfil",["$scope","$rootScope","$state","$http","$window","$ionicHistory","$ionicPopup","$translate","ionicMaterialInk","ionicMaterialMotion",function(t,e,n,i,o,a,r,l,s,c){t.goMarcacion=function(){n.go("marcacion")},t.goConfiguracion=function(){n.go("app.configuracion")},t.goContratoPedagogico=function(){n.go("app.contrato-pedagogico")},t.cerraSesion=function(){delete o.localStorage.token,delete o.localStorage.password,n.go("signin")},t.verRecordatorioMail=function(){n.go("app.recordatorio-mail")},t.verNotificaciones=function(){n.go("app.notificaciones")},t.idiomas=[{name:"Español",codigo:"es"},{name:"Ingles",codigo:"en"}],t.actualizar=function(n){n?(e.LoadingShow(),i.get(e.domain+"userProfile/").then(function(e){t.perfil=e.data,s.displayEffect()},function(t){e.banner([l.instant("net_error"),l.instant("try_again")]),e.LoadingHide()}),i.get(e.domain+"users/").then(function(n){t.user=n.data,o.localStorage.user=JSON.stringify(t.user),e.LoadingHide()},function(t){e.LoadingHide(),e.banner([l.instant("net_error"),l.instant("try_again")])}),t.$broadcast("scroll.refreshComplete")):o.localStorage.perfil&&o.localStorage.user?(t.perfil=JSON.parse(o.localStorage.perfil),t.user=JSON.parse(o.localStorage.user)):t.actualizar(!0)},t.editar=function(n){"nacimiento"==n?(t.inputType="date",null!=t.perfil.nacimiento?(t.nacimiento=t.perfil.nacimiento.split("-"),t.nacimiento=new Date(t.nacimiento[0],t.nacimiento[1]-1,t.nacimiento[2])):t.nacimiento=new Date(1990,10,18),t.perfil.nacimiento=t.nacimiento):t.inputType="text","reafirmar"==n||"adquirir"==n||"liberar"==n?t.template='<textarea ng-model="perfil.'+n+'" rows="4"></textarea>':t.template='<input type="'+t.inputType+'" ng-model="perfil.'+n+'">';r.show({template:t.template,title:l.instant("edit"),subTitle:"",scope:t,buttons:[{text:l.instant("cancel")},{text:"<b>"+l.instant("save")+"</b>",type:"button-positive",onTap:function(a){"nacimiento"==n?(t.nacimiento=t.perfil.nacimiento.getFullYear()+"-"+(t.perfil.nacimiento.getMonth()+1)+"-"+t.perfil.nacimiento.getDate(),data={nacimiento:t.nacimiento},i.put(e.domain+"userProfile/",data).then(function(e){t.perfil=e.data})):i.put(e.domain+"userProfile/",t.perfil).then(function(e){t.perfil=e.data}),o.localStorage.perfil=JSON.stringify(t.perfil)}}]})},t.editarUser=function(n){t.template='<input type="text" ng-model="user.'+n+'">';r.show({template:t.template,title:l.instant("edit"),subTitle:"",scope:t,buttons:[{text:l.instant("cancel")},{text:"<b>"+l.instant("save")+"</b>",type:"button-positive",onTap:function(n){i.put(e.domain+"users/",t.user).then(function(e){t.user=e.data,o.localStorage.user=JSON.stringify(t.user)})}}]})},t.editarPassword=function(n){t.password={},t.password.new_password="",t.password.current_password="",t.template='<input type="password" ng-model="password.current_password" placeholder="Contraseña Actual"><br><input type="password" ng-model="password.new_password" placeholder="Nueva Contraseña">';r.show({template:t.template,title:"Editar ",subTitle:"",scope:t,buttons:[{text:"Cancelar"},{text:"<b>Guardar</b>",type:"button-positive",onTap:function(n){i.post(e.domain+"auth/password/",t.password).then(function(t){})}}]})},t.editarIdioma=function(n){t.perfil.idioma=n.codigo,i.put(e.domain+"userProfile/",t.perfil).then(function(e){t.perfil=e.data,o.localStorage.language=t.perfil.idioma}),l.use(n.codigo)}}]);
+angular.module('Agenvida.controllerPerfil', [])
+.controller('controllerPerfil', function($scope,$rootScope, $state, $http ,$window,
+    $ionicHistory, $ionicPopup, $translate,  ionicMaterialInk, ionicMaterialMotion, $timeout){
+
+// $rootScope.domain = "http://agenvida.herokuapp.com/";
+
+
+
+
+$scope.goMarcacion = function(){
+	$state.go('marcacion');
+
+};
+
+$scope.goConfiguracion = function() {
+	console.log("go configuracion");
+	$state.go('app.configuracion');
+};
+
+
+$scope.goContratoPedagogico = function(){
+	
+	console.log("contrato-pedagogico");
+	$state.go('app.contrato-pedagogico');
+
+};
+
+$scope.cerraSesion = function (){
+
+	delete $window.localStorage.token;
+    delete $window.localStorage.password;
+	$state.go('signin');
+
+
+}
+
+$scope.verRecordatorioMail = function(){
+  console.log("recordatorio-mail");
+
+   $state.go('app.recordatorio-mail');
+}
+
+$scope.verNotificaciones = function(){
+  console.log("verNotificaciones");
+
+   $state.go('app.notificaciones');
+}
+
+
+
+
+
+
+/* Posibles Idiomas */
+$scope.idiomas = [{
+    name: "Español",
+    codigo:"es"
+   
+}, {
+    name: "Ingles",
+    codigo:"en"
+   
+   }]
+$scope.actualizar = function(fullrefresh){ 
+       
+
+        if (fullrefresh) {
+                 $rootScope.LoadingShow();
+      
+
+                $http.get($rootScope.domain + "userProfile/").then(
+
+                function(result){
+
+                	$scope.perfil = result.data;
+                     $timeout(function() {
+                     ionicMaterialInk.displayEffect();
+                     ionicMaterialMotion.blinds();
+                }, 50);
+                    
+                },
+
+                function(result){ // si algo va mal.
+                    $rootScope.banner([$translate.instant("net_error"),$translate.instant("try_again") ])
+
+                    $rootScope.LoadingHide();
+                     $timeout(function() {
+                     ionicMaterialInk.displayEffect();
+                     ionicMaterialMotion.blinds();
+                }, 50);
+                }
+
+
+                );
+
+
+                    $http.get($rootScope.domain + "users/").then(
+                    function(result){
+
+                    	$scope.user = result.data;
+
+                    	console.log($scope.user);
+                        
+                         $window.localStorage.user = JSON.stringify($scope.user);
+
+                        $rootScope.LoadingHide();
+
+
+                    },
+                    function(result){ // si algo va mal.
+                        $rootScope.LoadingHide();
+                $rootScope.banner([$translate.instant("net_error"),$translate.instant("try_again") ])
+
+                    }
+
+                    );
+
+                $scope.$broadcast('scroll.refreshComplete');
+
+        }
+        else { // no full refresh
+            if ($window.localStorage.perfil && $window.localStorage.user ){
+
+                $scope.perfil =  JSON.parse($window.localStorage.perfil);
+                $scope.user = JSON.parse($window.localStorage.user);
+                console.log($scope.perfil);
+                $timeout(function() {
+                     ionicMaterialInk.displayEffect();
+                     ionicMaterialMotion.ripple();
+                }, 100);
+
+            }
+            else {
+                $scope.actualizar(true);
+            }
+            
+
+
+        }
+
+
+
+}
+
+/**********************************************/
+/**** Show pop Up de Editar algo del perfil****/
+/*********************************************/
+$scope.editar = function(campo) {
+
+	console.log(campo);
+ 	if (campo == "nacimiento"){
+ 		$scope.inputType = "date";
+ 		console.log($scope.perfil.nacimiento);
+        if($scope.perfil.nacimiento!=null){
+
+    $scope.nacimiento = $scope.perfil.nacimiento.split("-");
+        console.log($scope.nacimiento[0]);
+        console.log($scope.nacimiento[1]);
+        console.log($scope.nacimiento[2]);
+        $scope.nacimiento = new Date($scope.nacimiento[0],$scope.nacimiento[1]-1,$scope.nacimiento[2]);
+
+
+
+        }else{
+            $scope.nacimiento = new Date(1990,10,18);
+        }
+
+        
+ 	
+ 		$scope.perfil.nacimiento = $scope.nacimiento;
+ 		
+
+ 	}else{
+ 		$scope.inputType = "text"
+ 	}
+
+ 		if (campo== "reafirmar" || campo == "adquirir" || campo== "liberar"){
+
+         		$scope.template =   '<textarea ng-model="perfil.'+campo+'" rows="4"></textarea>'
+
+         	}
+         	else{
+         		$scope.template = '<input type="'+ $scope.inputType  +'" ng-model="perfil.'+ campo +'">'
+         	}
+
+
+
+
+   var myPopup = $ionicPopup.show({
+     template: $scope.template,
+     title:  $translate.instant('edit'),
+     subTitle: '',
+     scope: $scope,
+     buttons: [
+       { text:  $translate.instant('cancel')},
+       
+        {
+         text: '<b>'+$translate.instant('save')+'</b>',
+         type: 'button-positive',
+         onTap: function(e) {
+
+         	if (campo == 'nacimiento'){
+
+         		 $scope.nacimiento = $scope.perfil.nacimiento.getFullYear() + "-" + ($scope.perfil.nacimiento.getMonth()+1) + "-" +  $scope.perfil.nacimiento.getDate(); 
+         		// $scope.perfil.nacimiento = $scope.nacimiento ;
+         		// console.log($scope.perfil.nacimiento);
+         		 data = {nacimiento: $scope.nacimiento  }
+
+         		 $http.put($rootScope.domain + "userProfile/", data).then(function(result){
+
+         		 		$scope.perfil = result.data;
+                       
+         		 })
+         	}
+
+
+         	else {
+
+         		$http.put($rootScope.domain + "userProfile/", $scope.perfil).then(function(result){
+
+         		 		$scope.perfil = result.data;
+
+         		 })
+
+         	}
+
+             $window.localStorage.perfil = JSON.stringify($scope.perfil );
+
+
+            
+              
+         }
+       },
+     ]
+   }); 
+
+};
+
+
+$scope.editarUser  = function(campo){
+	console.log(campo);
+
+		$scope.template = '<input type="'+ "text" +'" ng-model="user.'+ campo +'">'
+
+	 var myPopup = $ionicPopup.show({
+     template: $scope.template,
+     title:  $translate.instant('edit'),
+     subTitle: '',
+     scope: $scope,
+     buttons: [
+       { text:  $translate.instant('cancel') },
+       
+        {
+         text: '<b>'+$translate.instant('save')+'</b>',
+         type: 'button-positive',
+         onTap: function(e) {
+
+         	console.log($scope.user);
+         
+
+         		$http.put($rootScope.domain + "users/", $scope.user).then(function(result){
+
+         		 		$scope.user = result.data;
+                         $window.localStorage.user = JSON.stringify($scope.user );
+         		 })
+
+         	
+            
+              
+         }
+       },
+     ]
+   }); 
+
+
+
+
+};
+
+
+$scope.editarPassword = function(campo){
+
+
+
+	$scope.password = {}
+	$scope.password.new_password ="";
+	$scope.password.current_password ="";
+
+
+		$scope.template = '<input type="'+ "password" +'" ng-model="password.current_password" placeholder="Contraseña Actual"><br><input type="'+ "password" +'" ng-model="password.new_password" placeholder="Nueva Contraseña">'
+
+	 var myPopup = $ionicPopup.show({
+     template: $scope.template,
+     title: 'Editar ',
+     subTitle: '',
+     scope: $scope,
+     buttons: [
+       { text: 'Cancelar' },
+       
+        {
+         text: '<b>Guardar</b>',
+         type: 'button-positive',
+         onTap: function(e) {
+
+         	console.log($scope.user);
+         
+
+         		$http.post($rootScope.domain + "auth/password/", $scope.password).then(function(result){
+
+         		 		//$scope.perfil = result.data;
+         		 })
+
+         	
+            
+              
+         }
+       },
+     ]
+   }); 
+
+};
+
+
+
+
+
+
+
+
+$scope.editarIdioma = function(idioma){
+
+    $scope.perfil.idioma = idioma.codigo;
+
+
+    $http.put($rootScope.domain + "userProfile/", $scope.perfil).then(function(result){
+
+                        $scope.perfil = result.data;
+                        console.log($scope.perfil.idioma);
+
+                        $window.localStorage.language = $scope.perfil.idioma;
+                 })
+
+$translate.use(idioma.codigo);
+console.log(idioma.name); 
+
+
+}
+
+
+
+
+
+
+})

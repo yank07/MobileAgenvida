@@ -44,6 +44,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+        "id": "cordova-plugin-statusbar.statusbar",
+        "clobbers": [
+            "window.StatusBar"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-whitelist/whitelist.js",
         "id": "cordova-plugin-whitelist.whitelist",
         "runs": true
@@ -84,13 +91,15 @@ module.exports.metadata =
 // TOP OF METADATA
 {
     "com.ionic.keyboard": "1.0.4",
+    "cordova-plugin-app-event": "1.2.0",
     "cordova-plugin-console": "1.0.1",
     "cordova-plugin-device": "1.0.1",
     "cordova-plugin-inappbrowser": "1.0.2-dev",
     "cordova-plugin-splashscreen": "2.1.0",
+    "cordova-plugin-statusbar": "2.1.3",
     "cordova-plugin-whitelist": "1.0.0",
     "cordova-plugin-x-socialsharing": "5.0.5",
-    "de.appplant.cordova.plugin.local-notification": "0.8.2-dev"
+    "de.appplant.cordova.plugin.local-notification": "0.8.4"
 };
 // BOTTOM OF METADATA
 });

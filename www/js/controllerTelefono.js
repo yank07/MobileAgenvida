@@ -14,6 +14,7 @@ $http.get('js/frases.json').then(function(result){
 	 $scope.frase_elegida = $scope.frases[$scope.ramdom ];
 
 	 ionicMaterialInk.displayEffect();
+   ionicMaterialMotion.ripple();
 
 });
 
@@ -21,8 +22,8 @@ $scope.shareAnywhere = function() {
         $cordovaSocialSharing.share("This is your message", "This is your subject", "http://agenvida.com/static/img/icono.png", "http://agenvida.com/");
     }
  
-$scope.shareViaTwitter = function(message, image, link) {
-$cordovaSocialSharing.canShareVia("twitter", message, image, link).then(function(result) {
+$scope.shareViaTwitter = function(message) {
+$cordovaSocialSharing.canShareVia(message, "www/img/padreK.jpg").then(function(result) {
     $cordovaSocialSharing.shareViaTwitter(message, image, link);
 }, function(error) {
     alert("Cannot share on Twitter");
@@ -31,10 +32,10 @@ $cordovaSocialSharing.canShareVia("twitter", message, image, link).then(function
 
 
 
-$scope.shareViaFacebook =  function(message, image, link) {
+$scope.shareViaFacebook =  function(message) {
 
 
-$cordovaSocialSharing.shareViaFacebook("mensaje", "http://agenvida.com/static/img/icono.png", "http://agenvida.com/")
+$cordovaSocialSharing.shareViaFacebook(message, "www/img/padreK.jpg")
     .then(function(result) {
       // Success!
     }, function(err) {
@@ -45,10 +46,11 @@ $cordovaSocialSharing.shareViaFacebook("mensaje", "http://agenvida.com/static/im
 
 
 
-$scope.shareViaWhatsapp =  function(message, image, link) { 
+$scope.shareViaWhatsapp =  function(message) { 
+  console.log(message);
 
  $cordovaSocialSharing
-    .shareViaWhatsApp("mensaje", "http://agenvida.com/static/img/icono.png", "http://agenvida.com/")
+    .shareViaWhatsApp(message,"","")
     .then(function(result) {
       // Success!
     }, function(err) {
