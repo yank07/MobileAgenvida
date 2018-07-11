@@ -3,20 +3,20 @@
 
 
   <ion-nav-bar class="bar-positive">
-                  
-         
+
+
                   </ion-nav-bar>
 
         <ion-content >
           <div class="icono-login bar-positive">
 
             <img src="img/agenvidaicono.png">
-            
+
             <div class="" ng-show="mensajeShow">
             <div class="item item-text-wrap">
                   <p style="color:white">{{message_lindo}}</p>
 
-                 
+
 
                   <p style="color:{{color_mensaje}}">{{message}}</p>
             </div>
@@ -29,10 +29,10 @@
 
            <div class="im-wrapper">
 
-     
-        
+
+
           <div class="list">
-          
+
 
             <label class="item item-input item-floating-label">
                     <span class="input-label">{{'user_name' | translate | capitalize}}</span>
@@ -42,13 +42,13 @@
                     <span class="input-label">{{'password' | translate | capitalize}}</span>
                     <input placeholder="{{'password' | translate | capitalize }}" type="password" ng-model="user.password">
             </label>
-            
+
             <label class="item item-input item-select">
                 <div class="input-label">
-                  {{'language' | translate | capitalize}} 
+                  {{'language' | translate | capitalize}}
                 </div>
-              <select ng-init="idioma = idiomas[1]" 
-                    ng-model="idioma" 
+              <select
+                    ng-model="idioma"
                     ng-options="idioma.name for idioma in idiomas" ng-change="ChangeLanguage(idioma)">
             </select>
             </label>
@@ -57,9 +57,9 @@
 
           <div class="padding">
             <button class="button button-block button-positive" ng-click="signIn()">
-              {{'login' | translate | uppercase }} 
+              {{'login' | translate | uppercase }}
             </button>
-            
+
             <p class="text-center">
               <a href="" ng-click="forgotPasword()">{{'forgot_password' | translate}}  </a>
             </p>

@@ -9,36 +9,36 @@
 </ion-nav-bar>
 
         <ion-content >
-            
+
             <div class="list">
 
- 
+
 
 
   <div class="item item-icon-right" href="#">
-   
+
     <h2>{{user.email}}</h2>
       <p class="descripcion">{{'email'| translate }}</p>
 
        <i class="icon ion-edit" ng-click="editarUser('email')"></i>
-  
+
   </div>
 
   <div class="item item-icon-right" href="#">
-   
+
      <h2>**********</h2>
       <p class="descripcion">{{'password'| translate }}</p>
 
        <i class="icon ion-edit" ng-click="editarPassword('password')"></i>
-  
+
 
   </div>
   <label class="item item-input item-select">
     <div class="input-label">
-      {{'language'| translate }}  
+      {{'language'| translate }}
     </div>
-  <select ng-init="idioma = idiomas[1]"
-        ng-model="idioma" 
+  <select
+        ng-model="idioma"
         ng-options="idioma.name for idioma in idiomas" ng-change="editarIdioma(idioma)">
 </select>
   </label>
@@ -46,14 +46,14 @@
 
 <!--
   <div class="item item-icon-right" ng-click="verNotificaciones()">
-    
+
   Notificaciones
 
       <i class="icon ion-android-notifications"></i>
-  
+
   </div>
 
- 
+
   <div class="item item-divider  item-icon-right  " ng-click="verRecordatorioMail()">
     Recordatorio por mail
 
@@ -64,10 +64,9 @@
 
 
 
-  
+
 
 
 </div>
         </ion-content>
       </ion-view>
-   

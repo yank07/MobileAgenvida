@@ -18,7 +18,7 @@
                         on-refresh="actualizar(true)">
               </ion-refresher>
 
-            
+
             <div class="list animate-ripple">
 
     <div class="item item-divider">
@@ -26,62 +26,62 @@
   </div>
 
   <div class="item item-icon-right ink ink-dark" href="#">
-   
+
     <h2>{{user.first_name}} </h2>
       <p class="descripcion" >{{"name" | translate}}</p>
 
        <i class="icon ion-edit" ng-click="editarUser('first_name')"></i>
-  
+
   </div>
 
   <div class="item item-icon-right ink ink-dark" href="#">
-   
+
     <h2>{{user.last_name}} </h2>
       <p class="descripcion">{{"lastname" | translate}}</p>
 
        <i class="icon ion-edit" ng-click="editarUser('last_name')"></i>
-  
+
   </div>
 
   <div class="item item-icon-right ink ink-dark" href="#">
-   
+
     <h2>{{user.username}}</h2>
       <p class="descripcion">{{"username" | translate}}</p>
 
        <i class="icon ion-edit" ng-click="editarUser('username')" ></i>
-  
+
   </div>
 
 
   <div class="item item-body item-icon-right ink ink-dark" href="#">
-   
+
     <h2>{{perfil.ideal_personal}}</h2>
       <p class="descripcion">{{"ideal_personal" | translate}}</p>
 
        <i class="icon ion-edit" ng-click="editar('ideal_personal')"></i>
-  
+
   </div>
 
   <div class="item item-icon-right ink ink-dark" >
-   
+
      <h2>{{perfil.nacimiento}}</h2>
       <p class="descripcion">{{"date_birth"|translate}}</p>
 
        <i class="icon ion-edit" ng-click="editar('nacimiento')"></i>
-  
+
 
   </div>
 
   <div class="item item-icon-right ink ink-dark" >
-    
+
     <h2>{{perfil.pais}}</h2>
       <p class="descripcion">{{"country" | translate}}</p>
 
       <i class="icon ion-edit" ng-click="editar('pais')"></i>
-  
+
   </div>
 
- 
+
   <div class="item item-divider  item-icon-right ink ink-dark " ng-click="goContratoPedagogico()">
     {{"pedagogic_contract" | translate}}
 
@@ -95,21 +95,20 @@
     {{"configuration" | translate | capitalize }}
 
  <i class="icon   ion-ios-gear-outline"></i>
-  
+
   </div>
 
     <div class="item item-divider item-icon-right ink ink-dark" ng-click="cerraSesion()">
     {{"logout" | translate}}
 
  <i class="icon   ion-log-out"></i>
-  
+
   </div>
 
 
-  
+
 
 
 </div>
         </ion-content>
       </ion-view>
-   

@@ -1,0 +1,53 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "angular"
+  ],
+
+  "settings": {
+    "angular": 1
+  },
+
+  "plugins": [
+    "prettier",
+    "angular"
+  ],
+  "rules": {
+    "no-use-before-define": ["error", "nofunc"],
+    "no-undef": "error",
+    "prettier/prettier": "error",
+    "global-require": "error",
+    "no-bitwise": "error",
+    "camelcase": "error",
+    "curly": "error",
+    "eqeqeq": "error",
+    "no-caller": "error",
+    "no-invalid-regexp": "error",
+    "no-invalid-this": "error",
+    "angular/on-watch": "off",
+    "no-console": "off",
+    "angular/log": "off"
+  },
+
+  "globals": {
+    "Card": false,
+    "$": false,
+    "angular": false,
+    // Angular Mocks
+    "inject": false,
+    // JASMINE
+    "describe": false,
+    "it": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false,
+    "expect": false
+  }
+}
