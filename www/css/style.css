@@ -3,7 +3,7 @@
     src: url(../fonts/Roboto-Regular.ttf);
     font-weight: normal;
     font-style: normal;
-    
+
 }
 
 @font-face {
@@ -11,7 +11,7 @@
     src: url(../fonts/Roboto-Italic.ttf);
     font-weight: normal;
     font-style: italic;
-    
+
 }
 
 @font-face {
@@ -19,7 +19,7 @@
     src: url(../fonts/Roboto-Bold.ttf);
     font-weight: bold;
     font-style: normal;
-    
+
 }
 
 @font-face {
@@ -27,7 +27,7 @@
     src: url(../fonts/Roboto-BoldItalic.ttf);
     font-weight: bold;
     font-style: italic;
-    
+
 }
 
 @font-face {
@@ -35,7 +35,7 @@
     src: url(../fonts/Roboto-Thin.ttf);
     font-weight: 300;
     font-style: normal;
-    
+
 }
 
 @font-face {
@@ -43,7 +43,7 @@
     src: url(../fonts/Roboto-ThinItalic.ttf);
     font-weight: 300;
     font-style: italic;
-    
+
 }
 
 
@@ -52,7 +52,7 @@
     src: url(../fonts/Roboto-Black.ttf);
     font-weight: 900;
     font-style: normal;
-    
+
 }
 
 @font-face {
@@ -60,7 +60,7 @@
     src: url(../fonts/Roboto-BlackItalic.ttf);
     font-weight: 900;
     font-style: italic;
-    
+
 }
 
 
@@ -112,7 +112,7 @@ p.descripcion{
 color: #ddd;
 	}
 
- 
+
 .cargando {
     float: right;
     position: absolute;
@@ -168,7 +168,7 @@ span.icon.neutro.neutro-mark {
 
 .center{
     text-align: center;
- 
+
 }
 
 
@@ -207,13 +207,13 @@ span.icon.neutro.neutro-mark {
     color: #fff;
 }
 .item.item-positive {
-    /* border-color: #387EF5; 
+    /* border-color: #387EF5;
     background-color: #fafafa !important;
     color: #616161 !important ;*/
     border-bottom: solid 2px white;
     border-top: transparent;
     padding: 4px 10px;
-    
+
     font-weight: bold;
 }
 
@@ -228,7 +228,7 @@ span.icon.neutro.neutro-mark {
 }
 
 .item-divider {
-   
+
 
     padding: 0px 15px !important;
     min-height: 30px;
@@ -263,18 +263,18 @@ span.icon.neutro.neutro-mark {
     padding: 0px;
     float: left;
    /* transform-origin: left top 0;*/
-    
+
 
     font-size: 6px;
-    
+
     text-align: center;
-    
+
     border: ;
 }
 .marcacion.col {
     border-right: solid white 0px;
       background: #FBF7F7;
-        
+
     padding: 0px;
     float: left;
     transform-origin: left top 0;
@@ -283,7 +283,7 @@ span.icon.neutro.neutro-mark {
 
     font-size: 0px;
     /* padding-left: 0.6px; */
-    
+
     border: ;
 }
 
@@ -309,7 +309,7 @@ span.icon.neutro.neutro-mark {
     margin-top: 10px;
     margin-bottom: 0px;
     margin-left: 5px;
-  
+
 }
 
 .referencias .col{
@@ -351,6 +351,11 @@ span.icon.neutro.neutro-mark {
 .ionic_timepicker_popup .button {
      padding: 0px;
 }
-   
+
 
 /* FIN REPORTE */
+.button {
+  padding: 0;
+  margin: 0;
+}
+

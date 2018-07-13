@@ -111,14 +111,20 @@ $http.get("http://feed.evangelizo.org/v2/reader.php?date="+$scope.hoy+"&type=rea
       );
 
     $scope.shareViaWhatsapp = function() {
-      $cordovaSocialSharing.shareViaWhatsApp(document.getElementById("evangelio").innerText, "", "").then(
-        function(result) {
-          // Success!
-        },
-        function(err) {
-          // An error occurred. Show a message to the user
-        }
-      );
+      $cordovaSocialSharing
+        .shareViaWhatsApp(
+          document.getElementById("evangelio").innerText,
+          "",
+          ""
+        )
+        .then(
+          function(result) {
+            // Success!
+          },
+          function(err) {
+            // An error occurred. Show a message to the user
+          }
+        );
     };
 
     $scope.shareViaTwitter = function() {
