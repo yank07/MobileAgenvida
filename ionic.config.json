@@ -1,7 +1,9 @@
 {
   "name": "MobileAgenvida",
   "app_id": "de9da7f3",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic1",
   "watchPatterns": [
     "scss/**/*",

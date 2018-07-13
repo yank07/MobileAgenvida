@@ -32,9 +32,9 @@ angular
     $scope.cerraSesion = function() {
       delete $window.localStorage.token;
       delete $window.localStorage.password;
-      $timeout(function() {
-        $state.go("signin", {}, { reload: true });
-      }, 200);
+      $ionicHistory.clearCache().then(function() {
+        $state.go("signin");
+      });
     };
 
     $scope.verRecordatorioMail = function() {
@@ -51,11 +51,11 @@ angular
 
     $scope.language = $window.localStorage.language;
 
-    $scope.idioma = $rootScope.idiomas[1];
+    $rootScope.idioma = $rootScope.idiomas[1];
 
     angular.forEach($rootScope.idiomas, function(idioma) {
       if (idioma.codigo === $scope.language) {
-        $scope.idioma = idioma;
+        $rootScope.idioma = idioma;
         $translate.use(idioma.codigo);
       }
     });
@@ -71,7 +71,7 @@ angular
             $timeout(function() {
               ionicMaterialInk.displayEffect();
               ionicMaterialMotion.blinds();
-            }, 500);
+            }, 100);
           },
 
           function(result) {
@@ -86,7 +86,7 @@ angular
             $timeout(function() {
               ionicMaterialInk.displayEffect();
               ionicMaterialMotion.blinds();
-            }, 500);
+            }, 100);
           }
         );
 
@@ -291,6 +291,5 @@ angular
         });
 
       $translate.use(idioma.codigo);
-      console.log(idioma.name);
     };
   });

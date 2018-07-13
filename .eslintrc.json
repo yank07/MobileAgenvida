@@ -31,6 +31,7 @@
     "no-invalid-regexp": "error",
     "no-invalid-this": "error",
     "angular/on-watch": "off",
+    "angular/controller-name": "off",
     "no-console": "off",
     "angular/log": "off"
   },

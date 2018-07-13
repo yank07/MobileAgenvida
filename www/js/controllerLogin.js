@@ -20,13 +20,11 @@ angular
     $scope.user.password = $window.localStorage.password;
     $scope.language = $window.localStorage.language;
 
-    $scope.idioma = $rootScope.idiomas[1];
+    $rootScope.idioma = $rootScope.idiomas[1];
     console.log($rootScope.idiomas);
     angular.forEach($rootScope.idiomas, function(idioma) {
       if (idioma.codigo === $scope.language) {
-        $scope.idioma = idioma;
-        console.log($scope.idioma);
-
+        $rootScope.idioma = idioma;
         $translate.use(idioma.codigo);
       }
     });
@@ -53,7 +51,6 @@ angular
     $scope.ChangeLanguage = function(language) {
       //Se guarda solo el codigo del idioma en el localstorage
       $window.localStorage.language = language.codigo;
-      console.log(language.name);
       $translate.use(language.codigo);
     };
 
