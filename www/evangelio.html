@@ -5,21 +5,21 @@
                      <!-- Toggle left side menu -->
                      <button menu-toggle="left" class="button button-clear button-icon icon ion-navicon"></button>
                     </ion-nav-buttons>
-         
+
                   </ion-nav-bar>
-  
+
   <ion-content >
 
 
-<div class="card">	
+<div class="card">
 	<div class="item item-stable" >
 		   <h2 data-ng-bind-html="titulo_evangelio"></h2>
 		   <p>{{hoyLetras}}</p>
   	</div>
 	<div  class="item item-text-wrap">
 
-			
-			<div data-ng-bind-html="evangelio"></div>
+
+			<div id="evangelio" data-ng-bind-html="evangelio"></div>
 
 			<div ng-hide="palabra_de_dios">Palabra de Dios</div>
 
@@ -38,14 +38,16 @@
 
 <div class="center social">
    <button class="button button-fab" ng-click="shareViaWhatsapp(evangelio)"><i class="fa fa-whatsapp"></i></button>
- <!--<button class="button button-fab" ng-click="shareViaFacebook()"><i class="fa fa-facebook"></i></button>
- <button class="button button-fab" ng-click="shareViaTwitter()"><i class="fa fa-twitter"></i></button> -->
+   <button class="button button-fab" ng-click="shareViaTwitter(evangelio)"><i class="fa fa-twitter"></i></button>
+
+  <!--<button class="button button-fab" ng-click="shareViaFacebook()"><i class="fa fa-facebook"></i></button>
+  <button class="button button-fab" ng-click="shareViaTwitter()"><i class="fa fa-twitter"></i></button> -->
 
 </div>
 
 	</div>
 </div>
-  
+
 
   </ion-content>
 </ion-view>
