@@ -14,6 +14,32 @@ angular
     $timeout
   ) {
     // $rootScope.domain = "http://agenvida.herokuapp.com/";
+    var formatearNacimiento = function(nacimiento) {
+      if (nacimiento !== null) {
+        var nacimientoFormateado = nacimiento.split("-");
+        return new Date(
+          nacimientoFormateado[0],
+          nacimientoFormateado[1] - 1,
+          nacimientoFormateado[2]
+        );
+      } else {
+        return new Date(1990, 10, 18);
+      }
+    };
+
+    var deformatearNacimiento = function(nacimiento) {
+      if (nacimiento !== null) {
+        return (
+          nacimiento.getFullYear() +
+          "-" +
+          (nacimiento.getMonth() + 1) +
+          "-" +
+          nacimiento.getDate()
+        );
+      } else {
+        return "1990-10-18";
+      }
+    };
 
     $scope.goMarcacion = function() {
       $state.go("marcacion");
@@ -66,8 +92,12 @@ angular
 
         $http.get($rootScope.domain + "userProfile/").then(
           function(result) {
+            result.data.nacimiento = formatearNacimiento(
+              result.data.nacimiento
+            );
             $scope.perfil = result.data;
-            console.log($scope.perfil);
+            $window.localStorage.perfil = JSON.stringify($scope.perfil);
+
             $timeout(function() {
               ionicMaterialInk.displayEffect();
               ionicMaterialMotion.blinds();
@@ -114,9 +144,12 @@ angular
       } else {
         // no full refresh
         if ($window.localStorage.perfil && $window.localStorage.user) {
-          $scope.perfil = JSON.parse($window.localStorage.perfil);
+
+          var perfil = JSON.parse($window.localStorage.perfil);
+          perfil.nacimiento = new Date(perfil.nacimiento);
+
+          $scope.perfil = perfil;
           $scope.user = JSON.parse($window.localStorage.user);
-          console.log($scope.perfil);
           $timeout(function() {
             ionicMaterialInk.displayEffect();
             ionicMaterialMotion.ripple();
@@ -241,6 +274,28 @@ angular
       });
     };
 
+    $scope.editarUsuario = function() {
+      $http
+        .put($rootScope.domain + "users/", $scope.user)
+        .then(function(result) {
+          $scope.user = result.data;
+          $window.localStorage.user = JSON.stringify($scope.user);
+        });
+    };
+
+    $scope.editarPerfil = function() {
+      var nacimiento = deformatearNacimiento($scope.perfil.nacimiento);
+      var data = angular.copy($scope.perfil);
+      data.nacimiento = nacimiento;
+      $http
+        .put($rootScope.domain + "userProfile/", data)
+        .then(function(result) {
+          result.data.nacimiento = formatearNacimiento(result.data.nacimiento);
+          $scope.perfil = result.data;
+          $window.localStorage.perfil = JSON.stringify($scope.perfil);
+        });
+    };
+
     $scope.editarPassword = function(campo) {
       $scope.password = {};
       $scope.password.new_password = "";
@@ -280,10 +335,12 @@ angular
 
     $scope.editarIdioma = function(idioma) {
       $scope.perfil.idioma = idioma.codigo;
-
+      var data = angular.copy($scope.perfil);
+      data.nacimiento = deformatearNacimiento($scope.perfil.nacimiento);
       $http
-        .put($rootScope.domain + "userProfile/", $scope.perfil)
+        .put($rootScope.domain + "userProfile/", data)
         .then(function(result) {
+          result.data.nacimiento = formatearNacimiento(result.data.nacimiento);
           $scope.perfil = result.data;
           console.log($scope.perfil);
 

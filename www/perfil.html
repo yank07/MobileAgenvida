@@ -25,62 +25,37 @@
     {{"my_profile" | translate}}
   </div>
 
-  <div class="item item-icon-right ink ink-dark" href="#">
-
-    <h2>{{user.first_name}} </h2>
-      <p class="descripcion" >{{"name" | translate}}</p>
-
-       <i class="icon ion-edit" ng-click="editarUser('first_name')"></i>
-
-  </div>
-
-  <div class="item item-icon-right ink ink-dark" href="#">
-
-    <h2>{{user.last_name}} </h2>
-      <p class="descripcion">{{"lastname" | translate}}</p>
-
-       <i class="icon ion-edit" ng-click="editarUser('last_name')"></i>
-
-  </div>
-
-  <div class="item item-icon-right ink ink-dark" href="#">
-
-    <h2>{{user.username}}</h2>
-      <p class="descripcion">{{"username" | translate}}</p>
-
-       <i class="icon ion-edit" ng-click="editarUser('username')" ></i>
-
-  </div>
-
-
-  <div class="item item-body item-icon-right ink ink-dark" href="#">
-
-    <h2>{{perfil.ideal_personal}}</h2>
-      <p class="descripcion">{{"ideal_personal" | translate}}</p>
-
-       <i class="icon ion-edit" ng-click="editar('ideal_personal')"></i>
-
-  </div>
-
-  <div class="item item-icon-right ink ink-dark" >
-
-     <h2>{{perfil.nacimiento}}</h2>
-      <p class="descripcion">{{"date_birth"|translate}}</p>
-
-       <i class="icon ion-edit" ng-click="editar('nacimiento')"></i>
-
-
-  </div>
-
-  <div class="item item-icon-right ink ink-dark" >
-
-    <h2>{{perfil.pais}}</h2>
-      <p class="descripcion">{{"country" | translate}}</p>
-
-      <i class="icon ion-edit" ng-click="editar('pais')"></i>
-
-  </div>
-
+              <div class="list">
+                <label class="item item-input item-floating-label">
+                  <span class="input-label">{{"name" | translate}}</span>
+                  <input type="text" placeholder="{{'name' | translate}}" ng-model="user.first_name"
+                         ng-blur="editarUsuario()">
+                </label>
+                <label class="item item-input item-floating-label">
+                  <span class="input-label">{{"lastname" | translate}}</span>
+                  <input type="text" placeholder="{{'lastname' | translate}}" ng-model="user.last_name"
+                         ng-blur="editarUsuario()">
+                </label>
+                <label class="item item-input item-floating-label">
+                  <span class="input-label">{{"username" | translate}}</span>
+                  <input type="text" placeholder="{{'username' | translate}}" ng-model="user.username"
+                         ng-blur="editarUsuario()">
+                </label>
+                <label class="item item-input item-floating-label">
+                  <span class="input-label">{{"ideal_personal" | translate}}</span>
+                  <input type="text" placeholder="{{'ideal_personal' | translate}}" ng-model="perfil.ideal_personal"
+                         ng-blur="editarPerfil()">
+                </label>
+                <label class="item item-input item-floating-label">
+                  <span class="input-label">{{"date_birth" | translate}}</span>
+                  <input type="date" placeholder="{{'date_birth' | translate}}" ng-model="perfil.nacimiento"
+                         ng-blur="editarPerfil()">
+                </label>
+                <label class="item item-input item-floating-label">
+                  <span class="input-label">{{"country" | translate}}</span>
+                  <input type="text" placeholder="{{'country' | translate}}" ng-model="perfil.pais"
+                         ng-blur="editarPerfil()">
+                </label>
 
   <div class="item item-divider  item-icon-right ink ink-dark " ng-click="goContratoPedagogico()">
     {{"pedagogic_contract" | translate}}
@@ -104,6 +79,7 @@
  <i class="icon   ion-log-out"></i>
 
   </div>
+              </div>
 
 
 

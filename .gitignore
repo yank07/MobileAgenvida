@@ -6,3 +6,4 @@ platforms/
 plugins/
 .idea
 package-lock.json
+*.apk

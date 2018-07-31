@@ -40,14 +40,15 @@
             save:"Save",
             cancel:"Cancel",
             edit:"Edit",
-            back:"Back",
+          escribir:"Write",
+          back:"Back",
             success_login:"Succesfull Login",
             user_password_message:"Enter your username and password",
             invalid_grant: "Username or password incorrects",
             auth_error:"An authentication error occurs.",
             net_error:"network conection error",
             try_again: "try again later",
-            delete_mssg:'Delete', 
+            delete_mssg:'Delete',
         });
         $translateProvider.translations('es', {
             hello_message: "Hola",
@@ -90,15 +91,16 @@
              save:"Guardar",
              cancel:"Cancelar",
              edit:"Editar",
-             back:"Atrás",
+             escribir:"Escribir",
+          back:"Atrás",
               success_login:"Login Exitoso",
               user_password_message:"Ingresá tu usuario y contraseña",
               invalid_grant: "Nombre de usuario y/o contraseña incorrectos",
               auth_error:"Ocurrió un error de autenticación, favor intertalo nuevamente.",
               net_error:"error de conexion",
             try_again: "inténtelo nuevamente en unos instantes",
-             delete_mssg:'Eliminar', 
-            
+             delete_mssg:'Eliminar',
+
 
         });
         $translateProvider.preferredLanguage("en");
