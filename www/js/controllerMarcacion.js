@@ -128,10 +128,8 @@ angular
           $scope.propositos = result.data;
           $rootScope.propositos = result.data;
           $window.localStorage.propositos = JSON.stringify(result.data);
-          console.log($scope.propositos);
           $scope.pps = {};
           // $scope.pps = $filter('filter')($scope.propositos, { vinculacion: $scope.propositoParticular.id , mes_ano: ano + '-'+ mes +'-'  } )[0];
-          //  console.log($scope.pps);
           $rootScope.LoadingHide();
           $timeout(function() {
             ionicMaterialInk.displayEffect();
@@ -186,12 +184,9 @@ angular
       console.log("estoy en actualizar");
       console.log(fullrefresh);
 
-      if (fullrefresh == true) {
+      if (fullrefresh) {
         console.log("no tengo nada");
         $scope.getPropositos();
-
-        console.log("no tengo nada");
-
         $http.get($rootScope.domain + "userProfile/").then(function(result) {
           $rootScope.perfil = result.data;
           $window.localStorage.perfil = JSON.stringify($scope.perfil);
@@ -221,47 +216,40 @@ angular
 
     /*************************************************/
     $scope.marcar = function(proposito, valorMarcacion, sectionIndex, index) {
-      //  console.log(proposito);
+      console.log(valorMarcacion);
       //  console.log($scope.ano + "-" + $scope.mes + "-" + $scope.dia);
       //  console.log( searchFecha( $scope.dia , proposito.marcaciones) );
 
       /* busco si ya existe una marcacion de ese proposito en esa fecha */
       marcacion = searchFecha(proposito.marcaciones);
-
       /* Si ya hay una maracion, entonces actualizo */
 
       if (marcacion) {
-        if (marcacion.cumplimiento != valorMarcacion) {
+        if (marcacion.cumplimiento !== valorMarcacion) {
+          var data = angular.copy(marcacion);
+          data.cumplimiento = valorMarcacion;
+
           /* Corroboro que realmente haya un cambio */
           /* Si hay un cambio entonces actualizo el valor en el servidor mediante un PUT*/
-          console.log("hay marcacion y hay un cambio");
           // marcacion.loading = -1;
 
           $scope.loading = sectionIndex + "-" + index; //pongo loading hasta que llegue la respuesta
-          console.log($scope.loading);
 
           $http
-            .put(
-              $rootScope.domain + "marcaciones/" + marcacion.id + "/",
-              marcacion
-            )
+            .put($rootScope.domain + "marcaciones/" + marcacion.id + "/", data)
             .then(
               function(result) {
                 // si todo va bien
-                console.log("volvi");
-                console.log(result);
                 marcacion.cumplimiento = valorMarcacion;
                 $window.localStorage.propositos = JSON.stringify(
                   $scope.propositos
                 );
 
                 $scope.loading = "";
-                marcacion.cumplimiento = valorMarcacion;
               },
               function(result) {
                 // por si algo sale mal
                 $scope.loading = "";
-                console.log(result);
                 $rootScope.banner([
                   $translate.instant("net_error"),
                   $translate.instant("try_again")
@@ -274,7 +262,6 @@ angular
 
       /* Si no hay marcacion entonces creo una nueva*/
       else {
-        console.log(" NO hay marcacion");
         data = {
           dia: $scope.ano + "-" + $scope.mes + "-" + $scope.dia,
           cumplimiento: valorMarcacion,
@@ -291,9 +278,8 @@ angular
             $scope.loading = ""; //pongo loading hasta que llegue la respuesta
             $window.localStorage.propositos = JSON.stringify($scope.propositos);
           },
-          function(result) {
+          function() {
             // por si algo sale mal
-            console.log("algo salio mal en No hay marcacion");
             $scope.loading = "";
             $rootScope.banner([
               $translate.instant("net_error"),

@@ -1,90 +1,62 @@
-
-
-<ion-view view-title=" {{'my_profile' | translate}}" ng-init="actualizar(false)" >
-
+<ion-view ng-init="actualizar(false)" >
 <ion-nav-bar class="bar-positive">
   <ion-nav-back-button class="button-clear">
     <i class="ion-arrow-left-c"></i>
   </ion-nav-back-button>
 </ion-nav-bar>
+  <ion-nav-title> {{'my_profile' | translate}}</ion-nav-title>
 
+  <ion-content >
+  <ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="actualizar(true)">
+  </ion-refresher>
+  <div class="list animate-ripple">
+    <div class="list">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label bold">{{"user_name" | translate}}</span>
+        <input disabled type="text" placeholder="{{'escribir' | translate}}" ng-model="user.username"
+               ng-blur="editarUsuario()">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label bold">{{"name" | translate}}</span>
+        <input type="text" placeholder="{{'escribir' | translate}}" ng-model="user.first_name"
+               ng-blur="editarUsuario()">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label bold">{{"lastname" | translate}}</span>
+        <input type="text" placeholder="{{'escribir' | translate}}" ng-model="user.last_name"
+               ng-blur="editarUsuario()">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label bold">{{"ideal_personal" | translate}}</span>
+        <input type="text" placeholder="{{'escribir' | translate}}" ng-model="perfil.ideal_personal"
+               ng-blur="editarPerfil()">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label bold">{{"date_birth" | translate}}</span>
+        <input type="date" placeholder="{{'escribir' | translate}}" ng-model="perfil.nacimiento"
+               ng-blur="editarPerfil()">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label bold">{{"country" | translate}}</span>
+        <input type="text" placeholder="{{'escribir' | translate}}" ng-model="perfil.pais"
+               ng-blur="editarPerfil()">
+      </label>
 
-
-
-        <ion-content >
-
-           <ion-refresher
-                        pulling-text="Pull to refresh..."
-                        on-refresh="actualizar(true)">
-              </ion-refresher>
-
-
-            <div class="list animate-ripple">
-
-    <div class="item item-divider">
-    {{"my_profile" | translate}}
+      <div class="item item-divider  item-icon-right ink ink-dark " ng-click="goContratoPedagogico()">
+        {{"pedagogic_contract" | translate}}
+        <i class="icon ion-ios-compose-outline"></i>
+      </div>
+      <div class="item item-divider item-icon-right ink ink-dark" ng-click="goConfiguracion()">
+        {{"configuration" | translate | capitalize }}
+        <i class="icon   ion-ios-gear-outline"></i>
+      </div>
+      <div class="item item-divider item-icon-right ink ink-dark" ng-click="cerraSesion()">
+      {{"logout" | translate}}
+        <i class="icon   ion-log-out"></i>
+      </div>
+    </div>
   </div>
-
-              <div class="list">
-                <label class="item item-input item-floating-label">
-                  <span class="input-label">{{"name" | translate}}</span>
-                  <input type="text" placeholder="{{'name' | translate}}" ng-model="user.first_name"
-                         ng-blur="editarUsuario()">
-                </label>
-                <label class="item item-input item-floating-label">
-                  <span class="input-label">{{"lastname" | translate}}</span>
-                  <input type="text" placeholder="{{'lastname' | translate}}" ng-model="user.last_name"
-                         ng-blur="editarUsuario()">
-                </label>
-                <label class="item item-input item-floating-label">
-                  <span class="input-label">{{"username" | translate}}</span>
-                  <input type="text" placeholder="{{'username' | translate}}" ng-model="user.username"
-                         ng-blur="editarUsuario()">
-                </label>
-                <label class="item item-input item-floating-label">
-                  <span class="input-label">{{"ideal_personal" | translate}}</span>
-                  <input type="text" placeholder="{{'ideal_personal' | translate}}" ng-model="perfil.ideal_personal"
-                         ng-blur="editarPerfil()">
-                </label>
-                <label class="item item-input item-floating-label">
-                  <span class="input-label">{{"date_birth" | translate}}</span>
-                  <input type="date" placeholder="{{'date_birth' | translate}}" ng-model="perfil.nacimiento"
-                         ng-blur="editarPerfil()">
-                </label>
-                <label class="item item-input item-floating-label">
-                  <span class="input-label">{{"country" | translate}}</span>
-                  <input type="text" placeholder="{{'country' | translate}}" ng-model="perfil.pais"
-                         ng-blur="editarPerfil()">
-                </label>
-
-  <div class="item item-divider  item-icon-right ink ink-dark " ng-click="goContratoPedagogico()">
-    {{"pedagogic_contract" | translate}}
-
- <i class="icon ion-ios-compose-outline"></i>
-
-  </div>
-
-
-
-  <div class="item item-divider item-icon-right ink ink-dark" ng-click="goConfiguracion()">
-    {{"configuration" | translate | capitalize }}
-
- <i class="icon   ion-ios-gear-outline"></i>
-
-  </div>
-
-    <div class="item item-divider item-icon-right ink ink-dark" ng-click="cerraSesion()">
-    {{"logout" | translate}}
-
- <i class="icon   ion-log-out"></i>
-
-  </div>
-              </div>
-
-
-
-
-
-</div>
-        </ion-content>
-      </ion-view>
+</ion-content>
+</ion-view>

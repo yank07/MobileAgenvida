@@ -66,6 +66,7 @@
 
 .icon-praying-hands:before {
     content: "\e900";
+  padding-right: 10px;
 }
 
 
@@ -160,7 +161,7 @@ span.icon.neutro.neutro-mark {
 
 .title .fecha {
       font-size: 18px;
-    margin: 0px 30px;
+    margin: 0 0;
 
 }
 
