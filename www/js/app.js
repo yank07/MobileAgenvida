@@ -25,7 +25,8 @@ var agenvidaApp = angular
     "pascalprecht.translate", // Translate
     "ngSanitize",
     "ionic-material",
-    "ionic-timepicker"
+    "ionic-timepicker",
+    "monospaced.elastic"
   ])
 
   .run(function($state, $rootScope, $ionicLoading, $window, $translate) {

@@ -2,6 +2,7 @@ angular
   .module("Agenvida.controllerPerfil", [])
   .controller("controllerPerfil", function(
     $scope,
+    $stateParams,
     $rootScope,
     $state,
     $http,
@@ -13,6 +14,8 @@ angular
     ionicMaterialMotion,
     $timeout
   ) {
+    console.log($stateParams);
+    $scope.focusIdeal = $stateParams.ideal;
     // $rootScope.domain = "http://agenvida.herokuapp.com/";
     var formatearNacimiento = function(nacimiento) {
       if (nacimiento !== null) {
@@ -41,17 +44,30 @@ angular
       }
     };
 
+    function ripple() {
+      $timeout(function() {
+        ionicMaterialInk.displayEffect();
+        ionicMaterialMotion.ripple();
+      }, 100);
+    }
+
+    function blinds() {
+      $timeout(function() {
+        ionicMaterialInk.displayEffect();
+        ionicMaterialMotion.blinds();
+      }, 100);
+    }
+
+    $scope.password = {};
     $scope.goMarcacion = function() {
       $state.go("marcacion");
     };
 
     $scope.goConfiguracion = function() {
-      console.log("go configuracion");
       $state.go("app.configuracion");
     };
 
     $scope.goContratoPedagogico = function() {
-      console.log("contrato-pedagogico");
       $state.go("app.contrato-pedagogico");
     };
 
@@ -64,19 +80,14 @@ angular
     };
 
     $scope.verRecordatorioMail = function() {
-      console.log("recordatorio-mail");
-
       $state.go("app.recordatorio-mail");
     };
 
     $scope.verNotificaciones = function() {
-      console.log("verNotificaciones");
-
       $state.go("app.notificaciones");
     };
 
     $scope.language = $window.localStorage.language;
-
     $rootScope.idioma = $rootScope.idiomas[1];
 
     angular.forEach($rootScope.idiomas, function(idioma) {
@@ -97,35 +108,24 @@ angular
             );
             $scope.perfil = result.data;
             $window.localStorage.perfil = JSON.stringify($scope.perfil);
-
-            $timeout(function() {
-              ionicMaterialInk.displayEffect();
-              ionicMaterialMotion.blinds();
-            }, 100);
+            blinds();
           },
 
           function(result) {
             // si algo va mal.
-            console.log(result);
             $rootScope.banner([
               $translate.instant("net_error"),
               $translate.instant("try_again")
             ]);
 
             $rootScope.LoadingHide();
-            $timeout(function() {
-              ionicMaterialInk.displayEffect();
-              ionicMaterialMotion.blinds();
-            }, 100);
+            blinds();
           }
         );
 
         $http.get($rootScope.domain + "users/").then(
           function(result) {
             $scope.user = result.data;
-
-            console.log($scope.user);
-
             $window.localStorage.user = JSON.stringify($scope.user);
 
             $rootScope.LoadingHide();
@@ -141,19 +141,15 @@ angular
         );
 
         $scope.$broadcast("scroll.refreshComplete");
+        ripple();
       } else {
         // no full refresh
         if ($window.localStorage.perfil && $window.localStorage.user) {
-
           var perfil = JSON.parse($window.localStorage.perfil);
           perfil.nacimiento = new Date(perfil.nacimiento);
-
           $scope.perfil = perfil;
           $scope.user = JSON.parse($window.localStorage.user);
-          $timeout(function() {
-            ionicMaterialInk.displayEffect();
-            ionicMaterialMotion.ripple();
-          }, 100);
+          ripple();
         } else {
           $scope.actualizar(true);
         }
@@ -169,20 +165,33 @@ angular
         });
     };
 
-    $scope.editarPerfil = function() {
+    $scope.editarPerfil = function(idioma) {
       var nacimiento = deformatearNacimiento($scope.perfil.nacimiento);
       var data = angular.copy($scope.perfil);
       data.nacimiento = nacimiento;
+      if (idioma) {
+        data.idioma = idioma.codigo;
+        $translate.use(idioma.codigo);
+      }
       $http
         .put($rootScope.domain + "userProfile/", data)
         .then(function(result) {
           result.data.nacimiento = formatearNacimiento(result.data.nacimiento);
           $scope.perfil = result.data;
           $window.localStorage.perfil = JSON.stringify($scope.perfil);
+          if (idioma) {
+            $window.localStorage.language = idioma.codigo;
+          }
         });
     };
 
-    $scope.editarPassword = function(campo) {
+    $scope.editarContrasena = function() {
+      $http
+        .post($rootScope.domain + "auth/password/", $scope.password)
+        .then(function() {});
+    };
+
+    $scope.editarPassword = function() {
       $scope.password = {};
       $scope.password.new_password = "";
       $scope.password.current_password = "";
@@ -217,21 +226,5 @@ angular
           }
         ]
       });
-    };
-
-    $scope.editarIdioma = function(idioma) {
-      $scope.perfil.idioma = idioma.codigo;
-      var data = angular.copy($scope.perfil);
-      data.nacimiento = deformatearNacimiento($scope.perfil.nacimiento);
-      $http
-        .put($rootScope.domain + "userProfile/", data)
-        .then(function(result) {
-          result.data.nacimiento = formatearNacimiento(result.data.nacimiento);
-          $scope.perfil = result.data;
-
-          $window.localStorage.language = idioma.codigo;
-        });
-
-      $translate.use(idioma.codigo);
     };
   });

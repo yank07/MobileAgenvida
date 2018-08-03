@@ -33,15 +33,40 @@
       on-refresh="actualizar(true)">
     </ion-refresher>
     <div class="item-dark  item item-body" style="border-color: transparent;">
-      <h2 class="light center" ng-show="perfil.ideal_personal">"{{perfil.ideal_personal | uppercase }}"</h2>
-      <h2 class="light center" ng-click="verPerfil()" ng-show="!perfil.ideal_personal">Cargue un ideal personal</h2>
+      <div class="center">
+        <textarea msd-elastic style="
+        background: transparent;
+        color: white;
+        font-weight: bold;
+        margin-top: 14px;
+        margin-bottom: 14px;
+        overflow: visible;
+        font-size: 16px;
+        text-align: center;
+        white-space: normal; width: 100%; line-height: 1.2;"
+               placeholder="{{'ideal_personal_cargar' | translate}}" ng-model="perfil.ideal_personal"
+                  ng-blur="editarPerfil(); toggleIdeal =!toggleIdeal"></textarea>
+      </div>
+
       <!--*************************************** PROPOSITO PARTIULAR ************************************-->
-      <p class="item-icon-right pps light" ng-show="true" ng-value= " pps = ( propositos | filter:{ vinculacion: propositoParticular.id , mes_ano: ano + '-'+ mes +'-' , })[0]"
-         ng-click="pps ? showOpciones(pps):''"
+      <p class="item-icon-right pps light" style="padding-top: 0; margin-top: 0" ng-show="true" ng-value= " pps = ( propositos | filter:{ vinculacion: propositoParticular.id , mes_ano: ano + '-'+ mes +'-' , })[0]"
          on-hold="pps ? showOpciones(pps):''">
-            <span ng-if="pps != null" class="light item-text-wrap" style="font-size:15px;"
-            >
-               {{ pps.proposito | translate | limitTo:25 }}
+        <textarea ng-if="pps != null" msd-elastic style="
+                background: transparent;
+                color: white;
+                overflow: visible;
+                white-space: normal; width: 80%; line-height: 1.2; padding: 0 !important; margin: 0 !important;"
+                  type="text" placeholder="{{'add_pp' | translate}}" ng-model="pps.proposito"
+                  ng-blur="editarProposito(pps)"></textarea>
+
+        <textarea ng-if="pps == null" msd-elastic style="
+                background: transparent;
+                color: white;
+                overflow: visible;
+                white-space: normal; width: 80%; line-height: 1.2; padding: 0 !important; margin: 0 !important;"
+                  type="text" placeholder="{{'add_pp' | translate}}" ng-model="propositoParticularNuevo.proposito"
+                  ng-blur="editarProposito(propositoParticularNuevo)"></textarea>
+            <span ng-if="pps != null" class="light item-text-wrap" style="font-size:15px;">
                <ion-spinner class="cargando" style="right: 90px; top: 0;" ng-show="loading == 'undefined-undefined'"></ion-spinner>
                <span class="icon  ion-ios-checkmark-outline mas ink ink-dark" style="right: 60px" ng-class="{'mas-mark' : (pps.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 1 }).length != 0 } "
                      ng-click="$event.preventDefault(); $event.stopPropagation(); marcar(pps, 1 , sectionIndex, $index)"></span>
@@ -49,9 +74,6 @@
                      ng-click="$event.preventDefault(); $event.stopPropagation(); marcar(pps, 2 , sectionIndex, $index)"></span>
                <span class="icon ion-ios-circle-outline neutro ink ink-dark" style="right: 0" ng-class="{'neutro-mark' : (pps.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 0 }).length != 0 }"
                      ng-click="$event.preventDefault(); $event.stopPropagation(); marcar(pps, 0, sectionIndex, $index )"></span>
-            </span>
-        <span ng-click="CreateProposito(propositoParticular)" ng-if="pps == null">
-            {{'add_pp' | translate}}
             </span>
       </p>
       <!--*************************************** FIN PROPOSITO PARTIULAR ************************************-->

@@ -49,6 +49,9 @@ angular
             templateUrl: "perfil.html",
             controller: "controllerPerfil"
           }
+        },
+        params: {
+          ideal: false
         }
       })
 

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "MobileAgenvida: An Ionic project",
   "dependencies": {
+    "angular-elastic": "^2.5.1",
     "cordova-android": "7.0.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.0.5",

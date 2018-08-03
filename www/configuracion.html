@@ -1,72 +1,55 @@
-
-
-      <ion-view view-title=" {{'configuration' | translate | capitalize}}"  ng-init="actualizar(false)" >
-
+<ion-view view-title=" {{'configuration' | translate | capitalize}}"  ng-init="actualizar(false)" >
 <ion-nav-bar class="bar-positive">
   <ion-nav-back-button class="button-clear">
     <i class="ion-arrow-left-c"></i>
   </ion-nav-back-button>
 </ion-nav-bar>
+  <ion-content>
+    <div class="list">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label bold">{{"email" | translate}}</span>
+        <input type="text" placeholder="{{'escribir' | translate}}" ng-model="user.email"
+               ng-blur="editarUsuario()">
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label bold">
+          {{'language'| translate }}
+        </div>
+        <select
+          ng-model="idioma"
+          ng-options="idioma.name for idioma in idiomas" ng-change="editarPerfil(idioma)">
+        </select>
+      </label>
 
-        <ion-content >
-
-            <div class="list">
-
-
-
-
-  <div class="item item-icon-right" href="#">
-
-    <h2>{{user.email}}</h2>
-      <p class="descripcion">{{'email'| translate }}</p>
-
-       <i class="icon ion-edit" ng-click="editarUser('email')"></i>
-
-  </div>
-
-  <div class="item item-icon-right" href="#">
-
-     <h2>**********</h2>
-      <p class="descripcion">{{'password'| translate }}</p>
-
-       <i class="icon ion-edit" ng-click="editarPassword('password')"></i>
-
-
-  </div>
-  <label class="item item-input item-select">
-    <div class="input-label">
-      {{'language'| translate }}
+      <ion-list class="animate-ripple">
+        <a class=" ink ink-dark  item item-stable item-divider item-icon"
+           ng-class="{active: togglePassword}"
+           ng-click="togglePassword = !togglePassword">
+          <i class="icon"
+             ng-class="togglePassword ? 'ion-chevron-down' : 'ion-chevron-right'"></i>
+          &nbsp;
+          {{'change_pass' | translate}}
+        </a>
+        <div  class="item item-light  item-accordion  item-icon-right in done" style="border: 0"
+              ng-show="togglePassword"
+        >
+          <label class="item item-input item-stacked-label">
+            <span class="input-label bold">{{"actual_pass" | translate}}</span>
+            <input type="password" placeholder="{{'escribir' | translate}}" ng-model="password.current_password">
+          </label>
+        </div>
+        <div  class="item item-light  item-accordion  item-icon-right in done" style="border: 0"
+              ng-show="togglePassword"
+        >
+          <label class="item item-input item-stacked-label">
+            <span class="input-label bold">{{"new_pass" | translate}}</span>
+            <input type="password" placeholder="{{'escribir' | translate}}" ng-model="password.new_password">
+          </label>
+        </div>
+        <button ng-show="togglePassword" class="button button-full button-assertive button-small"  ng-click="editarContrasena()">
+          {{'change_pass' | translate}}
+        </button>
+      </ion-list>
     </div>
-  <select
-        ng-model="idioma"
-        ng-options="idioma.name for idioma in idiomas" ng-change="editarIdioma(idioma)">
-</select>
-  </label>
-
-
-<!--
-  <div class="item item-icon-right" ng-click="verNotificaciones()">
-
-  Notificaciones
-
-      <i class="icon ion-android-notifications"></i>
-
-  </div>
-
-
-  <div class="item item-divider  item-icon-right  " ng-click="verRecordatorioMail()">
-    Recordatorio por mail
-
- <i class="icon ion-android-mail"></i>
-
-  </div>-->
-
-
-
-
-
-
-
-</div>
-        </ion-content>
-      </ion-view>
+  </ion-content>
+</ion-view>

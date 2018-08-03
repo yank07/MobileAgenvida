@@ -24,6 +24,32 @@ angular
     ionicMaterialInk,
     ionicMaterialMotion
   ) {
+    var formatearNacimiento = function(nacimiento) {
+      if (nacimiento !== null) {
+        var nacimientoFormateado = nacimiento.split("-");
+        return new Date(
+          nacimientoFormateado[0],
+          nacimientoFormateado[1] - 1,
+          nacimientoFormateado[2]
+        );
+      } else {
+        return new Date(1990, 10, 18);
+      }
+    };
+
+    var deformatearNacimiento = function(nacimiento) {
+      if (nacimiento !== null) {
+        return (
+          nacimiento.getFullYear() +
+          "-" +
+          (nacimiento.getMonth() + 1) +
+          "-" +
+          nacimiento.getDate()
+        );
+      } else {
+        return "1990-10-18";
+      }
+    };
     /**************************************************/
     /**************** VARIABLES **********************/
     /*************************************************/
@@ -180,6 +206,29 @@ angular
       }
     }
 
+    $scope.editarPerfil = function(idioma) {
+      console.log($scope.perfil);
+      var nacimiento = deformatearNacimiento(
+        new Date($scope.perfil.nacimiento)
+      );
+      var data = angular.copy($scope.perfil);
+      data.nacimiento = nacimiento;
+      if (idioma) {
+        data.idioma = idioma.codigo;
+        $translate.use(idioma.codigo);
+      }
+      $http
+        .put($rootScope.domain + "userProfile/", data)
+        .then(function(result) {
+          result.data.nacimiento = formatearNacimiento(result.data.nacimiento);
+          $scope.perfil = result.data;
+          $window.localStorage.perfil = JSON.stringify($scope.perfil);
+          if (idioma) {
+            $window.localStorage.language = idioma.codigo;
+          }
+        });
+    };
+
     $scope.actualizar = function(fullrefresh) {
       console.log("estoy en actualizar");
       console.log(fullrefresh);
@@ -188,6 +237,8 @@ angular
         console.log("no tengo nada");
         $scope.getPropositos();
         $http.get($rootScope.domain + "userProfile/").then(function(result) {
+          result.data.nacimiento = formatearNacimiento(result.data.nacimiento);
+          $scope.perfil = result.data;
           $rootScope.perfil = result.data;
           $window.localStorage.perfil = JSON.stringify($scope.perfil);
         });
@@ -398,6 +449,61 @@ angular
       });
     };
 
+    $scope.propositoParticularNuevo = { vinculacion: 5 };
+    $scope.editarProposito = function(proposito) {
+      if (proposito.id) {
+        var data = {};
+        data.proposito = proposito.proposito;
+        data.id = proposito.id;
+        data.mes_ano = proposito.mes_ano;
+        if (proposito.proposito && proposito.proposito.trim() !== "") {
+          $http
+            .put($rootScope.domain + "propositos/" + proposito.id + "/", data)
+            .then(function() {
+              $window.localStorage.propositos = JSON.stringify($scope.propositos);
+            });
+        } else {
+          $http
+            .delete($rootScope.domain + "propositos/" + proposito.id + "/")
+            .then(function() {
+              $scope.index = $scope.propositos.indexOf(proposito);
+              $scope.propositos.splice($scope.index, 1);
+              $window.localStorage.propositos = JSON.stringify($scope.propositos);
+            });
+        }
+      } else {
+        if (proposito.proposito && proposito.proposito.trim() !== "") {
+          $scope.propositoParticularNuevo.vinculacion = proposito.vinculacion;
+          $scope.propositoParticularNuevo.mes_ano = $scope.fechaTotal;
+          $rootScope.LoadingShow();
+
+          $http
+            .post(
+              $rootScope.domain + "propositos/",
+              $scope.propositoParticularNuevo
+            )
+            .then(
+              function(result) {
+                $scope.propositos.push(result.data);
+                $window.localStorage.propositos = JSON.stringify(
+                  $scope.propositos
+                );
+                $rootScope.LoadingHide();
+                $scope.shownGroup[proposito.vinculacion] = true;
+                $scope.propositoParticularNuevo = { vinculacion: 5 };
+              },
+              function () {
+                // por si algo sale mal
+                $rootScope.banner([
+                  $translate.instant("net_error"),
+                  $translate.instant("try_again")
+                ]);
+                $rootScope.LoadingHide();
+              }
+            );
+        }
+      }
+    };
     /* FIN de POPUP */
     /**************************************************************************/
     /*****Muestro las opciones de edicion de un proposito al hacer doble tab***/
@@ -536,9 +642,9 @@ angular
       $ionicSideMenuDelegate.toggleLeft();
     };
 
-    $scope.verPerfil = function() {
-      console.log("ver perfil");
-      $state.go("app.perfil");
+    $scope.verPerfil = function(params) {
+      console.log(params);
+      $state.go("app.perfil", params);
     };
 
     $scope.verReporte = function() {
