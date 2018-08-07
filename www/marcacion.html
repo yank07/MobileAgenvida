@@ -87,22 +87,28 @@
            ng-class="shownGroup[vinculacion.id] ? 'ion-chevron-down' : 'ion-chevron-right'"></i>
         &nbsp;
         {{vinculacion.nombre | slugify | translate }}
-        <i class="icon ion-ios-plus-outline ink pull-right" style="font-size: 30px" ng-if="shownGroup[vinculacion.id]"
+        <i class="icon ion-ios-plus-outline ink pull-right" style="font-size: 30px" ng-if="shownGroup[vinculacion.id] && !estaAgregando()"
            ng-click="$event.preventDefault(); $event.stopPropagation(); CreateProposito(vinculacion)"></i>
       </a>
-      <div  class="item item-light  item-accordion  item-icon-right in done" style="border: 0"
+      <div  class="item item-light  item-accordion  item-icon-right in done"
             ng-repeat="proposito in (filtered =(propositos | filter:{ vinculacion: vinculacion.id , mes_ano: ano + '-'+ mes +'-' })|orderBy: 'id')  track by proposito.id"
-            ng-show="shownGroup[vinculacion.id]" ng-click="showOpciones(proposito)"
+            ng-show="shownGroup[vinculacion.id]"
             on-hold="showOpciones(proposito)"
       >
-        <span class=" "> {{proposito.proposito | limitTo:30}}</span>
+        <input focus-me="{{proposito.id}}" ng-class="{'mas-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 1 }).length > 0,
+                      'menos-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 2 }).length > 0,
+                      'neutro-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 0 }).length > 0 }"
+               style=" border: 0; border-left: 2px solid; padding-left: 10px;
+        background: transparent;
+        overflow: visible;
+        text-align: left;
+        white-space: normal; width: 100%;"
+               placeholder="{{'add_p_message' | translate}}" type="text" ng-model="proposito.proposito"
+        ng-blur="editarProposito(proposito)"/>
         <ion-spinner class="cargando" style="right: 110px; top: 15px;" ng-show="loading == sectionIndex + '-' + $index"></ion-spinner>
-        <span class="icon ink ion-checkmark-circled mas " ng-class="{'mas-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 1 }).length != 0 } "
-              ng-click="$event.preventDefault(); $event.stopPropagation(); marcar(proposito, 1 , sectionIndex, $index);"></span>
-        <span class="icon ink ion-close-circled menos " ng-class="{'menos-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 2 }).length != 0 }"
-              ng-click="$event.preventDefault(); $event.stopPropagation(); marcar(proposito, 2 , sectionIndex, $index)"></span>
-        <span class="icon ink ion-ios-circle-outline neutro" ng-class="{'neutro-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 0 }).length != 0 }"
-              ng-click="$event.preventDefault(); $event.stopPropagation(); marcar(proposito, 0, sectionIndex, $index )"></span>
+        <span class="icon ion-android-more-vertical dark item-dark" ng-show="proposito.id" ng-click="showOpciones(proposito, sectionIndex, $index)"></span>
+
+
       </div>
     </ion-list>
   </ion-content>

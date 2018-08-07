@@ -198,6 +198,10 @@ angular
     function searchFecha(myArray) {
       console.log(myArray);
       console.log($scope.ano + "-" + $scope.mes + "-" + $scope.dia);
+      if (!myArray) {
+        return null;
+      }
+
       for (var i = 0; i < myArray.length; i++) {
         if (myArray[i].dia === $scope.fechaTotal) {
           console.log(myArray[i].dia);
@@ -233,9 +237,9 @@ angular
       console.log("estoy en actualizar");
       console.log(fullrefresh);
 
+      $scope.getPropositos();
       if (fullrefresh) {
         console.log("no tengo nada");
-        $scope.getPropositos();
         $http.get($rootScope.domain + "userProfile/").then(function(result) {
           result.data.nacimiento = formatearNacimiento(result.data.nacimiento);
           $scope.perfil = result.data;
@@ -267,7 +271,7 @@ angular
 
     /*************************************************/
     $scope.marcar = function(proposito, valorMarcacion, sectionIndex, index) {
-      console.log(valorMarcacion);
+      console.log(proposito);
       //  console.log($scope.ano + "-" + $scope.mes + "-" + $scope.dia);
       //  console.log( searchFecha( $scope.dia , proposito.marcaciones) );
 
@@ -313,6 +317,7 @@ angular
 
       /* Si no hay marcacion entonces creo una nueva*/
       else {
+        console.log("nueva");
         data = {
           dia: $scope.ano + "-" + $scope.mes + "-" + $scope.dia,
           cumplimiento: valorMarcacion,
@@ -398,59 +403,22 @@ angular
         mes_ano: $scope.fechaTotal
       };
 
-      // An elaborate, custom popup
-      var myPopup = $ionicPopup.show({
-        template: '<input type="text" ng-model="PropositoNuevo.proposito">',
-        title: $translate.instant("create_p"),
-        subTitle: $translate.instant("add_p_message"),
-        scope: $scope,
-        buttons: [
-          { text: $translate.instant("cancel") },
-
-          {
-            text: "<b>" + $translate.instant("save") + "</b>",
-            type: "button-positive",
-            onTap: function(e) {
-              if ($scope.PropositoNuevo.proposito == "") {
-                e.preventDefault();
-              } else {
-                $rootScope.LoadingShow();
-
-                $http
-                  .post(
-                    $rootScope.domain + "propositos/",
-                    $scope.PropositoNuevo
-                  )
-                  .then(
-                    function(result) {
-                      console.log($scope.propositos);
-                      console.log(result);
-                      $scope.propositos.push(result.data);
-                      $scope.filtered = $scope.filtered;
-                      $window.localStorage.propositos = JSON.stringify(
-                        $scope.propositos
-                      );
-                      $rootScope.LoadingHide();
-                      $scope.shownGroup[vinculacionID] = true;
-                    },
-                    function(result) {
-                      // por si algo sale mal
-                      $rootScope.banner([
-                        $translate.instant("net_error"),
-                        $translate.instant("try_again")
-                      ]);
-                      $rootScope.LoadingHide();
-                    }
-                  );
-              }
-            }
-          }
-        ]
-      });
+      $scope.propositos.push($scope.PropositoNuevo);
+      return;
     };
 
+    $scope.estaAgregando = function() {
+      var agregando = false;
+      angular.forEach($scope.propositos, function(item) {
+        if (!item.id) {
+          agregando = true;
+        }
+      });
+      return agregando;
+    };
     $scope.propositoParticularNuevo = { vinculacion: 5 };
     $scope.editarProposito = function(proposito) {
+      console.log(proposito);
       if (proposito.id) {
         var data = {};
         data.proposito = proposito.proposito;
@@ -460,7 +428,9 @@ angular
           $http
             .put($rootScope.domain + "propositos/" + proposito.id + "/", data)
             .then(function() {
-              $window.localStorage.propositos = JSON.stringify($scope.propositos);
+              $window.localStorage.propositos = JSON.stringify(
+                $scope.propositos
+              );
             });
         } else {
           $http
@@ -468,39 +438,68 @@ angular
             .then(function() {
               $scope.index = $scope.propositos.indexOf(proposito);
               $scope.propositos.splice($scope.index, 1);
-              $window.localStorage.propositos = JSON.stringify($scope.propositos);
+              $window.localStorage.propositos = JSON.stringify(
+                $scope.propositos
+              );
             });
         }
       } else {
         if (proposito.proposito && proposito.proposito.trim() !== "") {
-          $scope.propositoParticularNuevo.vinculacion = proposito.vinculacion;
-          $scope.propositoParticularNuevo.mes_ano = $scope.fechaTotal;
+          var dataToSend;
+          var esPropositoParticular = false;
+          // Si es un proposito particular
+          if (
+            proposito.proposito === $scope.propositoParticularNuevo.proposito
+          ) {
+            esPropositoParticular = true;
+            dataToSend = $scope.propositoParticularNuevo;
+            dataToSend.vinculacion = proposito.vinculacion;
+            dataToSend.mes_ano = $scope.fechaTotal;
+          } else {
+            dataToSend = proposito;
+          }
           $rootScope.LoadingShow();
 
-          $http
-            .post(
-              $rootScope.domain + "propositos/",
-              $scope.propositoParticularNuevo
-            )
-            .then(
-              function(result) {
+          $http.post($rootScope.domain + "propositos/", dataToSend).then(
+            function(result) {
+              console.log(result);
+              if (esPropositoParticular) {
                 $scope.propositos.push(result.data);
-                $window.localStorage.propositos = JSON.stringify(
-                  $scope.propositos
-                );
-                $rootScope.LoadingHide();
-                $scope.shownGroup[proposito.vinculacion] = true;
-                $scope.propositoParticularNuevo = { vinculacion: 5 };
-              },
-              function () {
-                // por si algo sale mal
-                $rootScope.banner([
-                  $translate.instant("net_error"),
-                  $translate.instant("try_again")
-                ]);
-                $rootScope.LoadingHide();
+              } else {
+                proposito = result.data;
+                console.log(proposito);
+
+                for (var i in $scope.propositos) {
+                  if (!$scope.propositos[i].id) {
+                    $scope.propositos[i].marcaciones = result.data.marcaciones;
+                    $scope.propositos[i].id = result.data.id;
+
+                    console.log($scope.propositos[i]);
+
+                    break; //Stop this loop, we found it!
+                  }
+                }
               }
-            );
+              $window.localStorage.propositos = JSON.stringify(
+                $scope.propositos
+              );
+              $rootScope.LoadingHide();
+              $scope.shownGroup[proposito.vinculacion] = true;
+              $scope.propositoParticularNuevo = { vinculacion: 5 };
+            },
+            function() {
+              // por si algo sale mal
+              $rootScope.banner([
+                $translate.instant("net_error"),
+                $translate.instant("try_again")
+              ]);
+              $rootScope.LoadingHide();
+            }
+          );
+        } else {
+          $scope.propositos = $scope.propositos.filter(function(item) {
+            return item.id !== proposito.id;
+          });
         }
       }
     };
@@ -509,23 +508,32 @@ angular
     /*****Muestro las opciones de edicion de un proposito al hacer doble tab***/
     /**************************************************************************/
 
-    $scope.showOpciones = function(proposito) {
+    $scope.showOpciones = function(proposito, sectionIndex, index) {
       console.log(proposito);
       // Show the action sheet
-      var hideSheet = $ionicActionSheet.show({
-        buttons: [{ text: "<b>" + $translate.instant("edit") + "</b>" }],
+      $ionicActionSheet.show({
+        buttons: [
+          {
+            text:
+              '<span class="icon ion-checkmark-circled mas-mark"></span>' +
+              $translate.instant("si")
+          },
+          {
+            text:
+              '<span class="icon ion-close-circled menos-mark"></span>' +
+              $translate.instant("no")
+          },
+          {
+            text:
+              '<span class="icon ion-ios-circle-outline neutro-mark"></span>' +
+              $translate.instant("no_aplica")
+          }
+        ],
         destructiveText: $translate.instant("delete_mssg"),
-        titleText: $translate.instant("edit_p"),
+        titleText: proposito.proposito,
         cancelText: $translate.instant("cancel"),
-        cancel: function() {
-          // add cancel code..
-          //console.log(propositoID);
-          return true;
-        },
-
         destructiveButtonClicked: function() {
-          //Cuando hago tab en eliminar
-          console.log("Eliminado");
+          //Cuando hago tap en eliminar
           $http
             .delete($rootScope.domain + "propositos/" + proposito.id + "/")
             .then(function() {
@@ -536,50 +544,20 @@ angular
 
           return true;
         },
-        buttonClicked: function() {
+        buttonClicked: function(button) {
           //cuando hago click en editar
-          console.log(proposito);
           // delete proposito.marcaciones;
-          $scope.editProposito = {};
-
-          console.log(proposito);
-          $scope.editProposito.id = proposito.id;
-          $scope.editProposito.proposito = proposito.proposito;
-          $scope.editProposito.mes_ano = proposito.mes_ano;
-
-          var myPopup = $ionicPopup.show({
-            template: '<input type="text" ng-model="editProposito.proposito">',
-            title: $translate.instant("create_p"),
-            subTitle: $translate.instant("add_p_message"),
-            scope: $scope,
-            buttons: [
-              { text: $translate.instant("cancel") },
-
-              {
-                text: "<b>" + $translate.instant("save") + "</b>",
-                type: "button-positive",
-                onTap: function(e) {
-                  if (proposito.proposito == "") {
-                    e.preventDefault();
-                  } else {
-                    $http
-                      .put(
-                        $rootScope.domain +
-                          "propositos/" +
-                          $scope.editProposito.id +
-                          "/",
-                        $scope.editProposito
-                      )
-                      .then(function(result) {
-                        console.log(result);
-                        proposito.proposito = result.data.proposito;
-                        //  $scope.propositos.push(result.data);
-                      });
-                  }
-                }
-              }
-            ]
-          });
+          switch (button) {
+            case 0:
+              $scope.marcar(proposito, 1, sectionIndex, index);
+              break;
+            case 1:
+              $scope.marcar(proposito, 2, sectionIndex, index);
+              break;
+            case 2:
+              $scope.marcar(proposito, 0, sectionIndex, index);
+              break;
+          }
           return true;
         }
       });
@@ -642,9 +620,8 @@ angular
       $ionicSideMenuDelegate.toggleLeft();
     };
 
-    $scope.verPerfil = function(params) {
-      console.log(params);
-      $state.go("app.perfil", params);
+    $scope.verPerfil = function() {
+      $state.go("app.perfil");
     };
 
     $scope.verReporte = function() {

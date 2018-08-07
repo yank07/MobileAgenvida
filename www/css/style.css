@@ -94,12 +94,13 @@ p.descripcion{
 
 .list .item.item-accordion {
         line-height: 38px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #BDBDBD;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #dbdbdb;
     transition: 0.04s all linear;
-    margin: 0px 0px;
+    margin: 0;
 }
+
 .list .item.item-accordion.ng-hide {
   line-height: 0px;
 }
@@ -127,6 +128,15 @@ span.icon.menos {
     right: 40px;
 }
 
+input.mas-mark {
+  border-left-color: #43A047 !important;
+}
+input.menos-mark {
+  border-left-color: red !important;
+}
+input.neutro-mark {
+  border-left-color: blue !important;
+}
 
 
 span.icon.neutro {
@@ -134,16 +144,16 @@ span.icon.neutro {
 	right: 10px;
 }
 
-span.icon.mas.mas-mark {
+span.icon.mas-mark {
     color: #43A047;
 }
 
 
-span.icon.menos.menos-mark {
+span.icon.menos-mark {
       color: red;
 }
 
-span.icon.neutro.neutro-mark {
+span.icon.neutro-mark {
 
 	 color: blue;
 }
@@ -360,3 +370,6 @@ span.icon.neutro.neutro-mark {
   margin: 0;
 }
 
+.action-sheet .button {
+  background-color: inherit;
+}

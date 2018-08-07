@@ -14,8 +14,6 @@ angular
     ionicMaterialMotion,
     $timeout
   ) {
-    console.log($stateParams);
-    $scope.focusIdeal = $stateParams.ideal;
     // $rootScope.domain = "http://agenvida.herokuapp.com/";
     var formatearNacimiento = function(nacimiento) {
       if (nacimiento !== null) {

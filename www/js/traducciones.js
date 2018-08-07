@@ -57,7 +57,10 @@ agenvidaApp.config(function(
     delete_mssg: "Delete",
     actual_pass: "Actual password",
     new_pass: "New password",
-    change_pass: "Change password"
+    change_pass: "Change password",
+    si: "Yes",
+    no: "No",
+    no_aplica: "Does not apply"
   });
   $translateProvider.translations("es", {
     hello_message: "Hola",
@@ -114,7 +117,9 @@ agenvidaApp.config(function(
     delete_mssg: "Eliminar",
     actual_pass: "Contraseña Actual",
     new_pass: "Nueva contraseña",
-    change_pass: "Cambiar contraseña"
+    change_pass: "Cambiar contraseña",si: "Si",
+    no: "No",
+    no_aplica: "No aplica"
   });
   $translateProvider.preferredLanguage("en");
   $translateProvider.fallbackLanguage("en");

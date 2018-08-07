@@ -22,6 +22,7 @@ var agenvidaApp = angular
     "Agenvida.controllerReporte",
     "Agenvida.controllerTelefono",
     "Agenvida.controllerOraciones",
+    "Agenvida.focusMe",
     "pascalprecht.translate", // Translate
     "ngSanitize",
     "ionic-material",
