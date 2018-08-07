@@ -71,15 +71,12 @@ angular
     };
 
     $ionicHistory.clearHistory();
-    console.log($ionicHistory.viewHistory());
-    //$rootScope.domain = "http://agenvida.herokuapp.com/";
-    //$rootScope.domain = "http://localhost:8000/";
+
     $scope.date = new Date();
     $scope.dia = ("0" + $scope.date.getDate()).slice(-2);
     $scope.mes = ("0" + ($scope.date.getMonth() + 1)).slice(-2);
     $scope.ano = $scope.date.getFullYear();
     $scope.fechaTotal = $scope.ano + "-" + $scope.mes + "-" + $scope.dia;
-    console.log($scope.dia + "-" + $scope.mes + "-" + $scope.ano);
     $scope.showInput = [false, false, false, false, false];
     $scope.NuevoProposito = ["", "", "", ""];
     $scope.vinculaciones = [
@@ -108,13 +105,10 @@ angular
       setLabel: "Ir", //Optional
       setButtonType: "button-assertive", //Optional
       todayButtonType: "button-assertive", //Optional
-      //  closeButtonType : 'button-assertive',  //Optional
       inputDate: new Date(), //Optional
       mondayFirst: false, //Optional
-      //  disabledDates: disabledDates, //Optional
       weekDaysList: $scope.weekDaysList, //Optional
       monthList: $scope.monthList, //Optional
-
       templateType: "modal", //Optional
       showTodayButton: "true", //Optional
       modalHeaderColor: "bar-positive", //Optional
@@ -134,7 +128,6 @@ angular
           $scope.date.setFullYear($scope.ano);
           $scope.fechaTotal = $scope.ano + "-" + $scope.mes + "-" + $scope.dia;
 
-          // console.log($scope.date);
         }
       }
     };
@@ -164,10 +157,8 @@ angular
         },
         function(result) {
           // algo salio mal #TODO volver a registrar
-          console.log("algo salio mal");
           if (result.statusText == "UNAUTHORIZED") {
             $rootScope.mensaje = "No autorizado";
-            console.log("no estas autorizado");
             delete $window.localStorage.token;
 
             $state.go("signin");
@@ -175,14 +166,12 @@ angular
             result.detail == "Invalid token header. No credentials provided."
           ) {
             delete $window.localStorage.token;
-            console.log("Invalid Token");
             $state.go("signin");
           } else {
             $rootScope.banner([
               $translate.instant("net_error"),
               $translate.instant("try_again")
             ]);
-            console.log(result);
           }
 
           $rootScope.LoadingHide();
@@ -196,22 +185,18 @@ angular
     /*************************************************/
 
     function searchFecha(myArray) {
-      console.log(myArray);
-      console.log($scope.ano + "-" + $scope.mes + "-" + $scope.dia);
       if (!myArray) {
         return null;
       }
 
       for (var i = 0; i < myArray.length; i++) {
         if (myArray[i].dia === $scope.fechaTotal) {
-          console.log(myArray[i].dia);
           return myArray[i];
         }
       }
     }
 
     $scope.editarPerfil = function(idioma) {
-      console.log($scope.perfil);
       var nacimiento = deformatearNacimiento(
         new Date($scope.perfil.nacimiento)
       );
@@ -234,12 +219,8 @@ angular
     };
 
     $scope.actualizar = function(fullrefresh) {
-      console.log("estoy en actualizar");
-      console.log(fullrefresh);
-
       $scope.getPropositos();
       if (fullrefresh) {
-        console.log("no tengo nada");
         $http.get($rootScope.domain + "userProfile/").then(function(result) {
           result.data.nacimiento = formatearNacimiento(result.data.nacimiento);
           $scope.perfil = result.data;
@@ -271,9 +252,6 @@ angular
 
     /*************************************************/
     $scope.marcar = function(proposito, valorMarcacion, sectionIndex, index) {
-      console.log(proposito);
-      //  console.log($scope.ano + "-" + $scope.mes + "-" + $scope.dia);
-      //  console.log( searchFecha( $scope.dia , proposito.marcaciones) );
 
       /* busco si ya existe una marcacion de ese proposito en esa fecha */
       marcacion = searchFecha(proposito.marcaciones);
@@ -317,20 +295,16 @@ angular
 
       /* Si no hay marcacion entonces creo una nueva*/
       else {
-        console.log("nueva");
         data = {
           dia: $scope.ano + "-" + $scope.mes + "-" + $scope.dia,
           cumplimiento: valorMarcacion,
           proposito: proposito.id
         };
 
-        //console.log(data);
         $scope.loading = sectionIndex + "-" + index; //pongo loading hasta que llegue la respuesta
         $http.post($rootScope.domain + "marcaciones/", data).then(
           function(result) {
-            //console.log(result);
             proposito.marcaciones.push(result.data);
-            //$scope.loading(proposito.id);
             $scope.loading = ""; //pongo loading hasta que llegue la respuesta
             $window.localStorage.propositos = JSON.stringify($scope.propositos);
           },
@@ -352,35 +326,21 @@ angular
 
     $scope.diaUp = function() {
       $scope.tomorrow = new Date();
-
       $scope.tomorrow.setTime($scope.date.getTime() + 864e5);
-
       $scope.dia = ("0" + $scope.tomorrow.getDate()).slice(-2);
       $scope.mes = ("0" + ($scope.tomorrow.getMonth() + 1)).slice(-2);
-
-      console.log($scope.dia);
-
       $scope.ano = $scope.tomorrow.getFullYear();
-
       $scope.fechaTotal = $scope.ano + "-" + $scope.mes + "-" + $scope.dia;
-
       $scope.date.setTime($scope.tomorrow.getTime());
     };
 
     $scope.diaDown = function() {
       $scope.tomorrow = new Date();
-
       $scope.tomorrow.setTime($scope.date.getTime() - 864e5);
-
       $scope.dia = ("0" + $scope.tomorrow.getDate()).slice(-2);
       $scope.mes = ("0" + ($scope.tomorrow.getMonth() + 1)).slice(-2);
-
       $scope.ano = $scope.tomorrow.getFullYear();
-
-      console.log($scope.dia);
-
       $scope.fechaTotal = $scope.ano + "-" + $scope.mes + "-" + $scope.dia;
-
       $scope.date.setTime($scope.tomorrow.getTime());
     };
 
@@ -388,12 +348,8 @@ angular
     /* FIN Funcion  aumentar un dia con flechita */
     /*********************************************/
 
-    /*********************************************/
-    /* TRAigo mis datos personales */
-    /*********************************************/
-
     /**********************************************/
-    /**** Show pop Up de Crear nuevo proposito****/
+    /**** Crea nuevo proposito****/
     /*********************************************/
     $scope.CreateProposito = function(proposito) {
       console.log(proposito);
@@ -404,9 +360,10 @@ angular
       };
 
       $scope.propositos.push($scope.PropositoNuevo);
-      return;
+      $scope.shownGroup[vinculacionID] = true;
     };
 
+    // Verifica si se está agregando un propósito
     $scope.estaAgregando = function() {
       var agregando = false;
       angular.forEach($scope.propositos, function(item) {
@@ -416,9 +373,16 @@ angular
       });
       return agregando;
     };
+
+    // Variable utilizada para el input del proposito particular nuevo
     $scope.propositoParticularNuevo = { vinculacion: 5 };
-    $scope.editarProposito = function(proposito) {
-      console.log(proposito);
+
+    /**
+     * Editar o agregar un propósito
+     * @param proposito
+     */
+    $scope.editarProposito = function(proposito, vinculacionID, filtered) {
+      console.log(filtered);
       if (proposito.id) {
         var data = {};
         data.proposito = proposito.proposito;
@@ -433,6 +397,7 @@ angular
               );
             });
         } else {
+          // Si ya existe y borra manualmente en el input
           $http
             .delete($rootScope.domain + "propositos/" + proposito.id + "/")
             .then(function() {
@@ -441,6 +406,9 @@ angular
               $window.localStorage.propositos = JSON.stringify(
                 $scope.propositos
               );
+              if (filtered.length === 1) {
+                $scope.shownGroup[vinculacionID] = false;
+              }
             });
         }
       } else {
@@ -462,20 +430,15 @@ angular
 
           $http.post($rootScope.domain + "propositos/", dataToSend).then(
             function(result) {
-              console.log(result);
               if (esPropositoParticular) {
                 $scope.propositos.push(result.data);
               } else {
                 proposito = result.data;
-                console.log(proposito);
 
                 for (var i in $scope.propositos) {
                   if (!$scope.propositos[i].id) {
                     $scope.propositos[i].marcaciones = result.data.marcaciones;
                     $scope.propositos[i].id = result.data.id;
-
-                    console.log($scope.propositos[i]);
-
                     break; //Stop this loop, we found it!
                   }
                 }
@@ -500,6 +463,9 @@ angular
           $scope.propositos = $scope.propositos.filter(function(item) {
             return item.id !== proposito.id;
           });
+          if (filtered.length === 1) {
+            $scope.shownGroup[vinculacionID] = false;
+          }
         }
       }
     };
@@ -509,7 +475,6 @@ angular
     /**************************************************************************/
 
     $scope.showOpciones = function(proposito, sectionIndex, index) {
-      console.log(proposito);
       // Show the action sheet
       $ionicActionSheet.show({
         buttons: [
@@ -537,7 +502,6 @@ angular
           $http
             .delete($rootScope.domain + "propositos/" + proposito.id + "/")
             .then(function() {
-              console.log("Proposito eliminado");
               $scope.index = $scope.propositos.indexOf(proposito);
               $scope.propositos.splice($scope.index, 1);
             });
@@ -571,21 +535,6 @@ angular
      * Es el acordeon
      *************************************/
 
-    /* $scope.toggleGroup = function(group) {
-    if ($scope.isGroupShown(group)) {
-      $scope.shownGroup = null;
-    } else {
-      $scope.shownGroup = group.id;
-    }
-  };
-  $scope.isGroupShown = function(group) {
-    return $scope.shownGroup === group.id;
-  };
-
-
-
-  */
-
     $scope.shownGroup = [
       true,
       true,
@@ -601,11 +550,12 @@ angular
     ];
 
     $scope.toggleGroup = function(group) {
+      console.log(group);
       $scope.isGroupShown(group);
     };
 
     $scope.isGroupShown = function(group) {
-      if ($scope.shownGroup[group.id] == true) {
+      if ($scope.shownGroup[group.id] === true) {
         $scope.shownGroup[group.id] = false;
       } else {
         $scope.shownGroup[group.id] = true;
@@ -634,7 +584,6 @@ angular
 
     $scope.verSugerencias = function() {
       $scope.screen_width = $window.innerWidth;
-      console.log($scope.screen_width);
 
       $state.go("app.sugerencias");
     };
@@ -658,7 +607,7 @@ angular
     $scope.abierto = false;
 
     $scope.desplegar = function() {
-      if ($scope.abierto == true) {
+      if ($scope.abierto === true) {
         $scope.shownGroup = [
           true,
           true,
@@ -672,7 +621,6 @@ angular
           true,
           true
         ];
-        console.log($scope.shownGroup);
         $scope.abierto = false;
       } else {
         $scope.shownGroup = [
@@ -683,9 +631,11 @@ angular
           false,
           false,
           false,
+          false,
+          false,
+          false,
           false
         ];
-        console.log($scope.shownGroup);
         $scope.abierto = true;
       }
     };

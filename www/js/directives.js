@@ -4,7 +4,7 @@ angular.module("Agenvida.focusMe", []).directive("focusMe", function($timeout) {
       if (!attrs.focusMe) {
         $timeout(function() {
           element[0].focus();
-        }, 750);
+        }, 100);
       }
     }
   };

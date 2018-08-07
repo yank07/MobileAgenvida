@@ -82,7 +82,14 @@ var agenvidaApp = angular
       "11",
       "12"
     ];
-    $rootScope.anos = ["2014", "2015", "2016"];
+    var hoy = new Date();
+    var anhoInicio = 2014;
+    var anhoActual = hoy.getFullYear();
+    $rootScope.anos = [];
+    while (anhoInicio <= anhoActual) {
+      $rootScope.anos.push(anhoInicio.toString());
+      anhoInicio += 1;
+    }
 
     /* Posibles Idiomas */
     $rootScope.idiomas = [

@@ -80,14 +80,14 @@
     </div>
     <ion-list class="animate-ripple" ng-repeat="vinculacion in vinculaciones"  ng-init="sectionIndex = $index"  >
       <a class=" ink ink-dark  item item-stable item-divider item-icon"
-         ng-click="(propositos | filter:{ vinculacion: vinculacion.id , mes_ano: ano + '-'+ mes +'-' }).length?toggleGroup(vinculacion): CreateProposito(vinculacion)"
+         ng-click="(propositos | filter:{ vinculacion: vinculacion.id , mes_ano: ano + '-'+ mes +'-' }).length > 0? toggleGroup(vinculacion): CreateProposito(vinculacion)"
          ng-class="{active: shownGroup[vinculacion.id]}">
         <i class="icon"
-           ng-show="(propositos | filter:{ vinculacion: vinculacion.id , mes_ano: ano + '-'+ mes +'-' }).length"
+           ng-show="(propositos | filter:{ vinculacion: vinculacion.id , mes_ano: ano + '-'+ mes +'-' }).length > 0"
            ng-class="shownGroup[vinculacion.id] ? 'ion-chevron-down' : 'ion-chevron-right'"></i>
-        &nbsp;
         {{vinculacion.nombre | slugify | translate }}
-        <i class="icon ion-ios-plus-outline ink pull-right" style="font-size: 30px" ng-if="shownGroup[vinculacion.id] && !estaAgregando()"
+        <i class="icon ion-ios-plus-outline ink pull-right" style="font-size: 30px"
+           ng-if="(shownGroup[vinculacion.id] && (propositos | filter:{ vinculacion: vinculacion.id , mes_ano: ano + '-'+ mes +'-' }).length > 0) && !estaAgregando()"
            ng-click="$event.preventDefault(); $event.stopPropagation(); CreateProposito(vinculacion)"></i>
       </a>
       <div  class="item item-light  item-accordion  item-icon-right in done"
@@ -104,7 +104,7 @@
         text-align: left;
         white-space: normal; width: 100%;"
                placeholder="{{'add_p_message' | translate}}" type="text" ng-model="proposito.proposito"
-        ng-blur="editarProposito(proposito)"/>
+        ng-blur="editarProposito(proposito, vinculacion.id, filtered)"/>
         <ion-spinner class="cargando" style="right: 110px; top: 15px;" ng-show="loading == sectionIndex + '-' + $index"></ion-spinner>
         <span class="icon ion-android-more-vertical dark item-dark" ng-show="proposito.id" ng-click="showOpciones(proposito, sectionIndex, $index)"></span>
 
