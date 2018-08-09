@@ -37,6 +37,9 @@ var agenvidaApp = angular
       StatusBar.styleDefault();
       StatusBar.backgroundColorByName("blue");
     }
+    document.addEventListener("deviceready", function() {
+      Keyboard.hideFormAccessoryBar(false);
+    });
 
     if (window.localStorage.token) {
       console.log("en estoy en run y tengo el token");
@@ -126,7 +129,7 @@ var agenvidaApp = angular
     }
   ])
 
-  .factory("authInterceptor", function($rootScope, $q, $window) {
+  .factory("authInterceptor", function($rootScope, $q, $window, $injector) {
     return {
       request: function(config) {
         config.headers = config.headers || {};
@@ -138,6 +141,14 @@ var agenvidaApp = angular
       response: function(response) {
         if (response.status === 401) {
           // handle the case where the user is not authenticated
+          delete $window.localStorage.token;
+          delete $window.localStorage.password;
+          $injector
+            .get("$ionicHistory")
+            .clearCache()
+            .then(function() {
+              $injector.get("$state").go("signin");
+            });
         }
         return response || $q.when(response);
       }

@@ -79,7 +79,7 @@
       <!--*************************************** FIN PROPOSITO PARTIULAR ************************************-->
     </div>
     <ion-list class="animate-ripple" ng-repeat="vinculacion in vinculaciones"  ng-init="sectionIndex = $index"  >
-      <a class=" ink ink-dark  item item-stable item-divider item-icon"
+      <a class=" ink ink-dark  item item-stable item-divider item-icon" style="padding-left: 10px !important;"
          ng-click="(propositos | filter:{ vinculacion: vinculacion.id , mes_ano: ano + '-'+ mes +'-' }).length > 0? toggleGroup(vinculacion): CreateProposito(vinculacion)"
          ng-class="{active: shownGroup[vinculacion.id]}">
         <i class="icon"
@@ -98,7 +98,7 @@
         <input focus-me="{{proposito.id}}" ng-class="{'mas-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 1 }).length > 0,
                       'menos-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 2 }).length > 0,
                       'neutro-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 0 }).length > 0 }"
-               style=" border: 0; border-left: 2px solid; padding-left: 10px;
+               style=" border: 0; border-left: 2px solid; padding-left: 10px; border-bottom-left-radius: 0; border-top-left-radius: 0;
         background: transparent;
         overflow: visible;
         text-align: left;
