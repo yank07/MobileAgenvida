@@ -69,6 +69,10 @@
   padding-right: 10px;
 }
 
+.icon-prayinghands:before {
+  content: "\e900";
+}
+
 
 h1,h2,h3,h4,h5 {
   color: #6F6F6F;
@@ -365,10 +369,6 @@ span.icon.neutro-mark {
 
 
 /* FIN REPORTE */
-.button {
-  padding: 0;
-  margin: 0;
-}
 
 .action-sheet .button {
   background-color: inherit;

@@ -121,8 +121,10 @@ var agenvidaApp = angular
 
   .config([
     "$httpProvider",
-    function($httpProvider) {
+    "$ionicConfigProvider",
+    function($httpProvider, $ionicConfigProvider) {
       $httpProvider.defaults.withCredentials = true;
+      $ionicConfigProvider.backButton.text("");
     }
   ])
 

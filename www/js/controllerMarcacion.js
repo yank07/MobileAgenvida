@@ -127,7 +127,6 @@ angular
           $scope.date.setMonth($scope.mes - 1);
           $scope.date.setFullYear($scope.ano);
           $scope.fechaTotal = $scope.ano + "-" + $scope.mes + "-" + $scope.dia;
-
         }
       }
     };
@@ -252,7 +251,6 @@ angular
 
     /*************************************************/
     $scope.marcar = function(proposito, valorMarcacion, sectionIndex, index) {
-
       /* busco si ya existe una marcacion de ese proposito en esa fecha */
       marcacion = searchFecha(proposito.marcaciones);
       /* Si ya hay una maracion, entonces actualizo */
@@ -605,6 +603,20 @@ angular
     };
 
     $scope.abierto = false;
+
+    $scope.toggleVisibility = function() {
+      $scope.toggleGroupVisibility = !$scope.toggleGroupVisibility;
+      $scope.abierto = true;
+      $scope.toggle = true;
+      $scope.desplegar();
+    };
+
+    $scope.clickPropositos = function() {
+      if ($scope.toggleGroupVisibility) {
+        $scope.desplegar();
+        $scope.toggle = !$scope.toggle;
+      }
+    };
 
     $scope.desplegar = function() {
       if ($scope.abierto === true) {

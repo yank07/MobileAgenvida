@@ -60,7 +60,8 @@ agenvidaApp.config(function(
     change_pass: "Change password",
     si: "Yes",
     no: "No",
-    no_aplica: "Does not apply"
+    no_aplica: "Does not apply",
+    estirar_para_refrescar: "Estirar para recargar..."
   });
   $translateProvider.translations("es", {
     hello_message: "Hola",
@@ -119,7 +120,8 @@ agenvidaApp.config(function(
     new_pass: "Nueva contraseña",
     change_pass: "Cambiar contraseña",si: "Si",
     no: "No",
-    no_aplica: "No aplica"
+    no_aplica: "No aplica",
+    estirar_para_refrescar: "Pull to refresh..."
   });
   $translateProvider.preferredLanguage("en");
   $translateProvider.fallbackLanguage("en");

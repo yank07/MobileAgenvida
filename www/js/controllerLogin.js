@@ -10,9 +10,7 @@ angular
     $translate
   ) {
     if ($window.localStorage.token) {
-      console.log($window.localStorage.token);
       $scope.message = "Welcome Ya tengo el token";
-      console.log($scope.message);
     }
     $scope.user = {};
 
@@ -21,7 +19,6 @@ angular
     $scope.language = $window.localStorage.language;
 
     $rootScope.idioma = $rootScope.idiomas[1];
-    console.log($rootScope.idiomas);
     angular.forEach($rootScope.idiomas, function(idioma) {
       if (idioma.codigo === $scope.language) {
         $rootScope.idioma = idioma;
@@ -55,8 +52,6 @@ angular
     };
 
     $scope.signIn = function() {
-      console.log($scope.user.password);
-
       if ($scope.user.username != "" && $scope.user.password != "") {
         $scope.LoadingShow();
 
@@ -85,7 +80,6 @@ angular
             $scope.message_lindo = "";
             $scope.color_mensaje = "green";
             $scope.mensajeShow = true;
-            console.log($scope.message);
             $scope.mensajeShow = false;
             $scope.LoadingHide();
             $state.transitionTo("app.marcacion");
