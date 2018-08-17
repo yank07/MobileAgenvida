@@ -7,7 +7,7 @@ agenvidaApp.config(function(
     hello_message: "Howdy",
     goodbye_message: "Goodbye",
     configuration: "configuration",
-    user_name: "Username",
+    user_name: "User name",
     password: "password",
     language: "Language",
     login: "login",
@@ -29,7 +29,7 @@ agenvidaApp.config(function(
     my_profile: "My Profile",
     name: "Name",
     email: "Email",
-    lastname: "Lastname",
+    lastname: "Last name",
     date_birth: "Date of Birth",
     country: "Country",
     pedagogic_contract: "Pedagogical Contract",
@@ -51,7 +51,7 @@ agenvidaApp.config(function(
     success_login: "Succesfull Login",
     user_password_message: "Enter your username and password",
     invalid_grant: "Username or password incorrects",
-    auth_error: "An authentication error occurs.",
+    auth_error: "An authentication error occurs",
     net_error: "network conection error",
     try_again: "try again later",
     delete_mssg: "Delete",
@@ -61,7 +61,12 @@ agenvidaApp.config(function(
     si: "Yes",
     no: "No",
     no_aplica: "Does not apply",
-    estirar_para_refrescar: "Estirar para recargar..."
+    estirar_para_refrescar: "Estirar para recargar...",
+    check_mail: "Check your email and follow the instructions",
+    reset_pass: "Reset Password",
+    sign_up: "Sign Up",
+    loading: "Loading...",
+    user_exists: "Username already exists"
   });
   $translateProvider.translations("es", {
     hello_message: "Hola",
@@ -112,16 +117,22 @@ agenvidaApp.config(function(
     user_password_message: "Ingresá tu usuario y contraseña",
     invalid_grant: "Nombre de usuario y/o contraseña incorrectos",
     auth_error:
-      "Ocurrió un error de autenticación, favor intertalo nuevamente.",
+      "Ocurrió un error de autenticación",
     net_error: "error de conexion",
     try_again: "inténtelo nuevamente en unos instantes",
     delete_mssg: "Eliminar",
     actual_pass: "Contraseña Actual",
     new_pass: "Nueva contraseña",
-    change_pass: "Cambiar contraseña",si: "Si",
+    change_pass: "Cambiar contraseña",
+    si: "Si",
     no: "No",
     no_aplica: "No aplica",
-    estirar_para_refrescar: "Pull to refresh..."
+    estirar_para_refrescar: "Pull to refresh...",
+    check_mail: "Revisá tu correo electronico y seguí las instrucciones",
+    reset_pass: "Restablecer Contraseña",
+    sign_up: "Registrarse",
+    loading: "Cargando...",
+    user_exists: "El usuario ya existe"
   });
   $translateProvider.preferredLanguage("en");
   $translateProvider.fallbackLanguage("en");
