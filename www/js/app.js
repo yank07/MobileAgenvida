@@ -51,7 +51,7 @@ var agenvidaApp = angular
 
     // $rootScope.domain = "http://localhost:8000/";
 
-    $rootScope.domain = "http://agenvida.herokuapp.com/";
+    $rootScope.domain = "http://agenvida.com/";
     //  $rootScope.client_id = "zk31U7ywB3j5cxnEXxnRQGOdf2ksnLHDO4MMdMKe"; //desarrollo
 
     $rootScope.client_id = "FCMnar3EJW84jY4Lgsh9GSEgSAY9HGbIzv9vpxsr"; //Produccion
