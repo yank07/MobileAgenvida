@@ -16,7 +16,7 @@ agenvidaApp.config(function(
     purposes: "Purposes",
     monthly_report: "monthly report",
     lecture_day: "lecture of the day",
-    father_telephone: "father telephone",
+    father_telephone: "father's telephone",
     prayers: "prayers",
     ideal_personal: "Personal ideal",
     ideal_personal_cargar: "Write your personal ideal",
@@ -66,7 +66,10 @@ agenvidaApp.config(function(
     reset_pass: "Reset Password",
     sign_up: "Sign Up",
     loading: "Loading...",
-    user_exists: "Username already exists"
+    user_exists: "Username already exists",
+    evangelio_del_dia: "Gospel of the day",
+    father_tells: "The Father tells you..",
+    another_phrase: "Another Phrase"
   });
   $translateProvider.translations("es", {
     hello_message: "Hola",
@@ -82,7 +85,7 @@ agenvidaApp.config(function(
     purposes: "Propósitos",
     monthly_report: "reporte mensual",
     lecture_day: "lectura del dia",
-    father_telephone: "telefono del padre",
+    father_telephone: "teléfono del padre",
     prayers: "oraciones",
     ideal_personal: "Ideal personal",
     ideal_personal_cargar: "Cargue su ideal personal",
@@ -132,7 +135,10 @@ agenvidaApp.config(function(
     reset_pass: "Restablecer Contraseña",
     sign_up: "Registrarse",
     loading: "Cargando...",
-    user_exists: "El usuario ya existe"
+    user_exists: "El usuario ya existe",
+    evangelio_del_dia: "Evangelio del día",
+    father_tells: "El Padre te dice..",
+    another_phrase: "Otra Frase"
   });
   $translateProvider.preferredLanguage("en");
   $translateProvider.fallbackLanguage("en");

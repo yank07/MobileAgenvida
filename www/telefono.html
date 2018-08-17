@@ -1,4 +1,4 @@
-<ion-view title="Telefono del Padre">
+<ion-view title="{{'father_telephone' | translate | capitalize}}">
 
   <ion-nav-bar class="bar-positive">
                     <ion-nav-buttons side="left">
@@ -7,19 +7,12 @@
                     </ion-nav-buttons>
 
                   </ion-nav-bar>
-
-
-
-
   <ion-content >
-
-
-
 	<div class="list card">
 
   <div class="item ">
 
-    <h3>El Padre te dice..</h3>
+    <h3>{{'father_tells' | translate}}</h3>
 
   </div>
 
@@ -36,7 +29,7 @@
 
     <button class="button button-block button-calm" ng-click="nuevaFrase()">
                <i class="icon ion-ios-refresh-empty"></i>
-      Otra Frase
+      {{'another_phrase' | translate}}
             </button>
 
   <!-- <a class="tab-item" href="#">
@@ -62,14 +55,6 @@
  <button class="button button-fab" ng-click="shareViaTwitter(frase_elegida)"><i class="fa fa-twitter"></i></button>
 
 </div>
-
-
-
-
-
-
-
 </div>
-
   </ion-content>
 </ion-view>
