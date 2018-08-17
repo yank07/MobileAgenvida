@@ -23,12 +23,12 @@
       </button>
     </ion-nav-buttons>
   </ion-nav-bar>
-  <ion-content scroll="true">
+  <ion-content scroll="true" style="">
     <ion-refresher
       pulling-text="{{'estirar_para_refrescar' | translate}}"
       on-refresh="actualizar(true)">
     </ion-refresher>
-    <div class="item-dark  item item-body" style="border-color: transparent;">
+    <div class="item item-body" style="border-color: transparent;background-color: #1B237A;">
       <div class="center">
         <textarea msd-elastic style="
         background: transparent;
@@ -64,16 +64,17 @@
                   ng-blur="editarProposito(propositoParticularNuevo)"></textarea>
             <span ng-if="pps != null" class="light item-text-wrap" style="font-size:15px;">
                <ion-spinner class="cargando" style="right: 90px; top: 0;" ng-show="loading == 'undefined-undefined'"></ion-spinner>
-               <span class="icon  ion-ios-checkmark-outline mas ink ink-dark" style="right: 60px" ng-class="{'mas-mark' : (pps.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 1 }).length != 0 } "
+               <span class="icon  ion-ios-checkmark mas ink ink-dark" style="right: 60px" ng-class="{'mas-mark' : (pps.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 1 }).length != 0 } "
                      ng-click="$event.preventDefault(); $event.stopPropagation(); marcar(pps, 1 , sectionIndex, $index)"></span>
-               <span class="icon ion-ios-close-outline menos ink ink-dark" style="right: 30px" ng-class="{'menos-mark' : (pps.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 2 }).length != 0 }"
+               <span class="icon ion-ios-close menos ink ink-dark" style="right: 30px" ng-class="{'menos-mark' : (pps.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 2 }).length != 0 }"
                      ng-click="$event.preventDefault(); $event.stopPropagation(); marcar(pps, 2 , sectionIndex, $index)"></span>
-               <span class="icon ion-ios-circle-outline neutro ink ink-dark" style="right: 0" ng-class="{'neutro-mark' : (pps.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 0 }).length != 0 }"
+               <span class="icon ion-record neutro ink ink-dark" style="right: 0" ng-class="{'neutro-mark' : (pps.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 0 }).length != 0 }"
                      ng-click="$event.preventDefault(); $event.stopPropagation(); marcar(pps, 0, sectionIndex, $index )"></span>
             </span>
       </p>
       <!--*************************************** FIN PROPOSITO PARTIULAR ************************************-->
     </div>
+    <div style="background-color: #ffffff">
     <div class="ink ink-dark no-border item item-stable item-divider item-icon" ng-click="clickPropositos()">
       <i class="icon"
          ng-show="toggleGroupVisibility"
@@ -84,7 +85,7 @@
          ng-click="$event.preventDefault(); $event.stopPropagation(); toggleVisibility()"></i>
 
     </div>
-    <ion-list class="animate-ripple" ng-repeat="vinculacion in vinculaciones"  ng-init="sectionIndex = $index"  >
+    <ion-list class="animate-ripple" ng-repeat="vinculacion in vinculaciones"  ng-init="sectionIndex = $index">
       <a class=" ink ink-dark  item item-stable item-divider item-icon" ng-show="toggleGroupVisibility"
          ng-click="(propositos | filter:{ vinculacion: vinculacion.id , mes_ano: ano + '-'+ mes +'-' }).length > 0? toggleGroup(vinculacion): CreateProposito(vinculacion)"
          ng-class="{active: shownGroup[vinculacion.id]}">
@@ -112,7 +113,7 @@
         <input focus-me="{{proposito.id}}" ng-class="{'mas-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 1 }).length > 0,
                       'menos-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 2 }).length > 0,
                       'neutro-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 0 }).length > 0 }"
-               style=" border: 0; border-left: 4px solid; padding-left: 10px;
+               style=" border: 0; border-left: 4px solid; padding-left: 10px; border-left-color: #dbdbdb;
         background: transparent;
         overflow: visible;
         text-align: left;
@@ -128,11 +129,12 @@
             'icon-prayinghands' : vinculacion.id === 1,
             'ion-compose' : vinculacion.id === 7,
             'ion-calendar': vinculacion.id === 8
-          }" ng-show="!toggleGroupVisibility" style="margin-right: 10px !important;"></i>
-                  <i class="ion-android-more-vertical dark"></i>
+          }" ng-show="!toggleGroupVisibility"></i>
+          <i class="ion-android-more-vertical dark text-center" style="width: 20px !important;"></i>
         </span>
       </div>
     </ion-list>
+    </div>
   </ion-content>
 </ion-view>
 
