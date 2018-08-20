@@ -95,6 +95,9 @@ angular
       }
     });
 
+    $scope.$on("$ionicView.beforeEnter", function() {
+      $scope.actualizar(true);
+    });
     $scope.actualizar = function(fullrefresh) {
       if (fullrefresh) {
         $rootScope.LoadingShow();

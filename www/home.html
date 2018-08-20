@@ -1,12 +1,10 @@
 <ion-view view-title="Agenvida"  hide-nav-bar="true" has-navbar="true" >
-
-
 <ion-side-menus enable-menu-with-back-views="true">
 
       <!-- ++++++++++++++++ Center content  ++++++++++++++++  -->
                     <ion-side-menu-content scroll="false">
 
-                   
+
 
 
                   <!--    <ion-header-bar class="bar-positive">
@@ -22,7 +20,7 @@
                         </h1>
 
 
-            
+
 
                         <div class="buttons">
 
@@ -30,8 +28,8 @@
                               <button class="button button-icon icon-right" side="right" >
                           <i class="icon ion-calendar"></i>
                         </button>
-                        </ionic-datepicker> 
-                        
+                        </ionic-datepicker>
+
 
 
 
@@ -42,14 +40,14 @@
 
 
                         </div>
-                    
-                                  
+
+
 
 
 
 
                       </ion-header-bar> -->
-                     
+
 
 
 
@@ -62,24 +60,18 @@
 
                     </ion-side-menu-content>
 
-
-
-
-
-
-
                 <!-- ++++++++++++++++ Left menu ++++++++++++++++ -->
 
-       
+
                 <ion-side-menu side="left" >
 
 
-                 
+
 
                   <ion-header-bar class="expanded bar bar-positive-900  bar-header disable-user-behavior">
                       <img src="img/agenvidaicono.png" class="avatar motion spin fade">
                       <div class="menu-bottom">
-                         AGENVIDA 
+                         AGENVIDA
                       </div>
                   </ion-header-bar>
 
@@ -90,42 +82,42 @@
                        <ion-item ng-click="verMarcacion()"  class="item-icon-left ink" menu-close>
 
                        <i class="icon ion-checkmark"></i>   {{"purposes" | translate  | capitalize }}
-                     
+
                       </ion-item>
 
 
                       <ion-item ng-click="verReporte()" class="item-icon-left ink" menu-close>
 
                       <i class="icon  ion-calendar"></i>     {{"monthly_report" | translate  | capitalize }} <!--<span class="item-note balanced">Nuevo</span> -->
-                     
+
                       </ion-item>
 
-                       <ion-item ng-click="verEvangelio()" class="item-icon-left ink" menu-close>
+                       <ion-item ng-click="verEvangelio()" class="item-icon-left ink" menu-close ng-show="showEvangelio()">
 
-                       <i class="icon ion-ios-book"></i>   {{"lecture_day" | translate  | capitalize }} 
-                     
+                       <i class="icon ion-ios-book"></i>   {{"lecture_day" | translate  | capitalize }}
+
                       </ion-item>
 
                        <ion-item ng-click="verTelefono()"  class="item-icon-left ink" menu-close>
 
-                  <i class="icon ion-android-call"></i>   {{"father_telephone" | translate | capitalize }} 
-                     
+                  <i class="icon ion-android-call"></i>   {{"father_telephone" | translate | capitalize }}
+
                       </ion-item>
                        <ion-item ng-click="verOraciones()" class="item-icon-left ink" menu-close>
 
                       <i class="icon icon-praying-hands"></i> {{"prayers" | translate | capitalize }}
-                     
+
                       </ion-item>
 
                     <!--  <ion-item ng-click="verNotificaciones()" class="item-icon-left ink disable-user-behavior" menu-close>
 
-                        <i class="icon ion-ios-bell"></i>   Notificaciones 
-                     
+                        <i class="icon ion-ios-bell"></i>   Notificaciones
+
                       </ion-item> -->
                        <!-- <ion-item ng-click="verSugerencias()" menu-close>
 
                       Sugerencias
-                     
+
                       </ion-item>-->
                     </ion-list>
                   </ion-content>
@@ -133,8 +125,8 @@
 
                 </ion-side-menu>
 
-               
+
 </ion-view>
 
-      
-  
+
+

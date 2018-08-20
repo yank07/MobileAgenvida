@@ -153,6 +153,7 @@ angular
         url: "/",
         templateUrl: "sign-in.html",
         controller: "controllerLogin",
+        cache: false,
         onEnter: function($state) {
           if (window.localStorage.token) {
             console.log("Estoy en Routes SignIn");

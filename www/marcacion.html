@@ -23,12 +23,14 @@
       </button>
     </ion-nav-buttons>
   </ion-nav-bar>
-  <ion-content scroll="true" style="">
+  <ion-floating-button ng-show="!toggleGroupVisibility" click="showOpcionesNuevo()" button-color="#1B237A" icon="ion-plus" icon-color="#fff">
+  </ion-floating-button>
+  <ion-content scroll="true" style="margin-right: -1px" class="has-header">
     <ion-refresher
       pulling-text="{{'estirar_para_refrescar' | translate}}"
       on-refresh="actualizar(true)">
     </ion-refresher>
-    <div class="item item-body" style="border-color: transparent;background-color: #1B237A;">
+    <div class="item item-body" style="border-color: #1B237A;background-color: #1B237A; margin-right: -5px">
       <div class="center">
         <textarea msd-elastic style="
         background: transparent;
@@ -113,7 +115,7 @@
         <input focus-me="{{proposito.id}}" ng-class="{'mas-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 1 }).length > 0,
                       'menos-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 2 }).length > 0,
                       'neutro-mark' : (proposito.marcaciones | filter:{ dia: fechaTotal, cumplimiento: 0 }).length > 0 }"
-               style=" border: 0; border-left: 4px solid; padding-left: 10px; border-left-color: #dbdbdb;
+               style=" border: 0; border-left: 4px solid; padding-left: 10px; border-left-color: #dbdbdb; border-radius: 0 !important;
         background: transparent;
         overflow: visible;
         text-align: left;

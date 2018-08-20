@@ -71,6 +71,9 @@ angular
             "&client_secret="
         }).then(
           function(result) {
+            delete $window.localStorage.perfil;
+            delete $window.localStorage.propositos;
+            delete $window.localStorage.user;
             $window.localStorage.username = $scope.user.username;
             $window.localStorage.password = $scope.user.password;
             $window.localStorage.token = result.data.access_token;

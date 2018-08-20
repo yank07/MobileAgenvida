@@ -27,7 +27,8 @@ var agenvidaApp = angular
     "ngSanitize",
     "ionic-material",
     "ionic-timepicker",
-    "monospaced.elastic"
+    "monospaced.elastic",
+    "ion-floating-menu"
   ])
 
   .run(function($state, $rootScope, $ionicLoading, $window, $translate) {
@@ -56,21 +57,6 @@ var agenvidaApp = angular
 
     $rootScope.client_id = "FCMnar3EJW84jY4Lgsh9GSEgSAY9HGbIzv9vpxsr"; //Produccion
 
-    $rootScope.dias_semana = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"];
-    $rootScope.meses = [
-      "Ene",
-      "Feb",
-      "Mar",
-      "Abr",
-      "May",
-      "Jun",
-      "Jul",
-      "Agost",
-      "Sept",
-      "Oct",
-      "Nov",
-      "Dic"
-    ];
     $rootScope.meses_num = [
       "01",
       "02",
@@ -120,13 +106,65 @@ var agenvidaApp = angular
     $rootScope.LoadingHide = function() {
       $ionicLoading.hide();
     };
+
+    loadVariables();
+    $rootScope.$on("$translateChangeSuccess", function() {
+      console.log("IDIOMA CAMBIADO");
+      loadVariables();
+    });
+
+    function loadVariables() {
+      if (lenguage === "es") {
+        $rootScope.meses = [
+          "Ene",
+          "Feb",
+          "Mar",
+          "Abr",
+          "May",
+          "Jun",
+          "Jul",
+          "Agost",
+          "Sept",
+          "Oct",
+          "Nov",
+          "Dic"
+        ];
+      } else {
+        $rootScope.meses = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sept",
+          "Oct",
+          "Nov",
+          "Dec"
+        ];
+      }
+      $rootScope.dias_semana = [
+        $translate.instant("domingo").substring(0, 3),
+        $translate.instant("lunes").substring(0, 3),
+        $translate.instant("martes").substring(0, 3),
+        $translate.instant("miercoles").substring(0, 3),
+        $translate.instant("jueves").substring(0, 3),
+        $translate.instant("viernes").substring(0, 3),
+        $translate.instant("sabado").substring(0, 3)
+      ];
+    }
   })
 
   .config([
     "$httpProvider",
     "$ionicConfigProvider",
     function($httpProvider, $ionicConfigProvider) {
-      $httpProvider.defaults.withCredentials = true;
+      //Enable cross domain calls
+      $httpProvider.defaults.useXDomain = true;
+      //delete $httpProvider.defaults.xsrfHeaderName;
+      //delete $httpProvider.defaults.headers.common['X-Requested-With'];
       $ionicConfigProvider.backButton.text("");
     }
   ])

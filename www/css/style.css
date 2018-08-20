@@ -134,12 +134,15 @@ span.icon.menos {
 
 input.mas-mark {
   border-left-color: #43A047 !important;
+  border-radius: 0 !important;
 }
 input.menos-mark {
   border-left-color: red !important;
+  border-radius: 0 !important;
 }
 input.neutro-mark {
   border-left-color: #7A7A7A !important;
+  border-radius: 0 !important;
 }
 
 
@@ -174,8 +177,8 @@ span.icon.neutro-mark {
 
 
 .title .fecha {
-      font-size: 18px;
-    margin: 0 0;
+      font-size: 16px;
+    margin: -10px -10px;
 
 }
 

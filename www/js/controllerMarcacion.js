@@ -77,8 +77,6 @@ angular
     $scope.mes = ("0" + ($scope.date.getMonth() + 1)).slice(-2);
     $scope.ano = $scope.date.getFullYear();
     $scope.fechaTotal = $scope.ano + "-" + $scope.mes + "-" + $scope.dia;
-    $scope.showInput = [false, false, false, false, false];
-    $scope.NuevoProposito = ["", "", "", ""];
     $scope.vinculaciones = [
       { id: 1, nombre: "Dios" },
       { id: 2, nombre: "Conmigo" },
@@ -99,22 +97,22 @@ angular
     /* Configuracion del Calendario para elegir fechas */
     /***************************************************/
     $scope.datepickerObject = {
-      titleLabel: "Elegir día", //Optional
-      todayLabel: "Hoy", //Optional
-      closeLabel: "Cerrar", //Optional
-      setLabel: "Ir", //Optional
+      titleLabel: $translate.instant("elegir_dia"), //Optional
+      todayLabel: $translate.instant("hoy"), //Optional
+      closeLabel: $translate.instant("cerrar"), //Optional
+      setLabel: $translate.instant("ir"), //Optional
       setButtonType: "button-assertive", //Optional
       todayButtonType: "button-assertive", //Optional
       inputDate: new Date(), //Optional
       mondayFirst: false, //Optional
-      weekDaysList: $scope.weekDaysList, //Optional
-      monthList: $scope.monthList, //Optional
+      weekDaysList: $rootScope.dias_semana, //Optional
+      monthList: $rootScope.meses, //Optional
       templateType: "modal", //Optional
       showTodayButton: "true", //Optional
       modalHeaderColor: "bar-positive", //Optional
       modalFooterColor: "bar-positive", //Optional
       from: new Date(2012, 1, 2), //Optional
-      to: new Date(2018, 8, 25), //Optional
+      to: new Date(2100, 8, 25), //Optional
       callback: function(val) {
         //Mandatory
 
@@ -525,6 +523,71 @@ angular
       });
     };
 
+    $scope.showOpcionesNuevo = function(vinculacion) {
+      // Show the action sheet
+      $ionicActionSheet.show({
+        buttons: [
+          {
+            text:
+              '<span class="icon icon-prayinghands"></span>' +
+              $translate.instant("dios")
+          },
+          {
+            text:
+              '<span class="icon ion-person"></span>' +
+              $translate.instant("conmigo")
+          },
+          {
+            text:
+              '<span class="icon ion-ios-people"></span>' +
+              $translate.instant("con_los_demas")
+          },
+          {
+            text:
+              '<span class="icon ion-leaf"></span>' +
+              $translate.instant("con_la_naturaleza")
+          },
+          {
+            text:
+              '<span class="icon ion-compose"></span>' +
+              $translate.instant("propositos_semanales")
+          },
+          {
+            text:
+              '<span class="icon ion-calendar"></span>' +
+              $translate.instant("propositos_mensuales")
+          }
+        ],
+        titleText: $translate.instant("purposes"),
+        cancelText: $translate.instant("cancel"),
+        buttonClicked: function(button) {
+          //cuando hago click en editar
+          // delete proposito.marcaciones;
+          switch (button) {
+            case 0:
+              $scope.CreateProposito($scope.vinculaciones.filter(function (value) { return value.id === 1 })[0]);
+              break;
+            case 1:
+              $scope.CreateProposito($scope.vinculaciones.filter(function (value) { return value.id === 2 })[0]);
+              break;
+            case 2:
+              $scope.CreateProposito($scope.vinculaciones.filter(function (value) { return value.id === 3 })[0]);
+              break;
+            case 3:
+              $scope.CreateProposito($scope.vinculaciones.filter(function (value) { return value.id === 4 })[0]);
+              break;
+            case 4:
+              $scope.CreateProposito($scope.vinculaciones.filter(function (value) { return value.id === 7 })[0]);
+              break;
+            case 5:
+              $scope.CreateProposito($scope.vinculaciones.filter(function (value) { return value.id === 8 })[0]);
+              break;
+          }
+          return true;
+        }
+      });
+    };
+
     //FIN de botones de edicion
 
     /************************************
@@ -588,6 +651,10 @@ angular
 
     $scope.verEvangelio = function() {
       $state.go("app.evangelio");
+    };
+
+    $scope.showEvangelio = function() {
+      return !ionic.Platform.isIOS();
     };
 
     $scope.verTelefono = function() {
