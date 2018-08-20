@@ -96,6 +96,7 @@ angular
     });
 
     $scope.$on("$ionicView.beforeEnter", function() {
+      $scope.perfil = {};
       $scope.actualizar(true);
     });
     $scope.actualizar = function(fullrefresh) {

@@ -120,9 +120,10 @@ color: #ddd;
 
 
 .cargando {
-    float: right;
-    position: absolute;
-    right: 105px;
+  top: 5px;
+  float: right;
+  position: absolute;
+  right: 105px;
 }
 span.icon.mas {
     right: 70px;
@@ -373,6 +374,15 @@ span.icon.neutro-mark {
 
 .action-sheet .button {
   background-color: inherit;
+  text-transform: capitalize;
+  font-weight: normal !important;
+}
+
+.platform-android .action-sheet-cancel {
+  display: block !important;
+}
+.action-sheet-destructive{
+  color: red !important;
 }
 
 /*Refresher*/

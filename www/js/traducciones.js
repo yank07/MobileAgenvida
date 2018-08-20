@@ -92,7 +92,8 @@ agenvidaApp.config(function(
     septiembre: "September",
     octubre: "October",
     noviembre: "November",
-    diciembre: "December"
+    diciembre: "December",
+    agregar_proposito: "Add purposes"
   });
   $translateProvider.translations("es", {
     hello_message: "Hola",
@@ -184,7 +185,8 @@ agenvidaApp.config(function(
     septiembre: "Septiembre",
     octubre: "Octubre",
     noviembre: "Noviembre",
-    diciembre: "Diciembre"
+    diciembre: "Diciembre",
+    agregar_proposito: "Agregue propósitos"
   });
   $translateProvider.preferredLanguage("en");
   $translateProvider.fallbackLanguage("en");

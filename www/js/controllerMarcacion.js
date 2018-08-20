@@ -214,6 +214,18 @@ angular
           }
         });
     };
+    $scope.mostrarFAB = true;
+    window.addEventListener("keyboardWillShow", function() {
+      $scope.$apply(function() {
+        $scope.mostrarFAB = false;
+      });
+    });
+
+    window.addEventListener("keyboardDidHide", function() {
+      $scope.$apply(function() {
+        $scope.mostrarFAB = true;
+      });
+    });
 
     $scope.actualizar = function(fullrefresh) {
       $scope.getPropositos();
@@ -378,7 +390,6 @@ angular
      * @param proposito
      */
     $scope.editarProposito = function(proposito, vinculacionID, filtered) {
-      console.log(filtered);
       if (proposito.id) {
         var data = {};
         data.proposito = proposito.proposito;
@@ -402,7 +413,7 @@ angular
               $window.localStorage.propositos = JSON.stringify(
                 $scope.propositos
               );
-              if (filtered.length === 1) {
+              if (filtered && filtered.length === 1) {
                 $scope.shownGroup[vinculacionID] = false;
               }
             });
@@ -459,11 +470,28 @@ angular
           $scope.propositos = $scope.propositos.filter(function(item) {
             return item.id !== proposito.id;
           });
-          if (filtered.length === 1) {
+          if (filtered && filtered.length === 1) {
             $scope.shownGroup[vinculacionID] = false;
           }
         }
       }
+    };
+
+    $scope.showListaVacia = function(propositos, ano, mes) {
+      if (propositos) {
+        var filtrados = propositos.filter(function(proposito) {
+          return (
+            proposito.vinculacion !== null &&
+            proposito.vinculacion !== 5 &&
+            proposito.mes_ano.includes(ano + "-" + mes + "-")
+          );
+        });
+        if (filtrados.length <= 0) {
+          return true;
+        }
+      }
+
+      return false;
     };
     /* FIN de POPUP */
     /**************************************************************************/
@@ -565,22 +593,46 @@ angular
           // delete proposito.marcaciones;
           switch (button) {
             case 0:
-              $scope.CreateProposito($scope.vinculaciones.filter(function (value) { return value.id === 1 })[0]);
+              $scope.CreateProposito(
+                $scope.vinculaciones.filter(function(value) {
+                  return value.id === 1;
+                })[0]
+              );
               break;
             case 1:
-              $scope.CreateProposito($scope.vinculaciones.filter(function (value) { return value.id === 2 })[0]);
+              $scope.CreateProposito(
+                $scope.vinculaciones.filter(function(value) {
+                  return value.id === 2;
+                })[0]
+              );
               break;
             case 2:
-              $scope.CreateProposito($scope.vinculaciones.filter(function (value) { return value.id === 3 })[0]);
+              $scope.CreateProposito(
+                $scope.vinculaciones.filter(function(value) {
+                  return value.id === 3;
+                })[0]
+              );
               break;
             case 3:
-              $scope.CreateProposito($scope.vinculaciones.filter(function (value) { return value.id === 4 })[0]);
+              $scope.CreateProposito(
+                $scope.vinculaciones.filter(function(value) {
+                  return value.id === 4;
+                })[0]
+              );
               break;
             case 4:
-              $scope.CreateProposito($scope.vinculaciones.filter(function (value) { return value.id === 7 })[0]);
+              $scope.CreateProposito(
+                $scope.vinculaciones.filter(function(value) {
+                  return value.id === 7;
+                })[0]
+              );
               break;
             case 5:
-              $scope.CreateProposito($scope.vinculaciones.filter(function (value) { return value.id === 8 })[0]);
+              $scope.CreateProposito(
+                $scope.vinculaciones.filter(function(value) {
+                  return value.id === 8;
+                })[0]
+              );
               break;
           }
           return true;

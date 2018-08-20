@@ -93,7 +93,6 @@ $http.get("http://feed.evangelizo.org/v2/reader.php?date="+$scope.hoy+"&type=rea
       )
       .then(
         function(result) {
-          console.log(result.data);
           $scope.evangelio = result.data;
           $scope.evangelio = $scope.evangelio.replace($scope.texto_molesto, "");
           $scope.evangelio = $sce.trustAsHtml($scope.evangelio);
