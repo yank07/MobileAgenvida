@@ -366,8 +366,16 @@ angular
         vinculacion: vinculacionID,
         mes_ano: $scope.fechaTotal
       };
+      console.log($scope.propositos);
 
-      $scope.propositos.push($scope.PropositoNuevo);
+      if (!$scope.$$phase) {
+        $scope.$apply(function() {
+          $scope.propositos.push($scope.PropositoNuevo);
+        });
+      } else {
+        $scope.propositos.push($scope.PropositoNuevo);
+      }
+      console.log($scope.propositos);
       $scope.shownGroup[vinculacionID] = true;
     };
 
@@ -445,7 +453,8 @@ angular
                 for (var i in $scope.propositos) {
                   if (!$scope.propositos[i].id) {
                     $scope.propositos[i].marcaciones = result.data.marcaciones;
-                    $scope.propositos[i].id = result.data.id;
+                    $scope.propositos[i] = result.data;
+                    console.log($scope.propositos);
                     break; //Stop this loop, we found it!
                   }
                 }

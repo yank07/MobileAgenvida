@@ -40,6 +40,7 @@ var agenvidaApp = angular
     }
     document.addEventListener("deviceready", function() {
       Keyboard.hideFormAccessoryBar(false);
+      //Keyboard.KeyboardResizeMode('ionic');
     });
 
     if (window.localStorage.token) {

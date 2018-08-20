@@ -1,4 +1,4 @@
-<ion-view ng-init="actualizar(false); toggleVisibility()">
+<ion-view ng-init="actualizar(false);">
 
   <ion-nav-bar class="bar-positive flat">
     <ion-nav-title>
@@ -23,8 +23,8 @@
       </button>
     </ion-nav-buttons>
   </ion-nav-bar>
-  <ion-floating-button ng-show="!toggleGroupVisibility && mostrarFAB" click="showOpcionesNuevo()" button-color="#1B237A" icon="ion-plus" icon-color="#fff">
-  </ion-floating-button>
+  <!--<ion-floating-button ng-show="!toggleGroupVisibility && mostrarFAB" click="showOpcionesNuevo()" button-color="#1B237A" icon="ion-plus" icon-color="#fff">
+  </ion-floating-button>-->
   <ion-content scroll="true" style="margin-right: -1px" class="has-header">
     <ion-refresher
       pulling-text="{{'estirar_para_refrescar' | translate}}"
@@ -77,15 +77,21 @@
       <!--*************************************** FIN PROPOSITO PARTIULAR ************************************-->
     </div>
     <div style="background-color: #ffffff">
-    <div class="ink ink-dark no-border item item-stable item-divider item-icon" ng-click="clickPropositos()">
+      <div style="position: absolute; width: 100%" align="center">
+        <button ng-show="!toggleGroupVisibility && mostrarFAB"
+                ng-click="showOpcionesNuevo()"
+                style="top: 5px; background-color: #1B237A; color: #ffffff;" class="button button-fab icon ion-plus"></button></div>
+      <div class="ink ink-dark no-border item item-stable item-divider item-icon" ng-click="clickPropositos()">
       <i class="icon"
          ng-show="toggleGroupVisibility"
          ng-class="toggle ? 'ion-chevron-down': 'ion-chevron-right'"></i>
       {{'purposes' | translate}}
-      <i class="text-center ink pull-right" style="font-size: 30px; width: 50px;"
-         ng-class="!toggleGroupVisibility ? 'ion-ios-eye-outline': 'ion-ios-eye'"
+<!--
+        <i class="text-center ink icon ion-ios-plus-outline" style="position: fixed; left: 0; right: 0; font-size: 30px; z-index: 9999; color: #1B237A"></i>
+-->
+        <i class="text-center ink pull-right" style="font-size: 30px; width: 50px;"
+         ng-class="!toggleGroupVisibility ? 'ion-ios-glasses-outline': 'ion-ios-glasses'"
          ng-click="$event.preventDefault(); $event.stopPropagation(); toggleVisibility()"></i>
-
     </div>
     <ion-list class="animate-ripple" ng-repeat="vinculacion in vinculaciones"  ng-init="sectionIndex = $index">
       <a class=" ink ink-dark  item item-stable item-divider item-icon" ng-show="toggleGroupVisibility"

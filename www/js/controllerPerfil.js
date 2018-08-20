@@ -96,8 +96,11 @@ angular
     });
 
     $scope.$on("$ionicView.beforeEnter", function() {
-      $scope.perfil = {};
-      $scope.actualizar(true);
+      var user = $window.localStorage.username;
+      if ($scope.user && $scope.user.username !== user) {
+        $scope.perfil = {};
+        $scope.actualizar(true);
+      }
     });
     $scope.actualizar = function(fullrefresh) {
       if (fullrefresh) {

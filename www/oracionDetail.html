@@ -1,9 +1,12 @@
-<ion-view title="{{'prayers' | translate | capitalize }}">
+<ion-view>
   <ion-nav-bar class="bar-positive">
     <ion-nav-back-button class="button-clear">
-    <i class="ion-arrow-left-c"></i></ion-nav-back-button>
+    <i class="ion-arrow-left-c"></i>
+    </ion-nav-back-button>
          </ion-nav-bar>
-    <ion-content>
+  <ion-nav-title> {{'prayers' | translate | capitalize}}</ion-nav-title>
+
+  <ion-content>
       <div class="card">
         <div class="item item-stable" >
          <h2 class="icon-praying-hands" data-ng-bind-html="oracionTitulo"></h2>
