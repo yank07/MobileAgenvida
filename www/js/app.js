@@ -119,10 +119,6 @@ var agenvidaApp = angular
 
     $rootScope.updateTranslations = loadVariables;
     $rootScope.updateTranslationsSuccess = function(translations) {
-      console.log("updateTranslationsSuccess");
-      angular.forEach(translations, function(item) {
-        console.log(item);
-      });
       $rootScope.meses = [
         translations.enero,
         translations.febrero,
@@ -142,7 +138,6 @@ var agenvidaApp = angular
     loadVariables($rootScope.updateTranslationsSuccess);
 
     function loadVariables(updateTranslationsSuccess) {
-      console.log("loadVariables");
       $translate([
         "enero",
         "febrero",
