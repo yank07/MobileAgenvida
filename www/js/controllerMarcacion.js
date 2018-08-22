@@ -732,8 +732,10 @@ angular
 
     $scope.abierto = false;
 
+    $scope.toggleGroupVisibility = $window.localStorage.toggleGroupVisibility;
     $scope.toggleVisibility = function() {
       $scope.toggleGroupVisibility = !$scope.toggleGroupVisibility;
+      $window.localStorage.toggleGroupVisibility = $scope.toggleGroupVisibility;
       $scope.abierto = true;
       $scope.toggle = true;
       $scope.desplegar();

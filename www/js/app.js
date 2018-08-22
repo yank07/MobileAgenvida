@@ -90,6 +90,10 @@ var agenvidaApp = angular
       {
         name: "English",
         codigo: "en"
+      },
+      {
+        name: "German",
+        codigo: "de"
       }
     ];
 
@@ -130,7 +134,7 @@ var agenvidaApp = angular
           "Nov",
           "Dic"
         ];
-      } else {
+      } else if (lenguage === "en") {
         $rootScope.meses = [
           "Jan",
           "Feb",
@@ -144,6 +148,21 @@ var agenvidaApp = angular
           "Oct",
           "Nov",
           "Dec"
+        ];
+      } else if (lenguage === "de") {
+        $rootScope.meses = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "Mai",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sept",
+          "Okt",
+          "Nov",
+          "Dez"
         ];
       }
       $rootScope.dias_semana = [
