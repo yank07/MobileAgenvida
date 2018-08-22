@@ -49,6 +49,7 @@ angular
       //Se guarda solo el codigo del idioma en el localstorage
       $window.localStorage.language = language.codigo;
       $translate.use(language.codigo);
+      $scope.message_lindo = $translate.instant("user_password_message");
     };
 
     $scope.signIn = function() {
