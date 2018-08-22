@@ -96,7 +96,10 @@ agenvidaApp.config(function(
     agregar_proposito: "Add purposes",
     no_marcado: "Not marked",
     mes: "Month",
-    anho: "Year"
+    anho: "Year",
+    proposito_particular: "Particular purpose",
+    references: "References",
+    general_view: "General view"
   });
   $translateProvider.translations("es", {
     hello_message: "Hola",
@@ -182,8 +185,8 @@ agenvidaApp.config(function(
     abril: "Abril",
     mayo: "Mayo",
     junio: "Junio",
-    julio: "July",
-    agosto: "Aogosto",
+    julio: "Julio",
+    agosto: "Agosto",
     septiembre: "Septiembre",
     octubre: "Octubre",
     noviembre: "Noviembre",
@@ -191,7 +194,10 @@ agenvidaApp.config(function(
     agregar_proposito: "Agregue propósitos",
     no_marcado: "No marcado",
     mes: "Mes",
-    anho: "Año"
+    anho: "Año",
+    proposito_particular: "Propósito particular",
+    references: "Referencias",
+    general_view: "Visión general"
   });
   $translateProvider.translations("de", {
     actual_pass: "Aktuelles Password",
@@ -255,8 +261,8 @@ agenvidaApp.config(function(
     pedagogic_contract_def:
       "Es geht darum, angestrebte Haltungen und Verhaltensweisen mit den Mitteln der Schönstattpädagogik umzusetzen.",
     prayers: "Gebete",
-    propositos_mensuales: "Monatliche Vorsätze",
-    propositos_semanales: "Wöchentliche Vorsätze",
+    propositos_mensuales: "Monatliche",
+    propositos_semanales: "Wöchentliche",
     purposes: "Vorsätze",
     reafirm_year: "Was möchte ich in diesem Jahr verstärken?",
     references: "Legende",
@@ -280,7 +286,20 @@ agenvidaApp.config(function(
     domingo: "Sonntag",
     agregar_proposito: "Zwecke hinzufügen",
     mes: "Monat",
-    anho: "Jahr"
+    anho: "Jahr",
+    enero: "Jan",
+    febrero: "Feb",
+    marzo: "Mar",
+    abril: "Apr",
+    mayo: "Mai",
+    junio: "Jun",
+    julio: "Jul",
+    agosto: "Aug",
+    septiembre: "Sept",
+    octubre: "Okt",
+    noviembre: "Nov",
+    diciembre: "Dez",
+    proposito_particular: "Bestimmter Zweck"
   });
   $translateProvider.preferredLanguage("en");
   $translateProvider.fallbackLanguage("en");

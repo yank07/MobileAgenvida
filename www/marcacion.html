@@ -4,7 +4,7 @@
     <ion-nav-title>
       <h2 class="title">
         <a class="button  button-icon button-clear   icon ion-arrow-left-b " ng-click="diaDown()" ></a>
-          <ionic-datepicker input-obj="datepickerObject"><span class="fecha">{{dia}}-{{mes}}-{{ano}}</span> </ionic-datepicker>
+          <span ng-click="openDatePicker()" class="fecha">{{dia}}-{{mes}}-{{ano}}</span>
         <a class=" button  button-icon button-clear  icon ion-arrow-right-b" ng-click="diaUp()" ></a>
       </h2>
     </ion-nav-title>
@@ -15,7 +15,6 @@
     <ion-nav-buttons side="right">
       <!-- Toggle left side menu -->
       <!--  <button class="button button-icon icon ion-ios-refresh-empty" ng-click="getPropositos()"></button> -->
-      <!--  <ionic-datepicker input-obj="datepickerObject"><button  class="button button-icon icon ion-calendar"></button></ionic-datepicker>-->
       <button  class="button button-icon icon button-clear ion-android-person"  ng-click="verPerfil()">
         <!--   <span ng-if="perfil">
            <span class="badge badge-assertive icon-badge">!</span>
