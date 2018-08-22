@@ -1,6 +1,4 @@
-
-
-<ion-view title="Reporte mensual">
+<ion-view title="{{'monthly_report' | translate | capitalize}}">
 <style type="text/css">
 
 </style>
@@ -9,12 +7,8 @@
                      <!-- Toggle left side menu -->
                      <button menu-toggle="left" class="button button-clear button-icon icon ion-navicon"></button>
                     </ion-nav-buttons>
-         
+
                   </ion-nav-bar>
-
-
-
-  
   <ion-content >
 
 <!--
@@ -28,7 +22,7 @@
 
 
 
-    </div>  
+    </div>
 </div> -->
 
 <!--
@@ -65,7 +59,7 @@
   <label class="item item-input item-select">
 
     <div class="input-label">
-      Mes
+      {{ 'mes' | translate}}
     </div>
  <select name="mySelect" id="mySelect"
       ng-options="option for option in meses.availableOptions"
@@ -74,7 +68,7 @@
 
     <label class="item item-input item-select">
     <div class="input-label">
-      Año
+      {{'anho' | translate}}
     </div>
     <select name="mySelect2" id="mySelect2"
       ng-options="option for option in anos.availableOptions"
@@ -88,40 +82,40 @@
 
 <div class="card">
 
-  <h5 style="margin-left:8px;">Referencias</h5>
+  <h5 style="margin-left:8px;">{{'references' | translate}}</h5>
   <div class="row referencias">
 
-      <div class="col positivo"> Si </div>
-   <div class="col negativo"> No</div>
-    <div class="col neutro">No aplica</div>
-    <div class="col" style="background:#FBF7F7;"> No marcado</div>
+      <div class="col positivo">{{ 'si' | translate }} </div>
+   <div class="col negativo"> {{ 'no' | translate }} </div>
+    <div class="col neutro">{{ 'no_aplica' | translate }} </div>
+    <div class="col" style="background:#FBF7F7;"> {{ 'no_marcado' | translate }} </div>
 
   </div>
 
 
 </div>
 
-   
+
 <div class="card"ng-repeat="vinculacion in vinculaciones" >
 
 
 
     <div class="item item-stable ">
-    <h3> {{vinculacion.nombre}} </h3>
+    <h3> {{vinculacion.nombre | slugify | translate}} </h3>
   </div>
-  
+
 
  <div class=" item reporte"  ng-repeat="proposito in filtered =(propositos_mes | filter:{ vinculacion: vinculacion.id , mes_ano: anos.selectedOption  + '-'+ meses.selectedOption +'-' , })">
  <h5> {{proposito.proposito}} </h5>
         <div class="row">
-          
 
-            <div class="col marcacion" ng-repeat="numero in labels" 
+
+            <div class="col marcacion" ng-repeat="numero in labels"
             ng-class="{'positivo' : (proposito.marcaciones | filter:{ dia: anos.selectedOption +  '-' + meses.selectedOption +'-' + numero, cumplimiento: 1 }).length != 0 ,
                       'negativo' : (proposito.marcaciones | filter:{ dia: '2015-10-' + numero, cumplimiento: 2 }).length != 0 ,
-                      'neutro' : (proposito.marcaciones | filter:{ dia: '2015-10-' + numero, cumplimiento: 0 }).length != 0 
+                      'neutro' : (proposito.marcaciones | filter:{ dia: '2015-10-' + numero, cumplimiento: 0 }).length != 0
                     }"> . </div>
-         
+
         </div>
 
         <div class="row">
@@ -129,7 +123,7 @@
         </div>
 
         <div class="row">
-          
+
             <div class="marcacion2 col positivo" ng-repeat="a in getNumber(proposito.positivo) track by $index"></div>
             <div class="marcacion2 col negativo" ng-repeat="b in getNumber(proposito.negativo) track by $index"></div>
             <div class="marcacion2 col neutro" ng-repeat="c in getNumber(proposito.neutro) track by $index"></div>
@@ -146,23 +140,13 @@
 
  <div class="card">
         <div class="item item-stable">
-            Vision General
+            {{'general_view' | translate}}
         </div>
         <div class="item item-text-wrap">
            <canvas id="radar" class="chart chart-radar"
-              chart-data="data2" chart-labels="labels2" chart-options="{pointDotRadius : 3, datasetStrokeWidth : 2,
-             
-  
-            }">
-            </canvas> 
+              chart-data="data2" chart-labels="labels2" chart-options="{pointDotRadius : 3, datasetStrokeWidth : 2}">
+            </canvas>
         </div>
-    </div> 
-
-
-
-
-
-
-   
+    </div>
   </ion-content>
 </ion-view>

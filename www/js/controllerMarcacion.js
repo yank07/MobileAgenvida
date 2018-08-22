@@ -2,7 +2,8 @@ angular
   .module("Agenvida.controllerMarcacion", [
     "slugifier",
     "jett.ionic.content.banner",
-    "ion-floating-menu"
+    "ion-floating-menu",
+    "ionic-datepicker"
   ])
 
   .controller("controllerMarcacion", function(
@@ -22,7 +23,8 @@ angular
     $ionicContentBanner,
     $timeout,
     ionicMaterialInk,
-    ionicMaterialMotion
+    ionicMaterialMotion,
+    ionicDatePicker
   ) {
     var formatearNacimiento = function(nacimiento) {
       if (nacimiento !== null) {
@@ -90,23 +92,15 @@ angular
       { id: 8, nombre: "Proposito Mensuales" }
     ];
     $scope.propositoParticular = { id: 5, nombre: "Proposito Particular" };
-    $scope.weekDaysList = $rootScope.dias_semana; // esto esta definido en app.js
-    $scope.monthList = $rootScope.meses; // esto esta definido en app.js
 
     /***************************************************/
     /* Configuracion del Calendario para elegir fechas */
     /***************************************************/
     $scope.datepickerObject = {
-      titleLabel: $translate.instant("elegir_dia"), //Optional
-      todayLabel: $translate.instant("hoy"), //Optional
-      closeLabel: $translate.instant("cerrar"), //Optional
-      setLabel: $translate.instant("ir"), //Optional
       setButtonType: "button-assertive", //Optional
       todayButtonType: "button-assertive", //Optional
       inputDate: new Date(), //Optional
       mondayFirst: false, //Optional
-      weekDaysList: $rootScope.dias_semana, //Optional
-      monthList: $rootScope.meses, //Optional
       templateType: "modal", //Optional
       showTodayButton: "true", //Optional
       modalHeaderColor: "bar-positive", //Optional
@@ -115,11 +109,11 @@ angular
       to: new Date(2100, 8, 25), //Optional
       callback: function(val) {
         //Mandatory
-
         if (val) {
-          $scope.dia = ("0" + val.getDate()).slice(-2);
-          $scope.mes = ("0" + (val.getMonth() + 1)).slice(-2);
-          $scope.ano = val.getFullYear();
+          var valDate = new Date(val);
+          $scope.dia = ("0" + valDate.getDate()).slice(-2);
+          $scope.mes = ("0" + (valDate.getMonth() + 1)).slice(-2);
+          $scope.ano = valDate.getFullYear();
 
           $scope.date.setDate($scope.dia);
           $scope.date.setMonth($scope.mes - 1);
@@ -127,6 +121,23 @@ angular
           $scope.fechaTotal = $scope.ano + "-" + $scope.mes + "-" + $scope.dia;
         }
       }
+    };
+
+    $scope.openDatePicker = function() {
+      $scope.datepickerObject.weeksList = $rootScope.dias_semana;
+      $scope.datepickerObject.monthsList = $rootScope.meses;
+      $scope.datepickerObject.titleLabel = $translate.instant("elegir_dia");
+      $scope.datepickerObject.todayLabel = $translate.instant("hoy");
+      $scope.datepickerObject.closeLabel = $translate.instant("cerrar");
+      $scope.datepickerObject.setLabel = $translate.instant("ir");
+
+      $rootScope.updateTranslations(function(translations) {
+        $rootScope.updateTranslationsSuccess(translations);
+        $scope.datepickerObject.monthsList = $rootScope.meses;
+        $timeout(function() {
+          ionicDatePicker.openDatePicker($scope.datepickerObject);
+        }, 1000);
+      });
     };
 
     // FIN DE CONFIGURACION DE CALENDARIO

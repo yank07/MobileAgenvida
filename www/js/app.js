@@ -112,59 +112,54 @@ var agenvidaApp = angular
       $ionicLoading.hide();
     };
 
-    loadVariables();
     $rootScope.$on("$translateChangeSuccess", function() {
       console.log("IDIOMA CAMBIADO");
       loadVariables();
     });
 
-    function loadVariables() {
-      if (lenguage === "es") {
-        $rootScope.meses = [
-          "Ene",
-          "Feb",
-          "Mar",
-          "Abr",
-          "May",
-          "Jun",
-          "Jul",
-          "Agost",
-          "Sept",
-          "Oct",
-          "Nov",
-          "Dic"
-        ];
-      } else if (lenguage === "en") {
-        $rootScope.meses = [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sept",
-          "Oct",
-          "Nov",
-          "Dec"
-        ];
-      } else if (lenguage === "de") {
-        $rootScope.meses = [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "Mai",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sept",
-          "Okt",
-          "Nov",
-          "Dez"
-        ];
-      }
+    $rootScope.updateTranslations = loadVariables;
+    $rootScope.updateTranslationsSuccess = function(translations) {
+      console.log("updateTranslationsSuccess");
+      angular.forEach(translations, function(item) {
+        console.log(item);
+      });
+      $rootScope.meses = [
+        translations.enero,
+        translations.febrero,
+        translations.marzo,
+        translations.abril,
+        translations.mayo,
+        translations.junio,
+        translations.julio,
+        translations.agosto,
+        translations.septiembre,
+        translations.octubre,
+        translations.noviembre,
+        translations.diciembre
+      ];
+    };
+
+    loadVariables($rootScope.updateTranslationsSuccess);
+
+    function loadVariables(updateTranslationsSuccess) {
+      console.log("loadVariables");
+      $translate([
+        "enero",
+        "febrero",
+        "marzo",
+        "abril",
+        "mayo",
+        "junio",
+        "julio",
+        "agosto",
+        "septiembre",
+        "octubre",
+        "noviembre",
+        "diciembre"
+      ]).then(updateTranslationsSuccess, function(translationIds) {
+        console.log(translationIds);
+      });
+
       $rootScope.dias_semana = [
         $translate.instant("domingo").substring(0, 3),
         $translate.instant("lunes").substring(0, 3),

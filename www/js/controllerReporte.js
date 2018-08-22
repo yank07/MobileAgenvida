@@ -8,7 +8,8 @@ angular
     $rootScope,
     $ionicLoading,
     $sce,
-    $filter
+    $filter,
+    $translate
   ) {
     $scope.labels = [
       "01",
@@ -45,11 +46,12 @@ angular
     ];
 
     $scope.labels2 = [
-      "Dios",
-      "Conmigo",
-      "Los Demas",
-      "Naturaleza",
-      "P.Particular"
+      $translate.instant("dios"),
+      $translate.instant("conmigo"),
+      $translate.instant("con_los_demas"),
+      $translate.instant("con_la_naturaleza"),
+      $translate.instant("proposito_particular"),
+      $translate.instant("dios")
     ];
     $scope.hoy = new Date();
     $scope.vinculaciones = [
