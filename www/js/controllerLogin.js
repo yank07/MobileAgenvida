@@ -1,3 +1,4 @@
+/* eslint-disable angular/controller-as */
 angular
   .module("Agenvida.controllerLogin", [])
   .controller("controllerLogin", function(
@@ -53,7 +54,7 @@ angular
     };
 
     $scope.signIn = function() {
-      if ($scope.user.username != "" && $scope.user.password != "") {
+      if ($scope.user.username !== "" && $scope.user.password !== "") {
         $scope.LoadingShow();
 
         $http({
@@ -89,13 +90,7 @@ angular
             $state.transitionTo("app.marcacion");
           },
           function(result) {
-            //Si hay algun error en la autenticacion
-
-            // Erase the token if the user fails to log in
             delete $window.localStorage.token;
-
-            // Handle login errors here
-            console.log(result);
             $scope.message = $translate.instant(result.data.error);
             $scope.message_lindo = $translate.instant("auth_error");
             $scope.color_mensaje = "red";

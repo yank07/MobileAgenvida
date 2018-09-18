@@ -31,7 +31,7 @@ var agenvidaApp = angular
     "ion-floating-menu"
   ])
 
-  .run(function($state, $rootScope, $ionicLoading, $window, $translate) {
+  .run(function($state, $rootScope, $ionicLoading, $window, $translate, $http) {
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
 
@@ -42,14 +42,6 @@ var agenvidaApp = angular
       Keyboard.hideFormAccessoryBar(false);
       //Keyboard.KeyboardResizeMode('ionic');
     });
-
-    if (window.localStorage.token) {
-      console.log("en estoy en run y tengo el token");
-      console.log(window.localStorage.token);
-      $state.go("app.marcacion");
-    }
-
-    $rootScope.domain = "";
 
     // $rootScope.domain = "http://localhost:8000/";
 
@@ -92,8 +84,12 @@ var agenvidaApp = angular
         codigo: "en"
       },
       {
-        name: "German",
+        name: "Deutsch",
         codigo: "de"
+      },
+      {
+        name: "Italiano",
+        codigo: "it"
       }
     ];
 
@@ -176,6 +172,8 @@ var agenvidaApp = angular
       //delete $httpProvider.defaults.xsrfHeaderName;
       //delete $httpProvider.defaults.headers.common['X-Requested-With'];
       $ionicConfigProvider.backButton.text("");
+
+      $ionicConfigProvider.scrolling.jsScrolling(false);
     }
   ])
 
