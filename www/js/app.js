@@ -173,7 +173,7 @@ var agenvidaApp = angular
       //delete $httpProvider.defaults.headers.common['X-Requested-With'];
       $ionicConfigProvider.backButton.text("");
 
-      $ionicConfigProvider.scrolling.jsScrolling(false);
+      //$ionicConfigProvider.scrolling.jsScrolling(false);
     }
   ])
 
