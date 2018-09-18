@@ -238,6 +238,14 @@ angular
       });
     });
 
+    $scope.confirmar = function(keyEvent) {
+      var element = keyEvent.target;
+
+      if (keyEvent.keyCode === 13) {
+        Keyboard.close();
+        element.blur();
+      }
+    };
     $scope.actualizar = function(fullrefresh) {
       $scope.getPropositos();
       if (fullrefresh) {
@@ -371,13 +379,11 @@ angular
     /**** Crea nuevo proposito****/
     /*********************************************/
     $scope.CreateProposito = function(proposito) {
-      console.log(proposito);
       var vinculacionID = proposito.id;
       $scope.PropositoNuevo = {
         vinculacion: vinculacionID,
         mes_ano: $scope.fechaTotal
       };
-      console.log($scope.propositos);
 
       if (!$scope.$$phase) {
         $scope.$apply(function() {
@@ -386,7 +392,6 @@ angular
       } else {
         $scope.propositos.push($scope.PropositoNuevo);
       }
-      console.log($scope.propositos);
       $scope.shownGroup[vinculacionID] = true;
     };
 
