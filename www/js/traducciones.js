@@ -247,7 +247,7 @@ agenvidaApp.config(function(
     lunes: "Montag",
     martes: "Dienstag",
     miercoles: "Mittwoch",
-    monthly_report: "Monatliche Rechenschaft",
+    monthly_report: "Monatsbericht",
     my_profile: "Mein Profil",
     name: "Vorname",
     net_error: "Verbindungsfehler",
@@ -300,7 +300,7 @@ agenvidaApp.config(function(
     octubre: "Okt",
     noviembre: "Nov",
     diciembre: "Dez",
-    proposito_particular: "Bestimmter Zweck"
+    proposito_particular: "Partikularexamen"
   });
   $translateProvider.translations("it", {
     actual_pass: "Password attuale",
@@ -401,7 +401,8 @@ agenvidaApp.config(function(
     sabado: "sabato",
     domingo: "domenica",
     no_marcado: "non marcato",
-    agregar_proposito: "aggiungere proposito"
+    agregar_proposito: "aggiungere proposito",
+    proposito_particular: "Proposito particolare"
   });
   $translateProvider.preferredLanguage("en");
   $translateProvider.fallbackLanguage("en");
